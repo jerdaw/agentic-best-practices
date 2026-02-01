@@ -1,6 +1,8 @@
 # Best Practices
 
-Curated reference documentation for software development best practices.
+A collection of opinionated, actionable guides for software development. Each guide distills real-world patterns into scannable references with concrete examples.
+
+**Philosophy**: Show, don't tell. Code examples beat prose. Tables beat paragraphs.
 
 ## Contents
 
