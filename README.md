@@ -81,14 +81,42 @@ The [Adoption Guide](adoption/adoption.md) includes mechanisms to prevent projec
 | **Overrides section** | Intentional deviations must be documented with rationale |
 | **Periodic sync** | `git pull` updates standards across all projects |
 
+### Updating Standards
+
+| Task | Command |
+| --- | --- |
+| Update local standards | `git -C ~/agentic-best-practices pull` |
+| Review recent changes | `git -C ~/agentic-best-practices log --oneline -20` |
+
+Release hygiene and tagging conventions are documented in `docs/release-process.md`.
+
 See the full [Adoption Guide](adoption/adoption.md) for detailed setup instructions.
 
 ---
 
 ## Roadmap
 
-| Feature | Guide | Status |
-| --- | --- | --- |
+### Agent-Led (Minimal Human Input)
+
+| Work Item | Output | Minimal Input | Status |
+| --- | --- | --- | --- |
+| Clear dev-only security advisories | `npm audit` clean after dependency updates | Yes/No on taking breaking upgrades | Done |
+| Keep quality gates green | `npm run precommit` passes locally and in CI | None | Done |
+| Validate navigation + internal links | Passing `npm run validate` | None | Done |
+| Split changes into PR-sized patches | PR series + staging commands in `docs/phase-1-pr-split.md` | Yes/No on proposed split | Done |
+| Summarize doc deltas for fast approval | Checklist in `docs/phase-1-ship-revert-summary.md` | Yes/No per bucket | Done |
+| Document release process | Release checklist + notes template in `docs/release-process.md` | Yes/No on convention | Done |
+| Add downstream update guidance | Update commands in README + Adoption Guide | Yes/No on wording | Done |
+| Add feedback intake + triage rubric | `docs/feedback-template.md` + `docs/triage-rubric.md` | Yes/No on docs | Done |
+| Add scheduled CI validation | Weekly + manual runs in `.github/workflows/lint.yml` | Yes/No on schedule | Done |
+| Validate README index drift | README completeness checks in `scripts/validate-navigation.sh` | None | Done |
+
+### Human-Led (Non-trivial Context/Time)
+
+| Work Item | Why Human-Owned | Output | Status |
+| --- | --- | --- | --- |
+| Choose 1–2 adoption pilot repos | Requires org priorities + stakeholders | Pilot list + where feedback is captured | Planned |
+| Define “v1” success criteria + cadence | Product/ownership decision | Definition of Done + maintenance schedule | Planned |
 
 ---
 
@@ -132,6 +160,7 @@ Best practices specific to working with AI coding assistants.
 | Guide | Description |
 | --- | --- |
 | [Adoption Guide](adoption/adoption.md) | **Start Here.** Integrate agentic-best-practices into your projects. |
+| [AGENTS.md Template](adoption/template-agents.md) | Copy into a project as a starting point. |
 | [AGENTS.md Guidelines](guides/agents-md/agents-md-guidelines.md) | Creating effective AGENTS.md files. |
 | [Agentic Workflow](guides/agentic-workflow/agentic-workflow.md) | MAP-FIRST workflow for safe coding. |
 | [Prompting Patterns](guides/prompting-patterns/prompting-patterns.md) | Crafting effective prompts for AI tools. |
@@ -158,6 +187,13 @@ New guides must follow the [Writing Best Practices](guides/writing-best-practice
 | **Actionable** | Concrete examples over abstract principles. |
 | **Scannable** | Tables and lists over prose. |
 | **Maintained** | Updated when practices evolve. |
+
+### Feedback
+
+| If you found... | Use |
+| --- | --- |
+| A missing pattern, conflict, or confusing guidance | `docs/feedback-template.md` |
+| A consistent way to classify and resolve feedback | `docs/triage-rubric.md` |
 
 ---
 

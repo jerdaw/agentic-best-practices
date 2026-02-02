@@ -2,4 +2,4 @@
 npm run lint:md
 
 # Run navigation validation
-./scripts/validate-navigation.sh
+npm run validate
