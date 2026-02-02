@@ -92,6 +92,19 @@ Core software development patterns applicable to any project.
 | [Dependency Management](guides/dependency-management/dependency-management.md) | Managing external packages safety. |
 | [Supply Chain Security](guides/supply-chain-security/supply-chain-security.md) | SLSA, provenance, and artifact integrity. |
 | [Resilience Patterns](guides/resilience-patterns/resilience-patterns.md) | Retries, circuit breakers, and fallbacks. |
+| [Idempotency Patterns](guides/idempotency-patterns/idempotency-patterns.md) | Safe retry and deduplication strategies. |
+| [Secrets & Configuration](guides/secrets-configuration/secrets-configuration.md) | Config separation and secret management. |
+| [Secure Coding](guides/secure-coding/secure-coding.md) | OWASP patterns and injection prevention. |
+| [Deployment Strategies](guides/deployment-strategies/deployment-strategies.md) | Blue-green, canary, and feature flags. |
+| [Observability Patterns](guides/observability-patterns/observability-patterns.md) | Metrics, tracing, and health checks. |
+| [Testing Strategy](guides/testing-strategy/testing-strategy.md) | Test pyramid and coverage goals. |
+| [CI/CD Pipelines](guides/cicd-pipelines/cicd-pipelines.md) | Build, test, deploy automation. |
+| [Codebase Organization](guides/codebase-organization/codebase-organization.md) | Directory structure and layering. |
+| [Static Analysis](guides/static-analysis/static-analysis.md) | Linters, formatters, and SAST. |
+| [Privacy & Compliance](guides/privacy-compliance/privacy-compliance.md) | GDPR and data protection. |
+| [Accessibility & i18n](guides/accessibility-i18n/accessibility-i18n.md) | WCAG and localization. |
+| [Distributed Sagas](guides/distributed-sagas/distributed-sagas.md) | Multi-service transactions. |
+| [Database Indexing](guides/database-indexing/database-indexing.md) | Query optimization. |
 | [Planning Documentation](guides/planning-documentation/planning-documentation.md) | Roadmaps, implementation plans, and RFCs. |
 
 ### AI-Assisted Development
