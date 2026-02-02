@@ -27,12 +27,14 @@ A reference for configuring AI coding tools—Claude Code, Cursor, GitHub Copilo
 ## Quick Reference
 
 **Essential configurations**:
+
 - Project-specific instructions (AGENTS.md, CLAUDE.md)
 - File/folder exclusions (node_modules, build outputs)
 - Security boundaries (no secrets access)
 - Keybindings for common actions
 
 **Configuration priority**:
+
 1. Security settings first
 2. Project-specific instructions
 3. Exclusions and context limits
@@ -53,13 +55,13 @@ A reference for configuring AI coding tools—Claude Code, Cursor, GitHub Copilo
 ## Claude Code
 
 ### Project Instructions
- 
+
 Create `AGENTS.md` in project root (standard format). For Claude Code compatibility, symlink `CLAUDE.md` to it:
- 
+
 ```bash
 ln -s AGENTS.md CLAUDE.md
 ```
- 
+
 ```markdown
 # AGENTS.md
 
@@ -89,17 +91,21 @@ npm run build        # Production build
 ## Boundaries
 
 ### Always
+
 - Run lint before committing
 - Write tests for new functionality
 
 ### Ask First
+
 - Database schema changes
 - Adding new dependencies
 
 ### Never
+
 - Access .env files
 - Commit secrets
 - Force push to main
+
 ```
 
 ### Settings Configuration

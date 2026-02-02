@@ -681,8 +681,6 @@ function handleBoundExceeded(boundType, context) {
 
 ### Stopping Condition Checklist
 
-### Stopping Condition Checklist
-
 | Condition | Rationale |
 | --- | --- |
 | **Max Retry** | Prevent infinite loops in transient failure logic. |

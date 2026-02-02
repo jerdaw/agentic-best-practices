@@ -7,7 +7,7 @@ A collection of opinionated, actionable guides for software development. Each gu
 | Topic | Guidance |
 | --- | --- |
 | **For Agents** | Adopt patterns immediately; no need to ask permission for standard practices. |
-| **For Humans** | Use as a reference; challenge guidelines if they impede valid edge cases. |
+| **For Humans** | Use as a reference; challenge guidelines if they impede valid edge cases. See [references](docs/references.md) for external sources. |
 | **Contributing** | Follow [Writing Best Practices](guides/writing-best-practices/writing-best-practices.md) strictly. |
 | **Philosophy** | Examples > Prose. Tables > Paragraphs. Actionable > Theoretical. |
 

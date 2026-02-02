@@ -36,6 +36,7 @@ Best practices for AI agents on securing the software supply chain—dependencie
 | 4 | Hermetic, reproducible, two-party review | Very High |
 
 **Key practices**:
+
 - Pin dependencies to exact versions
 - Pin CI actions to commit SHAs
 - Verify provenance before trusting artifacts
@@ -103,20 +104,24 @@ cosign verify <artifact>
 ### SLSA Levels Explained
 
 **Level 1**: Documentation
+
 - Build process is documented
 - Automated build exists
 
 **Level 2**: Provenance
+
 - Signed provenance generated
 - Build runs on hosted service
 - Provenance includes source and build info
 
 **Level 3**: Security
+
 - Hardened build platform
 - Non-falsifiable provenance
 - Isolated build environment
 
 **Level 4**: Highest Assurance
+
 - Hermetic builds (no network, pinned tools)
 - Reproducible builds
 - Two-party review for source changes
@@ -284,6 +289,7 @@ jobs:
 ### What is SBOM?
 
 An SBOM is an inventory of all components in your software:
+
 - Direct dependencies
 - Transitive dependencies
 - Versions

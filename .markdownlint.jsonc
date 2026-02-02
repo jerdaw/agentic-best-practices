@@ -1,0 +1,91 @@
+// Markdownlint configuration for agentic-best-practices
+// Aligned with guides/writing-best-practices/writing-best-practices.md
+{
+  // Default state for all rules
+  "default": true,
+
+  // MD003: Heading style - enforce ATX style (# headings)
+  "MD003": {
+    "style": "atx"
+  },
+
+  // MD013: Line length - very permissive
+  // Writing guide prioritizes "dense formatting" and "front-load key information"
+  // over arbitrary line length limits. Scope/intro lines are intentionally descriptive.
+  "MD013": {
+    "line_length": 400, // Very permissive - clarity over length limits
+    "heading_line_length": 150,
+    "code_block_line_length": 150,
+    "code_blocks": false,
+    "tables": false, // Tables can be wide - prioritized in writing guide
+    "headings": true,
+    "strict": false,
+    "stern": false
+  },
+
+  // MD024: Multiple headings with same content
+  // Allow siblings_only since we have "Summary", "Contents" in multiple files
+  "MD024": {
+    "siblings_only": true
+  },
+
+  // MD025: Single title/h1 - keep enabled
+  "MD025": true,
+
+  // MD026: No trailing punctuation in headings - keep enabled
+  "MD026": {
+    "punctuation": ".,;:!"
+  },
+
+  // MD033: Allow inline HTML for special formatting when needed
+  "MD033": {
+    "allowed_elements": [
+      "br",
+      "details",
+      "summary",
+      "kbd",
+      "sub",
+      "sup"
+    ]
+  },
+
+  // MD034: No bare URLs - keep enabled to encourage proper markdown links
+  "MD034": true,
+
+  // MD036: Emphasis used instead of heading
+  // Disabled - writing guide intentionally uses "**Pattern:**" emphasis
+  // for visual hierarchy in examples (not as headings)
+  "MD036": false,
+
+  // MD040: Fenced code blocks should have a language
+  // Disabled - many code blocks are used for illustrations, examples,
+  // and generic output where language spec doesn't add value
+  // Writing guide prioritizes clarity over strict formatting
+  "MD040": false,
+
+  // MD041: First line in file should be h1 - keep enabled
+  "MD041": true,
+
+  // MD046: Code block style - enforce fenced
+  "MD046": {
+    "style": "fenced"
+  },
+
+  // MD049: Emphasis style - enforce consistent
+  "MD049": {
+    "style": "asterisk"
+  },
+
+  // MD050: Strong style - enforce consistent
+  "MD050": {
+    "style": "asterisk"
+  },
+
+  // MD051: Link fragments should be valid
+  // Disabled - produces false positives for valid anchor links
+  // The validation script handles link checking more reliably
+  "MD051": false,
+
+  // MD053: Link and image reference definitions should be needed - keep enabled
+  "MD053": true
+}

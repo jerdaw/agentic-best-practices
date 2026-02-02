@@ -37,6 +37,7 @@ Guidelines for writing best practices documentation—a meta-guide ensuring this
 | **Never** | Let documentation drift from practice | Maintains trust and accuracy |
 
 **Priority order**:
+
 | Rank | Metric | Outcome |
 | --- | --- | --- |
 | 1 | Actionability | Reader can use this immediately |
@@ -90,11 +91,13 @@ Guidelines for writing best practices documentation—a meta-guide ensuring this
 | Imperative commands | Guidance with rationale | Open suggestions |
 
 **Use prescriptive language for**:
+
 - Security-critical requirements
 - Breaking conventions that cause real harm
 - Non-negotiable standards
 
 **Use permissive language for**:
+
 - Style preferences
 - Approaches that depend on context
 - Emerging patterns not yet proven
@@ -162,12 +165,14 @@ Tables are the primary communication tool. Design them well:
 | Alignment | Left-align text, right-align numbers | Improves readability |
 
 **Good table**:
+
 | When | Do | Why |
 |------|-----|-----|
 | Bug fix | Include issue reference | Traceability |
 | Security patch | Link CVE | Auditability |
 
 **Avoid**:
+
 | Situations where you might want to consider referencing issues | Recommended practices for those situations | Detailed rationale explaining the reasoning |
 |---|---|---|
 | When fixing bugs that have been reported... | You should include a reference... | Because this helps with traceability... |
@@ -259,6 +264,7 @@ early return statements rather than deeply nested if-else structures...
 ### Example Patterns
 
 **Good pattern: Paired comparison with brief annotation**
+
 ```
 // Good: Descriptive, reveals intent
 const remainingAttempts = 3
@@ -268,6 +274,7 @@ const r = 3
 ```
 
 **Good pattern: Table of options**
+
 | Approach | When to Use | Example |
 |----------|-------------|---------|
 | Early return | Guard clauses | `if (!user) return null` |

@@ -23,6 +23,7 @@ A reference for crafting effective prompts that get better results from AI codin
 ## Quick Reference
 
 **Five elements of effective prompts**:
+
 1. **Task** – What you want done (verb + object)
 2. **Context** – Relevant code, constraints, environment
 3. **Format** – How you want the output structured
@@ -30,6 +31,7 @@ A reference for crafting effective prompts that get better results from AI codin
 5. **Examples** – Concrete samples of desired output
 
 **Most common mistakes**:
+
 - Vague requests ("make it better")
 - Missing context (no code, no error messages)
 - Overloaded prompts (multiple unrelated tasks)
@@ -62,12 +64,14 @@ Large tasks fail more often. Break them into steps the AI can complete reliably.
 ### Decomposition Pattern
 
 **Bad** (monolithic):
+
 ```
 Implement user authentication with login, registration, password reset,
 email verification, OAuth support, and session management.
 ```
 
 **Good** (decomposed):
+
 ```
 Step 1: Create a login function that accepts email/password and returns
 a session token. Use bcrypt for password comparison. Return appropriate
@@ -75,6 +79,7 @@ error messages for invalid credentials.
 ```
 
 Then after validation:
+
 ```
 Step 2: Create a registration function. Use the same password hashing
 as the login function we just created. Validate email format before saving.
@@ -110,6 +115,7 @@ AI can only use what you provide. Missing context leads to hallucinated solution
 Order matters. Put the most important context first.
 
 **Effective order**:
+
 1. The specific code you want changed
 2. Error messages or unexpected behavior
 3. Type definitions and interfaces
@@ -117,6 +123,7 @@ Order matters. Put the most important context first.
 5. Project conventions or patterns to follow
 
 **Bad** (buries the task):
+
 ```
 Our project uses TypeScript 5.0 with strict mode. We have a custom
 logging system in src/logger.ts. The database is PostgreSQL 15.
@@ -128,6 +135,7 @@ Can you fix the bug in the login function?
 ```
 
 **Good** (task first, context after):
+
 ```
 Fix the null reference error in login():
 
@@ -140,6 +148,7 @@ async function login(email: string, password: string) {
 
 The function should return null if user not found, or throw
 AuthError("Invalid credentials") if password doesn't match.
+
 ```
 
 ---
@@ -162,25 +171,31 @@ Unconstrained AI makes assumptions. Make boundaries explicit.
 ### Constraint Template
 
 ```
+
 [Task description]
 
 Constraints:
+
 - Only modify: [specific files or functions]
 - Must preserve: [existing behavior, API, tests]
 - Don't use: [forbidden dependencies, patterns]
 - Must support: [versions, environments, edge cases]
+
 ```
 
 **Example**:
 ```
+
 Refactor the validation logic in src/forms/user-form.ts to reduce duplication.
 
 Constraints:
+
 - Only modify user-form.ts (don't create new files)
 - All existing tests in user-form.test.ts must pass
 - Don't change the public validate() function signature
 - Don't add new dependencies
 - Keep the same error message format
+
 ```
 
 ---
@@ -192,7 +207,9 @@ First attempts rarely perfect. Plan for iteration.
 ### Refinement Workflow
 
 ```
+
 Initial prompt → Review output → Identify issues → Targeted follow-up
+
 ```
 
 ### Follow-up Patterns
@@ -209,21 +226,28 @@ Initial prompt → Review output → Identify issues → Targeted follow-up
 
 **Missing edge case**:
 ```
+
 Good start, but also handle:
+
 - Empty array input (should return empty array)
 - Array with single item (shouldn't call compare function)
+
 ```
 
 **Wrong approach**:
 ```
+
 This uses polling, but we need WebSockets for real-time updates.
 Rewrite using the ws library to match our existing chat implementation.
+
 ```
 
 **Over-engineered**:
 ```
+
 This is more complex than needed. Remove the factory pattern
 and caching layer. Just return the parsed config directly.
+
 ```
 
 ---
@@ -234,11 +258,13 @@ and caching layer. Just return the parsed config directly.
 
 **Template**:
 ```
+
 Bug: [One-line description]
 
 Error: [Exact error message or unexpected behavior]
 
 Code:
+
 ```[language]
 [The buggy code with context]
 ```
@@ -247,15 +273,18 @@ Expected: [What should happen]
 Actual: [What currently happens]
 
 [Optional: Your hypothesis about the cause]
+
 ```
 
 **Example**:
 ```
+
 Bug: User registration fails silently when email already exists
 
 Error: No error thrown, but user not created and no feedback shown
 
 Code:
+
 ```typescript
 async function register(email: string, password: string) {
   const existing = await db.user.findUnique({ where: { email } })
@@ -266,82 +295,100 @@ async function register(email: string, password: string) {
 
 Expected: Throw an error or return a result indicating email taken
 Actual: Returns undefined, caller has no way to know what happened
+
 ```
 
 ### Feature Implementation
 
 **Template**:
 ```
+
 Add [feature] to [component/module].
 
 Behavior:
+
 - When [trigger], it should [action]
 - [Additional behaviors]
 
 Constraints:
+
 - [Scope limits]
 - [What must not change]
 
 Match the pattern in [existing similar code] for consistency.
+
 ```
 
 **Example**:
 ```
+
 Add retry logic to the API client's fetch() method.
 
 Behavior:
+
 - On 5xx errors, retry up to 3 times with exponential backoff
 - On 4xx errors, don't retry (fail immediately)
 - Log each retry attempt at debug level
 
 Constraints:
+
 - Only modify src/api/client.ts
 - Don't change the fetch() function signature
 - Use the existing logger from src/utils/logger.ts
 
 Match the retry pattern in src/services/email.ts for consistency.
+
 ```
 
 ### Refactoring
 
 **Template**:
 ```
+
 Refactor [target] to [goal].
 
 Current problem: [What's wrong with current code]
 
 Desired outcome:
+
 - [Specific improvement 1]
 - [Specific improvement 2]
 
 Constraints:
+
 - All tests in [test file] must pass
 - Don't change public API
 - [Other preservation requirements]
+
 ```
 
 **Example**:
 ```
+
 Refactor the UserService class to use dependency injection.
 
 Current problem: UserService instantiates its own dependencies,
 making it hard to test and tightly coupled to implementations.
 
 Desired outcome:
+
 - Constructor accepts repository and logger as parameters
 - No direct instantiation of dependencies inside the class
 - Default parameter values for production use
 
 Constraints:
+
 - All tests in user-service.test.ts must pass
 - Don't change the method signatures (only constructor)
 - Update the DI container registration in src/container.ts
+
 ```
 
 ### Code Explanation
 
 **Template**:
 ```
+
 Explain [what you want explained]:
 
 ```[language]
@@ -350,10 +397,12 @@ Explain [what you want explained]:
 
 Focus on: [Specific aspects you want clarified]
 Skip: [What you already understand]
+
 ```
 
 **Example**:
 ```
+
 Explain the control flow in this Redux middleware:
 
 ```typescript
@@ -365,12 +414,14 @@ const apiMiddleware = store => next => action => {
 
 Focus on: Why there are three arrow functions nested like this
 Skip: Basic Redux concepts (I know what middleware does)
+
 ```
 
 ### Code Review Requests
 
 **Template**:
 ```
+
 Review this code for [focus areas]:
 
 ```[language]
@@ -379,10 +430,12 @@ Review this code for [focus areas]:
 
 Look for: [Specific concerns]
 Context: [Relevant background]
+
 ```
 
 **Example**:
 ```
+
 Review this authentication middleware for security issues:
 
 ```typescript
@@ -396,6 +449,7 @@ const authMiddleware = (req, res, next) => {
 
 Look for: Security vulnerabilities, missing validation, edge cases
 Context: This runs on every authenticated route in our Express app
+
 ```
 
 ---
@@ -417,40 +471,53 @@ Context: This runs on every authenticated route in our Express app
 
 **Vague** (bad):
 ```
+
 Make the search faster.
+
 ```
 
 **Specific** (good):
 ```
+
 The search function in src/search.ts takes 3+ seconds for queries
 with >1000 results. Add pagination to return 50 results at a time
 with a cursor for fetching more.
+
 ```
 
 **Overloaded** (bad):
 ```
+
 Fix the login bug, add password reset, update the tests, and refactor
 the user service to be cleaner.
+
 ```
 
 **Focused** (good):
 ```
+
 Fix the login bug where users with '+' in their email can't log in.
 The email is being URL-decoded somewhere, converting '+' to space.
+
 ```
 
 **Implicit constraints** (bad):
 ```
+
 Add a cache to the API.
+
 ```
 
 **Explicit constraints** (good):
 ```
+
 Add in-memory caching to the getUser API endpoint.
+
 - Cache for 5 minutes
 - Use the existing cache utility in src/utils/cache.ts
 - Don't add Redis or other external dependencies
 - Invalidate on user update
+
 ```
 
 ---

@@ -27,18 +27,21 @@ A reference for coordinating large refactoring efforts with AI assistance—plan
 ## Quick Reference
 
 **Before starting**:
+
 - Map all files that will change
 - Identify the order of changes
 - Define verification points
 - Plan rollback strategy
 
 **During refactoring**:
+
 - Change in small batches
 - Verify after each batch
 - Keep the codebase working
 - Commit at verification points
 
 **Risk factors**:
+
 - More files = higher risk
 - Breaking changes = coordinate carefully
 - No tests = danger zone
@@ -353,6 +356,7 @@ git commit -m "refactor: update repositories to use new types"
 ### Effective AI Prompts for Refactoring
 
 **Single file**:
+
 ```
 Refactor this file to use dependency injection:
 
@@ -363,6 +367,7 @@ Follow this pattern from UserRepository:
 ```
 
 **Batch of similar files**:
+
 ```
 Apply the same refactoring pattern to these files:
 
@@ -375,6 +380,7 @@ Apply to:
 ```
 
 **Verification request**:
+
 ```
 Check if this refactored code maintains the same behavior:
 
@@ -437,6 +443,7 @@ try {
 ```
 
 After:
+
 ```typescript
 const user = await userService.getUser(id)
 if (!user) {
@@ -445,20 +452,24 @@ if (!user) {
 ```
 
 ### Affected Files
+
 - src/api/users.ts
 - src/services/order-service.ts
 - src/tests/*.ts
+
 ```
 
 ### Breaking Change Workflow
 
 ```
+
 1. Document the breaking change
 2. Create migration guide
 3. Notify affected teams/consumers
 4. Make the change
 5. Update all internal consumers
 6. Release with clear changelog
+
 ```
 
 ---
@@ -468,40 +479,48 @@ if (!user) {
 ### Extract Interface
 
 ```
+
 1. Define interface for existing class
 2. Have class implement interface
 3. Update consumers to use interface type
 4. Now can add alternative implementations
+
 ```
 
 ### Rename/Move
 
 ```
+
 1. Create new name/location
 2. Export from old location (re-export)
 3. Update consumers to use new location
 4. Remove re-export from old location
 5. Delete old file if moved
+
 ```
 
 ### Split Module
 
 ```
+
 1. Create new modules
 2. Move pieces to new modules
 3. Re-export from original for backward compatibility
 4. Update consumers to import from new locations
 5. Remove re-exports from original
+
 ```
 
 ### Extract Service
 
 ```
+
 1. Create new service class
 2. Move methods from original
 3. Update original to delegate to new service
 4. Update consumers to use new service directly (optional)
 5. Clean up delegation if consumers updated
+
 ```
 
 ---

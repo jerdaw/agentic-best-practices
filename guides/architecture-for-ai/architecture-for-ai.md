@@ -84,7 +84,7 @@ Best practices for writing `ARCHITECTURE.md` files and system documentation that
 
 ### Full Template
 
-```markdown
+````markdown
 # Architecture: [System Name]
 
 ## Overview
@@ -120,6 +120,7 @@ graph LR
 ## Data Flow
 
 ### Request Lifecycle
+
 ```mermaid
 sequenceDiagram
     Client->>+API: HTTP Request
@@ -150,9 +151,11 @@ sequenceDiagram
 | Cache | Redis | 7+ | Sessions, rate limits |
 
 ## See Also
+
 - [ADR-001: Why we chose PostgreSQL](docs/adr/001-database-choice.md)
 - [API Documentation](docs/api/README.md)
-```
+
+````
 
 ---
 
