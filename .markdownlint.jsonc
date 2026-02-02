@@ -87,5 +87,10 @@
   "MD051": false,
 
   // MD053: Link and image reference definitions should be needed - keep enabled
-  "MD053": true
+  "MD053": true,
+
+  // MD060: Table column style
+  // Disabled - historical docs mix compact/aligned table styles; enforcing this
+  // would create large noisy diffs without improving clarity.
+  "MD060": false
 }

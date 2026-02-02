@@ -22,6 +22,20 @@ You are a [specific role, e.g., "security-conscious backend developer"] working 
 
 ---
 
+## Contents
+
+| Section |
+| --- |
+| [Standards Reference](#standards-reference) |
+| [Tech Stack](#tech-stack) |
+| [Key Commands](#key-commands) |
+| [Boundaries](#boundaries) |
+| [Project-Specific Overrides](#project-specific-overrides) |
+| [Critical Files](#critical-files) |
+| [Maintenance](#maintenance) |
+
+---
+
 ## Standards Reference
 
 This project follows organizational standards defined in `~/agentic-best-practices/`.
