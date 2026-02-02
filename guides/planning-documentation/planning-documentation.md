@@ -1,13 +1,15 @@
 # Planning Documentation
 
-Best practices for creating, maintaining, and archiving planning artifacts—roadmaps, implementation plans, RFCs, and proposals.
+Best practices for creating, maintaining, and archiving planning artifacts—roadmaps, implementation plans, RFCs, and
+proposals.
 
-> **Scope**: These guidelines apply to project planning documentation. For recording architectural decisions after they're made, see [ADRs in Documentation Guidelines](../documentation-guidelines/documentation-guidelines.md#architectural-decision-records-adrs).
+> **Scope**: These guidelines apply to project planning documentation. For recording architectural decisions after
+> they're made, see [ADRs in Documentation Guidelines](../documentation-guidelines/documentation-guidelines.md#architectural-decision-records-adrs).
 
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [Roadmaps](#roadmaps) |
@@ -22,21 +24,21 @@ Best practices for creating, maintaining, and archiving planning artifacts—roa
 ## Quick Reference
 
 | Document Type | When to Create | Lifecycle | Location |
-| --- | --- | --- | --- |
-| **Roadmap** | Project/quarter start | Updated quarterly, items archived | `docs/roadmap.md` or `ROADMAP.md` |
-| **Implementation Plan** | Before significant feature work | Archived on completion | `docs/planning/` → `docs/planning/archive/` |
-| **RFC/Proposal** | When seeking input on approach | Archived after decision | `docs/rfcs/` |
-| **Spike/Investigation** | Before unfamiliar work | Deleted or converted to plan | `docs/planning/` |
+| :--- | :--- | :--- | :--- |
+| **Roadmap** | Project/quarter start | Updated quarterly, items archived | `docs/roadmap.md` |
+| **Implementation Plan** | Before feature work | Archived on completion | `docs/planning/` |
+| **RFC/Proposal** | When seeking input | Archived after decision | `docs/rfcs/` |
+| **Spike** | Before unfamiliar work | Deleted or converted | `docs/planning/` |
 
 | Always | Rationale |
-| --- | --- |
+| :--- | :--- |
 | **Version control planning docs** | Changes are tracked and reviewable |
 | **Link plans to roadmap items** | Traceability from goal to execution |
 | **Archive, don't delete** | Preserves context for future reference |
 | **Date-stamp archived files** | Enables chronological lookup |
 
 | Never | Rationale |
-| --- | --- |
+| :--- | :--- |
 | **Keep stale plans active** | Causes confusion about current direction |
 | **Document aspirations as facts** | Misleads about current state |
 | **Duplicate between docs** | Creates drift between sources |
@@ -46,15 +48,17 @@ Best practices for creating, maintaining, and archiving planning artifacts—roa
 ## Core Principles
 
 | Principle | Guideline | Rationale |
-| --- | --- | --- |
-| **Living until complete** | Update plans as work progresses | Reflects reality, not original assumptions |
-| **Archive after extraction** | Move key info to official docs before archiving | Archives are disposable; docs are permanent |
-| **Single source of truth** | One roadmap, one active plan per feature | Prevents conflicting information |
-| **Outcome over intent** | Record what was built, not just what was planned | Closing the loop enables learning |
-| **Minimal viable planning** | Plan enough to start; refine as you learn | Avoids wasted effort on wrong paths |
+| :--- | :--- | :--- |
+| **Living until complete** | Update plans as work progresses | Reflects reality |
+| **Archive after extraction** | Move key info to docs before archiving | Docs are permanent |
+| **Single source of truth** | One roadmap, one active plan per feature | Prevents conflicting info |
+| **Outcome over intent** | Record what was built, not just planned | Enables learning |
+| **Minimal viable planning** | Plan enough to start; refine as you learn | Avoids wasted effort |
 
 > [!IMPORTANT]
-> **Archives are historical relics, not documentation.** Archived plans will quickly become outdated and should never be relied upon as authoritative. Before archiving, extract any valuable information into official documentation. The entire archive directory should be deletable at any time without losing critical project knowledge.
+> **Archives are historical relics, not documentation.** Archived plans will quickly become outdated and should never
+> be relied upon as authoritative. Before archiving, extract any valuable information into official documentation.
+> The entire archive directory should be deletable at any time without losing critical project knowledge.
 
 ---
 
@@ -83,11 +87,11 @@ Best practices for creating, maintaining, and archiving planning artifacts—roa
 ### Roadmap Best Practices
 
 | Practice | Implementation | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Keep it scannable** | Table format, not prose | Quick status checks |
 | **Link to details** | Implementation plans, issues | Roadmap stays light |
-| **Show status clearly** | Not Started / In Progress / Complete | Current state visible at glance |
-| **Archive completed items** | Move to "Completed" section | Reduces active noise |
+| **Show status clearly** | Not Started / In Progress / Complete | Visible at glance |
+| **Archive completed** | Move to "Completed" section | Reduces active noise |
 | **Review quarterly** | Prune, reprioritize, update | Stays relevant |
 
 ---
@@ -99,28 +103,28 @@ Planning documents move through defined stages, with clear locations and respons
 ### Stage-by-Stage Flow
 
 | Stage | Location | Naming | Actions |
-| --- | --- | --- | --- |
-| **1. Draft** | `docs/planning/` | `PLAN-NNN-feature-name.md` | Write, iterate, seek feedback |
-| **2. Under Review** | `docs/planning/` | Same | Gather stakeholder input |
+| :--- | :--- | :--- | :--- |
+| **1. Draft** | `docs/planning/` | `PLAN-NNN-feature.md` | Write, iterate, seek feedback |
+| **2. Review** | `docs/planning/` | Same | Gather stakeholder input |
 | **3. Approved** | `docs/planning/` | Same | Link from roadmap |
 | **4. In Progress** | `docs/planning/` | Same | Update as work progresses |
-| **5. Complete** | — | — | Extract to official docs, then archive |
-| **6. Archived** | `docs/planning/archive/` | `YYYY-MM-DD-PLAN-NNN-feature-name.md` | Reference only (not authoritative) |
+| **5. Complete** | — | — | Extract to docs, then archive |
+| **6. Archived** | `docs/planning/archive/` | `YYYY-MM-DD-PLAN-NNN.md` | Reference only |
 
 ### Version Numbering
 
 | Element | Format | Example | Rationale |
-| --- | --- | --- | --- |
-| **Plan number** | `PLAN-NNN` | `PLAN-017` | Sequential ID for cross-referencing |
-| **Project version** | `vX.Y` | `v2.3` | Ties plan to release cycle |
-| **Combined** | `PLAN-NNN-vX.Y` | `PLAN-017-v2.3` | Associates plan with target release |
+| :--- | :--- | :--- | :--- |
+| **Plan number** | `PLAN-NNN` | `PLAN-017` | Sequential ID |
+| **Project version** | `vX.Y` | `v2.3` | Ties plan to release |
+| **Combined** | `PLAN-NNN-vX.Y` | `PLAN-017-v2.3` | Associates plan with release |
 
 ### Filename Convention
 
 | Stage | Format | Example |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Active** | `PLAN-NNN-short-name.md` | `PLAN-017-user-auth.md` |
-| **Archived** | `YYYY-MM-DD-PLAN-NNN-short-name.md` | `2024-01-15-PLAN-017-user-auth.md` |
+| **Archived** | `YYYY-MM-DD-PLAN-NNN-name.md` | `2024-01-15-PLAN-017-auth.md` |
 
 ---
 
@@ -129,10 +133,10 @@ Planning documents move through defined stages, with clear locations and respons
 ### When to Write a Plan
 
 | Scope | Plan? | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Multi-day feature** | Yes | Coordinates work, enables review |
 | **Cross-team changes** | Yes | Aligns stakeholders |
-| **Significant refactor** | Yes | Documents approach before disruption |
+| **Significant refactor** | Yes | Documents approach |
 | **Bug fix** | No | Just fix it |
 | **Small enhancement** | No | Issue description suffices |
 
@@ -167,46 +171,46 @@ Planning documents move through defined stages, with clear locations and respons
 
 ### Plan Lifecycle
 
-| Phase | Document State | Actions |
-| --- | --- | --- |
-| **Draft** | Created, seeking review | Share for feedback, iterate |
+| Phase | State | Actions |
+| :--- | :--- | :--- |
+| **Draft** | Seeking review | Share for feedback, iterate |
 | **Approved** | Ready for execution | Link from roadmap |
-| **In Progress** | Being implemented | Update checkboxes, note changes |
-| **Completed** | Work finished | Add outcome summary, archive |
-| **Abandoned** | Work stopped | Note why, archive or delete |
+| **In Progress** | Implementing | Update checkboxes |
+| **Completed** | Finished | Add outcome, archive |
+| **Abandoned** | Stopped | Note why, archive |
 
 ### Archiving Completed Plans
 
 > [!CAUTION]
-> **Archives are not documentation.** They are historical artifacts that will become stale. Before archiving, you MUST extract any valuable information to official docs.
+> **Archives are not documentation.** They are historical artifacts that will become stale. Before archiving, you MUST
+> extract any valuable information to official docs.
 
 | Step | Action | Rationale |
-| --- | --- | --- |
-| **1. Extract to official docs** | Move ADRs, architectural insights, and lessons learned to permanent documentation | Official docs survive; archives don't |
-| **2. Add outcome summary** | Note at top: what was actually built vs. planned | Captures delta for historical reference |
-| **3. Date-stamp filename** | `2024-01-15-PLAN-NNN-feature.md` | Chronological sorting |
-| **4. Move to archive** | `docs/planning/archive/` | Separates active from historical |
-| **5. Update roadmap** | Link to archived location | Preserves traceability |
+| :--- | :--- | :--- |
+| **1. Extract** | Move ADRs, insights to permanent docs | Official docs survive |
+| **2. Outcome** | Note at top: built vs. planned | Historial reference |
+| **3. Date-stamp** | `2024-01-15-PLAN-NNN-feature.md` | Chronological sorting |
+| **4. Archive** | Move to `docs/planning/archive/` | Separate active from historical |
+| **5. Roadmap** | Link to archived location | Preserves traceability |
 
 ### What to Extract Before Archiving
 
 | Extract This | Destination | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Architectural decisions** | ADRs (`docs/adr/`) | Decisions are permanent record |
 | **API contracts** | API documentation | Interfaces must be documented |
-| **Configuration changes** | README or config docs | Users need current setup info |
+| **Config changes** | README or config docs | Users need current setup info |
 | **Lessons learned** | Runbooks or guidelines | Team knowledge preserved |
-| **Nothing unique** | Just archive | Plan was purely coordination |
 
 ### Archive Deletion Policy
 
 The archive directory exists for historical curiosity, not as a source of truth.
 
 | Policy | Rationale |
-| --- | --- |
-| **Archives may be deleted at any time** | Forces extraction of valuable info upfront |
-| **No critical info should live only in archive** | Single source of truth in official docs |
-| **Retention is optional (6-12 months typical)** | Reduces clutter while allowing recent reference |
+| :--- | :--- |
+| **Archives may be deleted** | Forces extraction of valuable info |
+| **No critical info in archive** | Single source of truth in docs |
+| **Retention is optional** | Reduces clutter |
 | **Bulk deletion is safe** | If extraction was done properly |
 
 ---
@@ -216,12 +220,11 @@ The archive directory exists for historical curiosity, not as a source of truth.
 ### When to Write an RFC
 
 | Situation | RFC? | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Significant architectural change** | Yes | Needs broad input |
 | **Breaking API changes** | Yes | Affects consumers |
 | **New technology adoption** | Yes | Team should weigh in |
 | **Process changes** | Maybe | Depends on impact |
-| **Implementation details** | No | Put in implementation plan |
 
 ### RFC Template
 
@@ -245,52 +248,37 @@ The archive directory exists for historical curiosity, not as a source of truth.
 | --- | --- | --- |
 | [Option A] | [Benefits] | [Drawbacks] |
 | [Option B] | [Benefits] | [Drawbacks] |
-
-## Open Questions
-- [ ] [Question 1]
-- [ ] [Question 2]
 ```
-
-### RFC Lifecycle
-
-| Status | Meaning | Duration |
-| --- | --- | --- |
-| **Draft** | Author still developing | Until ready for review |
-| **Under Review** | Seeking feedback | 1-2 weeks typical |
-| **Accepted** | Approved for implementation | Final state |
-| **Rejected** | Not moving forward | Final state |
-| **Superseded** | Replaced by newer RFC | Links to replacement |
 
 ---
 
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
-| --- | --- | --- |
-| **Phantom roadmap** | Exists but never updated | Review quarterly or delete |
-| **Plan everything** | Over-planning slows execution | Plan only significant work |
-| **Never archive** | Old plans clutter active docs | Archive on completion |
-| **Delete history** | Lose context for future decisions | Archive instead |
-| **Aspirational roadmaps** | Lists wishes, not commitments | Only include planned work |
-| **RFC without deadline** | Review drags indefinitely | Set review period |
-| **Plans without outcomes** | Never close the loop | Add completion summary |
+| :--- | :--- | :--- |
+| **Phantom roadmap** | Never updated | Review quarterly or delete |
+| **Plan everything** | Slows execution | Plan only significant work |
+| **Never archive** | Clutters active docs | Archive on completion |
+| **Delete history** | Lose context | Archive instead |
+| **Aspiration** | Lists wishes | Only include planned work |
+| **No deadline** | Drags indefinitely | Set review period |
 
 ---
 
 ## Directory Structure
 
-```
+```text
 docs/
 ├── roadmap.md              # Current roadmap
 ├── planning/
-│   ├── current-feature.md  # Active implementation plans
+│   ├── active-plan.md      # Active implementation plans
 │   └── archive/
-│       ├── 2024-01-15-auth.md
-│       └── 2024-02-01-api-v2.md
+│       ├── 2024-01-15.md
+│       └── 2024-02-01.md
 └── rfcs/
-    ├── 001-new-auth.md     # Active RFCs
+    ├── 001-active.md       # Active RFCs
     └── archive/
-        └── 000-rejected-idea.md
+        └── 000-rejected.md
 ```
 
 ---
