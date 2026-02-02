@@ -1,13 +1,15 @@
 # Supply Chain Security
 
-Best practices for AI agents on securing the software supply chain—dependencies, build provenance, artifact integrity, and CI/CD security.
+Best practices for AI agents on securing the software supply chain—dependencies, build provenance, artifact integrity,
+and CI/CD security.
 
-> **Scope**: These guidelines help AI agents make secure choices about dependencies, builds, and CI/CD pipelines. Supply chain attacks are high-impact; prevention requires discipline at every step.
+> **Scope**: These guidelines help AI agents make secure choices about dependencies, builds, and CI/CD pipelines.
+> Supply chain attacks are high-impact; prevention requires discipline at every step.
 
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [Dependency Provenance](#dependency-provenance) |
@@ -28,7 +30,7 @@ Best practices for AI agents on securing the software supply chain—dependencie
 **SLSA Framework** (Supply-chain Levels for Software Artifacts):
 
 | Level | Requirements | Trust |
-|-------|--------------|-------|
+| :--- | :--- | :--- |
 | 0 | No guarantees | None |
 | 1 | Build process documented | Low |
 | 2 | Signed provenance, hosted build | Medium |
@@ -62,7 +64,7 @@ Best practices for AI agents on securing the software supply chain—dependencie
 Provenance answers: Who built this? From what source? Using what process?
 
 | Question | Why It Matters |
-|----------|----------------|
+| :--- | :--- |
 | Who published? | Trust the publisher |
 | What source? | Verify it matches expectations |
 | How built? | Ensure no tampering in build |
@@ -91,7 +93,7 @@ cosign verify <artifact>
 ### Provenance Red Flags
 
 | Flag | Risk | Action |
-|------|------|--------|
+| :--- | :--- | :--- |
 | No source repository | Can't audit code | Find alternative |
 | Source doesn't match package | Possible tampering | Investigate or avoid |
 | No build pipeline | Local builds are risky | Prefer CI-built packages |
@@ -129,7 +131,7 @@ cosign verify <artifact>
 ### Implementing SLSA
 
 | Level | Implementation Steps |
-|-------|---------------------|
+| :--- | :--- |
 | 1 | Document build in README, use CI |
 | 2 | Add provenance generation to CI, sign artifacts |
 | 3 | Use hardened runners, isolated builds |
@@ -163,7 +165,7 @@ jobs:
 ### Why Pin?
 
 | Unpinned | Pinned | Risk Reduction |
-|----------|--------|----------------|
+| :--- | :--- | :--- |
 | `^1.2.3` | `1.2.3` | No surprise updates |
 | `>=1.0.0` | `1.0.0` | Reproducible builds |
 | `latest` | `2.1.0` | No version drift |
@@ -173,7 +175,7 @@ jobs:
 **Lock files** (always commit):
 
 | Tool | Lock File |
-|------|-----------|
+| :--- | :--- |
 | npm | `package-lock.json` |
 | yarn | `yarn.lock` |
 | pnpm | `pnpm-lock.yaml` |
@@ -251,7 +253,7 @@ jobs:
 
 ### CI Security Checklist
 
-```
+```markdown
 □ All actions pinned to SHA
 □ GITHUB_TOKEN has minimal permissions
 □ Secrets not exposed to PRs from forks
@@ -299,7 +301,7 @@ An SBOM is an inventory of all components in your software:
 ### SBOM Formats
 
 | Format | Use Case |
-|--------|----------|
+| :--- | :--- |
 | SPDX | ISO standard, broad tool support |
 | CycloneDX | Security-focused, vulnerability correlation |
 | SWID | Software identification tags |
@@ -347,7 +349,7 @@ jobs:
 ### Why Sign?
 
 | Without Signing | With Signing |
-|-----------------|--------------|
+| :--- | :--- |
 | Can't verify origin | Proven publisher |
 | Tampering undetected | Integrity verified |
 | No accountability | Traceable to signer |
@@ -408,7 +410,7 @@ jobs:
 ### Vulnerability Response
 
 | Severity | Response Time | Action |
-|----------|---------------|--------|
+| :--- | :--- | :--- |
 | Critical | Immediate | Patch or remove |
 | High | Within days | Plan remediation |
 | Medium | Within sprint | Schedule update |
@@ -416,7 +418,7 @@ jobs:
 
 ### Handling Vulnerabilities
 
-```
+```markdown
 1. Assess: Is this vulnerability exploitable in our context?
 2. Prioritize: Severity + exploitability + exposure
 3. Remediate: Update dependency or apply workaround
@@ -431,7 +433,7 @@ jobs:
 ### Before Adding Dependencies
 
 | Check | How |
-|-------|-----|
+| :--- | :--- |
 | Maintenance status | Last commit, open issues |
 | Security history | Past CVEs, response time |
 | Dependency count | Fewer = smaller surface |
@@ -474,13 +476,13 @@ registry=https://registry.npmjs.org/
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
-|--------------|---------|-----|
+| :--- | :--- | :--- |
 | **Unpinned dependencies** | Version drift, surprise breaks | Pin all versions |
 | **Tags in CI actions** | Tags can be moved maliciously | Pin to SHA |
 | **Overly broad token perms** | Excessive access if compromised | Minimal permissions |
 | **No SBOM** | Can't respond to vulnerabilities | Generate and publish |
 | **Unsigned artifacts** | Can't verify integrity | Sign with Sigstore |
-| **Ignored audit results** | Known vulnerabilities in production | Fix or document exceptions |
+| **Ignored audit results** | Known vulnerabilities | Fix or document |
 | **Shell injection in CI** | RCE via user input | Sanitize inputs |
 
 ---

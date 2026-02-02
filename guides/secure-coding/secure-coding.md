@@ -2,12 +2,13 @@
 
 Guidelines for writing code that defends against common vulnerabilities.
 
-> **Scope**: Applies to all code handling user input, authentication, data access, or external communication. Agents must bake security in by default, not bolt it on later.
+> **Scope**: Applies to all code handling user input, authentication, data access, or external communication. Agents must
+> bake security in by default, not bolt it on later.
 
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [Input Validation](#input-validation) |
@@ -23,7 +24,7 @@ Guidelines for writing code that defends against common vulnerabilities.
 ## Quick Reference
 
 | Category | Guidance | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Always** | Validate all external input | Untrusted data is attack vector |
 | **Always** | Use parameterized queries | Prevents SQL injection |
 | **Always** | Encode output for context | Prevents XSS |
@@ -40,7 +41,7 @@ Guidelines for writing code that defends against common vulnerabilities.
 ## Core Principles
 
 | Principle | Guideline | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Defense in depth** | Multiple layers of protection | Single failure doesn't compromise all |
 | **Least privilege** | Minimum permissions needed | Limits blast radius |
 | **Fail securely** | On error, deny access | Errors shouldn't open backdoors |
@@ -54,7 +55,7 @@ Guidelines for writing code that defends against common vulnerabilities.
 ### Validation Strategy
 
 | Technique | When to Use | Example |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Allowlist** | Known valid patterns | Email regex, enum values |
 | **Type coercion** | Expected data types | `parseInt()`, schema validation |
 | **Length limits** | Buffer overflow prevention | Max 255 chars for name |
@@ -84,7 +85,7 @@ class CreateUserRequest:
     email: str
     name: str
     age: int
-    
+
     def validate(self) -> list[str]:
         errors = []
         if not validate_email(self.email):
@@ -114,7 +115,7 @@ def create_user(data: dict):
 ### SQL Injection
 
 | Approach | Security | Example |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Parameterized queries** | ✓ Safe | `WHERE id = ?` with bound params |
 | **ORMs with bound params** | ✓ Safe | `User.find_by(id: params[:id])` |
 | **String concatenation** | ✗ Vulnerable | `"WHERE id = " + user_id` |
@@ -192,7 +193,7 @@ def render_username(username: str) -> str:
 ### Authentication Patterns
 
 | Pattern | Use Case | Implementation |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | Password hashing | User passwords | bcrypt, Argon2 (never MD5/SHA1) |
 | Token validation | API access | JWT with signature verification |
 | Session management | Web apps | Secure, HttpOnly, SameSite cookies |
@@ -223,11 +224,11 @@ def get_document(user: User, document_id: str) -> Document:
     document = Document.find(document_id)
     if document is None:
         raise NotFoundError()
-    
+
     # Check user has access
     if not user.can_access(document):
         raise ForbiddenError()  # Don't reveal existence
-    
+
     return document
 ```
 
@@ -241,7 +242,7 @@ def get_document(document_id: str, user_id: str) -> Document:
 ### Secure Cookie Settings
 
 | Attribute | Value | Purpose |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | `HttpOnly` | `true` | Prevents JavaScript access |
 | `Secure` | `true` | HTTPS only |
 | `SameSite` | `Strict` or `Lax` | CSRF protection |
@@ -254,7 +255,7 @@ def get_document(document_id: str, user_id: str) -> Document:
 ### Sensitive Data Handling
 
 | Data Type | Protection | Example |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | Passwords | Hash with bcrypt/Argon2 | Never store plaintext |
 | API keys | Encrypt at rest | Use secret manager |
 | PII | Minimize collection | Only store what's needed |
@@ -286,7 +287,7 @@ logger.info(f"Login attempt with password: {password}")  # Exposed in logs
 ### Secure Error Responses
 
 | Audience | Detail Level | Example |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | End user | Generic message | "Something went wrong" |
 | Logs | Full technical detail | Stack trace, context |
 | Monitoring | Structured error codes | `ERR_AUTH_FAILED` |
@@ -316,8 +317,8 @@ except Exception as e:
 
 ## Anti-Patterns
 
-| Anti-Pattern | Risk | Fix |
-| --- | --- | --- |
+| Anti-Pattern | Problem | Fix |
+| :--- | :--- | :--- |
 | **String concatenation in queries** | SQL injection | Parameterized queries |
 | **`eval()` on user input** | Code execution | Never use eval with untrusted data |
 | **Disabled SSL verification** | MITM attacks | Always verify certificates |
@@ -334,7 +335,7 @@ except Exception as e:
 ### Security Testing
 
 | Test Type | Purpose | Tools |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | SAST | Static code analysis | Semgrep, Bandit, CodeQL |
 | DAST | Runtime vulnerability scanning | OWASP ZAP, Burp Suite |
 | Dependency scan | Known CVEs | Dependabot, Snyk |

@@ -1,13 +1,12 @@
 # Tool Configuration for AI Coding Assistants
 
-A reference for configuring AI coding tools—Claude Code, Cursor, GitHub Copilot, and IDE integrations for effective workflows.
-
-> **Scope**: These configurations represent effective starting points. Tools evolve; verify against current documentation. Focus on patterns over specific settings.
+> **Scope**: These configurations represent effective starting points. Tools evolve; verify against current
+> documentation. Focus on patterns over specific settings.
 
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [Claude Code](#claude-code) |
@@ -74,7 +73,7 @@ You are a [specific role] working on [project type]. Priorities:
 ## Tech Stack
 
 | Layer | Technology | Version |
-|-------|------------|---------|
+| :--- | :--- | :--- |
 | Language | TypeScript | 5.x |
 | Framework | Express | 4.x |
 | Database | PostgreSQL | 15 |
@@ -106,7 +105,7 @@ npm run build        # Production build
 - Commit secrets
 - Force push to main
 
-```
+```markdown
 
 ### Settings Configuration
 
@@ -133,7 +132,7 @@ Claude Code settings are in `~/.claude/settings.json`:
 ### Useful Slash Commands
 
 | Command | Purpose |
-|---------|---------|
+| :--- | :--- |
 | `/help` | Show available commands |
 | `/clear` | Clear conversation |
 | `/compact` | Compact conversation history |
@@ -144,7 +143,7 @@ Claude Code settings are in `~/.claude/settings.json`:
 
 Create `.claudeignore` to exclude files:
 
-```
+```markdown
 # Build outputs
 dist/
 build/
@@ -188,7 +187,7 @@ Create `.cursor/settings.json`:
 
 Create `.cursorrules` for project-specific instructions:
 
-```
+```markdown
 You are working on a TypeScript Express API.
 
 Tech stack:
@@ -217,7 +216,7 @@ Never:
 ### Keybindings
 
 | Action | Default | Purpose |
-|--------|---------|---------|
+| :--- | :--- | :--- |
 | Open AI chat | Cmd/Ctrl + L | Start conversation |
 | Edit with AI | Cmd/Ctrl + K | Inline edit |
 | Accept suggestion | Tab | Accept completion |
@@ -229,7 +228,7 @@ Never:
 For multi-file operations:
 
 | Setting | Recommended |
-|---------|-------------|
+| :--- | :--- |
 | Context scope | Current folder + imports |
 | Max context files | 10-20 files |
 | Include tests | When writing features |
@@ -292,7 +291,7 @@ This is a TypeScript React application using:
 ### Keybindings
 
 | Action | Windows/Linux | Mac |
-|--------|--------------|-----|
+| :--- | :--- | :--- |
 | Accept suggestion | Tab | Tab |
 | Dismiss suggestion | Esc | Esc |
 | Next suggestion | Alt + ] | Option + ] |
@@ -348,7 +347,7 @@ In `.vscode/settings.json`:
 ### Recommended Extensions
 
 | Extension | Purpose |
-|-----------|---------|
+| :--- | :--- |
 | ESLint | Catches errors AI introduces |
 | Prettier | Consistent formatting |
 | TypeScript Hero | Import management |
@@ -395,7 +394,7 @@ Create `.vscode/settings.json` per project:
 In Settings → Tools → AI Assistant:
 
 | Setting | Recommended |
-|---------|-------------|
+| :--- | :--- |
 | Enable suggestions | On |
 | Delay before showing | 300ms |
 | Max suggestions | 3 |
@@ -448,7 +447,7 @@ In `.idea/misc.xml`, ensure exclusions:
 
 All tools should exclude:
 
-```
+```markdown
 # Environment files
 .env
 .env.*
@@ -493,7 +492,7 @@ Block dangerous operations in tool configs:
 If available, enable:
 
 | Setting | Purpose |
-|---------|---------|
+| :--- | :--- |
 | Command logging | Track what AI executes |
 | Prompt logging | Review what AI sees |
 | Output logging | Debug unexpected behavior |
@@ -505,7 +504,7 @@ If available, enable:
 ### What to Include
 
 | Include | Why |
-|---------|-----|
+| :--- | :--- |
 | Source files | Core context |
 | Type definitions | AI needs types |
 | Configuration | Project patterns |
@@ -514,7 +513,7 @@ If available, enable:
 ### What to Exclude
 
 | Exclude | Why |
-|---------|-----|
+| :--- | :--- |
 | node_modules | Too large, not helpful |
 | Build outputs | Generated code |
 | Test snapshots | Large, low signal |
@@ -526,7 +525,7 @@ If available, enable:
 Keep AI context manageable:
 
 | Content | Limit |
-|---------|-------|
+| :--- | :--- |
 | Single file | < 500 lines preferred |
 | Context files | < 20 files |
 | Total context | < 100KB text |
@@ -538,7 +537,7 @@ Keep AI context manageable:
 ### Complementary Tool Combinations
 
 | Workflow | Tools | Division |
-|----------|-------|----------|
+| :--- | :--- | :--- |
 | Writing + completion | Cursor + Copilot | Cursor for chat, Copilot for inline |
 | CLI + IDE | Claude Code + VS Code | CLI for tasks, IDE for editing |
 | Review + commit | Any AI + GitLens | AI for code, GitLens for git context |
@@ -546,7 +545,7 @@ Keep AI context manageable:
 ### Avoiding Conflicts
 
 | Issue | Solution |
-|-------|----------|
+| :--- | :--- |
 | Overlapping suggestions | Disable one inline completer |
 | Different style recommendations | Standardize rules files |
 | Conflicting keybindings | Customize one tool's bindings |
@@ -556,7 +555,7 @@ Keep AI context manageable:
 Keep consistent across tools:
 
 | Sync Item | How |
-|-----------|-----|
+| :--- | :--- |
 | Exclusions | Same patterns in all tools |
 | Project instructions | Reference same source |
 | Security rules | Consistent boundaries |
@@ -568,7 +567,7 @@ Keep consistent across tools:
 ### Essential Bindings
 
 | Action | Suggested Key |
-|--------|---------------|
+| :--- | :--- |
 | Trigger AI | Alt/Option + Space |
 | Accept suggestion | Tab |
 | Dismiss suggestion | Esc |
@@ -579,7 +578,7 @@ Keep consistent across tools:
 ### Productivity Bindings
 
 | Action | Suggested Key |
-|--------|---------------|
+| :--- | :--- |
 | Generate tests | Ctrl/Cmd + Shift + T |
 | Explain selection | Ctrl/Cmd + Shift + E |
 | Fix error at cursor | Ctrl/Cmd + . (VS Code default) |
@@ -592,7 +591,7 @@ Keep consistent across tools:
 ### Common Issues
 
 | Issue | Cause | Fix |
-|-------|-------|-----|
+| :--- | :--- | :--- |
 | Slow suggestions | Large context | Add exclusions |
 | Wrong patterns | Missing instructions | Add rules file |
 | Secrets in suggestions | Files not excluded | Add to ignore files |
@@ -613,7 +612,7 @@ Keep consistent across tools:
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
-|--------------|---------|-----|
+| :--- | :--- | :--- |
 | **No exclusions** | AI chokes on node_modules | Configure exclusions |
 | **No project instructions** | AI doesn't know context | Add AGENTS.md/rules |
 | **Default keybindings only** | Inefficient workflow | Customize for speed |

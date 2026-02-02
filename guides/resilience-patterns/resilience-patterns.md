@@ -1,13 +1,15 @@
 # Resilience Patterns
 
-Best practices for AI agents on building resilient systems—retries, circuit breakers, fallbacks, and graceful degradation.
+Best practices for AI agents on building resilient systems—retries, circuit breakers, fallbacks, and graceful
+degradation.
 
-> **Scope**: These patterns help AI agents write code that handles failures gracefully. Distributed systems fail; resilient code recovers.
+> **Scope**: These patterns help AI agents write code that handles failures gracefully. Distributed systems fail;
+> resilient code recovers.
 
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [Retry Pattern](#retry-pattern) |
@@ -29,7 +31,7 @@ Best practices for AI agents on building resilient systems—retries, circuit br
 **Core patterns**:
 
 | Pattern | Purpose | When to Use |
-|---------|---------|-------------|
+| :--- | :--- | :--- |
 | **Retry** | Recover from transient failures | Network blips, temporary errors |
 | **Circuit Breaker** | Prevent cascade failures | Failing dependencies |
 | **Timeout** | Bound waiting time | All external calls |
@@ -59,7 +61,7 @@ Best practices for AI agents on building resilient systems—retries, circuit br
 ### When to Retry
 
 | Error Type | Retry? | Rationale |
-|------------|--------|-----------|
+| :--- | :--- | :--- |
 | Network timeout | Yes | Transient |
 | Connection refused | Yes (with backoff) | Server may be restarting |
 | 5xx server error | Yes | Server may recover |
@@ -70,7 +72,7 @@ Best practices for AI agents on building resilient systems—retries, circuit br
 
 ### Retry with Exponential Backoff
 
-```
+```text
 Attempt 1: Immediate
 Attempt 2: Wait 1 second
 Attempt 3: Wait 2 seconds
@@ -148,7 +150,7 @@ function isRetryable(error: unknown): boolean {
 ### Retry Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
-|--------------|---------|-----|
+| :--- | :--- | :--- |
 | Infinite retries | Resource exhaustion | Cap at max attempts |
 | No backoff | Hammers failing service | Exponential backoff |
 | Retry non-idempotent | Duplicate operations | Only retry safe operations |
@@ -161,7 +163,7 @@ function isRetryable(error: unknown): boolean {
 
 ### How It Works
 
-```
+```text
 CLOSED (normal operation)
     ↓ failures exceed threshold
 OPEN (fail fast, no calls)
@@ -174,7 +176,7 @@ HALF-OPEN (test with one call)
 ### States
 
 | State | Behavior |
-|-------|----------|
+| :--- | :--- |
 | **Closed** | Normal operation; track failures |
 | **Open** | Reject immediately; don't call service |
 | **Half-Open** | Allow one test call; decide next state |
@@ -271,7 +273,7 @@ class CircuitBreaker {
 ### When to Use Circuit Breakers
 
 | Scenario | Use Circuit Breaker? |
-|----------|---------------------|
+| :--- | :--- |
 | External API calls | Yes |
 | Database connections | Yes |
 | Microservice calls | Yes |
@@ -287,7 +289,7 @@ class CircuitBreaker {
 Every external call needs a timeout. No exceptions.
 
 | Operation | Suggested Timeout |
-|-----------|-------------------|
+| :--- | :--- |
 | HTTP API call | 30 seconds |
 | Database query | 10 seconds |
 | Cache lookup | 1 second |
@@ -320,7 +322,7 @@ async function withTimeout<T>(
 ### Timeout Considerations
 
 | Factor | Impact |
-|--------|--------|
+| :--- | :--- |
 | Network latency | Add buffer for slow networks |
 | Operation complexity | Complex queries need more time |
 | User expectations | Balance UX vs reliability |
@@ -333,7 +335,7 @@ async function withTimeout<T>(
 ### Fallback Strategies
 
 | Strategy | When to Use |
-|----------|-------------|
+| :--- | :--- |
 | Default value | Missing data acceptable |
 | Cached data | Stale data acceptable |
 | Alternative service | Redundant provider available |
@@ -374,7 +376,7 @@ const userData = await withFallback(
 
 ### Fallback Hierarchy
 
-```
+```text
 1. Try primary source
    ↓ fail
 2. Try secondary source
@@ -393,7 +395,7 @@ const userData = await withFallback(
 Prevent one failing component from exhausting resources for others.
 
 | Resource | Isolation Method |
-|----------|-----------------|
+| :--- | :--- |
 | Thread pools | Separate pools per dependency |
 | Connection pools | Separate pools per service |
 | Rate limits | Per-endpoint limits |
@@ -445,7 +447,7 @@ class Bulkhead {
 
 ### Resilience Pipeline
 
-```
+```text
 Request
   → Timeout (outermost)
     → Circuit Breaker
@@ -497,7 +499,7 @@ async function resilientCall<T>(
 ### Liveness vs Readiness
 
 | Check | Question | Failed Response |
-|-------|----------|-----------------|
+| :--- | :--- | :--- |
 | **Liveness** | Is the process alive? | Restart the process |
 | **Readiness** | Can it handle requests? | Stop sending traffic |
 
@@ -548,7 +550,7 @@ async function checkHealth(): Promise<HealthStatus> {
 ### Degradation Strategies
 
 | Situation | Degradation |
-|-----------|-------------|
+| :--- | :--- |
 | Recommendation service down | Show popular items |
 | Search slow | Return cached results |
 | Payment provider down | Queue for later processing |
@@ -577,7 +579,7 @@ async function getRecommendations(userId: string): Promise<Product[]> {
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
-|--------------|---------|-----|
+| :--- | :--- | :--- |
 | **No timeout** | Requests hang forever | Always set timeouts |
 | **Retry storms** | Overwhelm recovering service | Exponential backoff + jitter |
 | **Cascade failures** | One failure takes down system | Circuit breakers + bulkheads |
@@ -594,7 +596,7 @@ For long-running agent operations, implement checkpointing to enable resumption.
 ### When to Checkpoint
 
 | Scenario | Checkpoint? | Rationale |
-|----------|-------------|-----------|
+| :--- | :--- | :--- |
 | Multi-step operations | Yes | Resume from last step |
 | Expensive computations | Yes | Don't repeat work |
 | External API sequences | Yes | Continue after rate limits |
@@ -676,7 +678,7 @@ async function resumeTask(taskId: string): Promise<Result> {
 ### Checkpoint Storage
 
 | Storage | Use Case | Durability |
-|---------|----------|------------|
+| :--- | :--- | :--- |
 | Memory | Development, short tasks | None (lost on restart) |
 | File system | Single-node, local tasks | Good |
 | Redis | Distributed, medium duration | Good with persistence |

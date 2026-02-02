@@ -2,7 +2,8 @@
 
 Guidelines for building reliable test suites that catch bugs without slowing development.
 
-> **Scope**: Applies to all test types—unit, integration, end-to-end. Agents must write tests that verify behavior, not implementation, and maintain appropriate coverage.
+> **Scope**: Applies to all test types—unit, integration, end-to-end. Agents must write tests that verify behavior,
+> not implementation, and maintain appropriate coverage.
 
 ## Contents
 

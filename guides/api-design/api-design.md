@@ -2,7 +2,8 @@
 
 Best practices for AI agents on designing APIs—whether HTTP APIs, library interfaces, or internal module contracts.
 
-> **Scope**: These guidelines are for AI agents performing coding tasks. Good API design enables correct usage and prevents misuse; these patterns apply to any interface you create.
+> **Scope**: These guidelines are for AI agents performing coding tasks. Good API design enables correct usage and
+> prevents misuse; these patterns apply to any interface you create.
 
 ## Contents
 
