@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname "$0")/_/husky.sh"
-
 # Run markdown linting on staged files
 npm run lint:md
 
