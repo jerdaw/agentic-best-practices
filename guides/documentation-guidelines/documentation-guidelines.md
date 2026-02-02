@@ -528,4 +528,3 @@ For roadmaps, implementation plans, RFCs, and archiving practices, see [Planning
 * [API Design](../api-design/api-design.md) – Designing APIs worth documenting
 * [PRD for Agents](../prd-for-agents/prd-for-agents.md) – Writing specifications AI can consume
 * [Architecture for AI](../architecture-for-ai/architecture-for-ai.md) – System docs that prevent hallucination
-* [Static Analysis](../static-analysis/static-analysis.md) – Linting, formatters, and pre-commit hooks

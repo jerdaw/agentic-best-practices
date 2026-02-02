@@ -2,12 +2,13 @@
 
 Guidelines for integrating linters, formatters, and security scanners into development workflows.
 
-> **Scope**: Applies to automated code quality tools run during development and CI. Agents must configure and respect static analysis rules to maintain code quality automatically.
+> **Scope**: Applies to automated code quality tools run during development and CI. Agents must configure and respect
+> static analysis rules to maintain code quality automatically.
 
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [Tool Categories](#tool-categories) |
@@ -21,7 +22,7 @@ Guidelines for integrating linters, formatters, and security scanners into devel
 ## Quick Reference
 
 | Category | Guidance | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Always** | Run linters in CI before merge | Catches issues automatically |
 | **Always** | Commit analysis configuration | Reproducible across environments |
 | **Always** | Fix findings rather than disable rules | Maintains quality baseline |
@@ -35,7 +36,7 @@ Guidelines for integrating linters, formatters, and security scanners into devel
 ## Core Principles
 
 | Principle | Guideline | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Automate enforcement** | Tools catch what humans miss | Consistent, tireless checking |
 | **Fast feedback** | Run locally and early in CI | Fix before code review |
 | **Baseline, don't regress** | New code must pass; fix legacy over time | Gradual improvement |
@@ -49,7 +50,7 @@ Guidelines for integrating linters, formatters, and security scanners into devel
 ### Tool Types
 
 | Category | Purpose | Examples |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Formatter** | Consistent code style | Prettier, Black, gofmt |
 | **Linter** | Code quality, bugs | ESLint, Pylint, golangci-lint |
 | **Type Checker** | Type safety | TypeScript, mypy, Pyright |
@@ -59,7 +60,7 @@ Guidelines for integrating linters, formatters, and security scanners into devel
 ### Recommended Stack
 
 | Language | Formatter | Linter | Type Checker | SAST |
-| --- | --- | --- | --- | --- |
+| :--- | :--- | :--- | :--- | :--- |
 | JavaScript/TS | Prettier | ESLint | TypeScript | Semgrep |
 | Python | Black, isort | Ruff or Pylint | mypy or Pyright | Bandit |
 | Go | gofmt | golangci-lint | Built-in | gosec |
@@ -84,7 +85,7 @@ project/
 ### Rule Severity Levels
 
 | Level | Action | Use For |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Error** | Block commit/merge | Security, bugs, breaking issues |
 | **Warning** | Show but allow | Style preferences, tech debt |
 | **Off** | Disabled | Rules that don't fit project |
@@ -120,7 +121,7 @@ line-length = 100
 ### Pipeline Placement
 
 | Stage | Tools | Fail On |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | Pre-commit | Formatter, fast linter | Any error |
 | PR Check | Full linter, type check | Any error |
 | Scheduled | SAST, dependency scan | New high/critical findings |
@@ -137,16 +138,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Format Check
         run: npm run format:check
-        
+
       - name: Lint
         run: npm run lint
-        
+
       - name: Type Check
         run: npm run typecheck
-        
+
       - name: Security Scan
         run: npx semgrep --config=auto
 ```
@@ -166,7 +167,7 @@ ruff check $FILES
 ### Fixing vs Ignoring
 
 | Situation | Action | Method |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | Real issue | Fix the code | Preferred |
 | False positive | Inline disable with comment | `// eslint-disable-next-line` |
 | Project-wide exception | Config file exclusion | Add to ignore list |
@@ -206,7 +207,7 @@ ruff check . --diff-against-baseline=.ruff-baseline.json
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Blanket disables** | Hides real issues | Disable specific rules with reasons |
 | **Ignoring warnings** | Issues accumulate | Fix or promote to errors |
 | **Tool sprawl** | Conflicting/overlapping rules | Consolidate tools |

@@ -1,13 +1,15 @@
 # Writing Best Practices
 
-Guidelines for writing best practices documentation—a meta-guide ensuring this collection remains useful for both AI agents and humans.
+Guidelines for writing best practices documentation—a meta-guide ensuring this collection remains useful for both AI
+agents and humans.
 
-> **Scope**: These guidelines apply to writing any best practices, coding standards, or developer guidelines documentation. The goal is content that guides effectively without hindering.
+> **Scope**: These guidelines apply to writing any best practices, coding standards, or developer guidelines
+> documentation. The goal is content that guides effectively without hindering.
 
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [Prescriptive vs Permissive Balance](#prescriptive-vs-permissive-balance) |
@@ -17,6 +19,7 @@ Guidelines for writing best practices documentation—a meta-guide ensuring this
 | [Examples and Illustrations](#examples-and-illustrations) |
 | [Common Pitfalls](#common-pitfalls) |
 | [Anti-Patterns](#anti-patterns) |
+| [References and Citations](#references-and-citations) |
 | [Self-Assessment Checklist](#self-assessment-checklist) |
 
 ---
@@ -24,7 +27,7 @@ Guidelines for writing best practices documentation—a meta-guide ensuring this
 ## Quick Reference
 
 | Category | Guidance | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Always** | Explain why, not just what | Guides judgment, not just actions |
 | **Always** | Use tables and examples over prose | Maximizes scannability and density |
 | **Always** | Keep sections self-contained | Improves modularity and AI retrieval |
@@ -36,10 +39,8 @@ Guidelines for writing best practices documentation—a meta-guide ensuring this
 | **Never** | Include hypothetical edge cases | Keeps focus on 80% actionable cases |
 | **Never** | Let documentation drift from practice | Maintains trust and accuracy |
 
-**Priority order**:
-
 | Rank | Metric | Outcome |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | 1 | Actionability | Reader can use this immediately |
 | 2 | Scannability | Key info found in <30 seconds |
 | 3 | Accuracy | Reflects current actual practice |
@@ -51,7 +52,7 @@ Guidelines for writing best practices documentation—a meta-guide ensuring this
 ## Core Principles
 
 | Principle | Guideline | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Principles over rules** | Guide judgment, not just actions | Readers can adapt to edge cases |
 | **Scannable over readable** | Prioritize tables and lists | Faster retrieval for humans and AI |
 | **Concise over comprehensive** | focus on essential guidance | Reduces noise and token usage |
@@ -66,7 +67,7 @@ Guidelines for writing best practices documentation—a meta-guide ensuring this
 ### The Spectrum
 
 | Too Prescriptive | Balanced | Too Permissive |
-|------------------|----------|----------------|
+| :--- | :--- | :--- |
 | "Always use exactly 3 retries with 1000ms delay" | "Use retries with exponential backoff; 3 attempts is typical" | "Consider retrying failed operations" |
 | "Format all dates as YYYY-MM-DD" | "Use ISO 8601 dates; match existing codebase format" | "Use a consistent date format" |
 | "Functions must be under 30 lines" | "Prefer functions under 30 lines; prioritize readability" | "Keep functions small" |
@@ -74,7 +75,7 @@ Guidelines for writing best practices documentation—a meta-guide ensuring this
 ### Finding the Right Balance
 
 | Situation | Lean Prescriptive | Lean Permissive |
-|-----------|-------------------|-----------------|
+| :--- | :--- | :--- |
 | Security requirements | ✓ | |
 | Team has inconsistent practices | ✓ | |
 | Multiple valid approaches exist | | ✓ |
@@ -85,7 +86,7 @@ Guidelines for writing best practices documentation—a meta-guide ensuring this
 ### Language Patterns
 
 | Prescriptive | Balanced | Permissive |
-|--------------|----------|------------|
+| :--- | :--- | :--- |
 | "Must", "Always", "Never" | "Prefer", "When possible", "Typically" | "Consider", "May", "Could" |
 | "Do X" | "Prefer X because Y" | "X is one option" |
 | Imperative commands | Guidance with rationale | Open suggestions |
@@ -111,7 +112,7 @@ Guidelines for writing best practices documentation—a meta-guide ensuring this
 Every best practices document should include:
 
 | Section | Purpose | Required? | Effect |
-| --- | --- | --- | --- |
+| :--- | :--- | :--- | :--- |
 | **Title + intro** | What this covers, who it's for | Yes | Sets context immediately |
 | **Contents table** | Links to major sections | Yes | Enables direct jump to relevant content |
 | **Quick Reference** | Always/Never/Priority at a glance | Yes | Enables <30s navigation |
@@ -125,7 +126,7 @@ Every best practices document should include:
 AI agents consume these documents within limited context windows. Structure accordingly:
 
 | Technique | Why It Helps |
-| --------- | ------------ |
+| :--- | :--- |
 | Front-load key information | Important content survives truncation |
 | Self-contained sections | Each section works independently |
 | Tables over prose | Higher information density |
@@ -140,14 +141,14 @@ Every guide should include a Contents table immediately after the title/intro, l
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [Anti-Patterns](#anti-patterns) |
 ```
 
 | Guideline | Rationale |
-| --------- | --------- |
+| :--- | :--- |
 | Place immediately after intro | First thing AI scans after title |
 | Link only to H2/H3 sections | Avoids overwhelming depth |
 | Use section names as link text | Self-documenting, no extra prose |
@@ -158,23 +159,21 @@ Every guide should include a Contents table immediately after the title/intro, l
 Tables are the primary communication tool. Design them well:
 
 | Element | Guideline | Rationale |
-|---------|-----------|-----------|
+| :--- | :--- | :--- |
 | Column headers | Clear, parallel structure | Enhances scannability |
 | Row count | 5-10 rows ideal; split if larger | Prevents cognitive overload |
 | Cell content | Brief phrases, not sentences | Increases information density |
 | Alignment | Left-align text, right-align numbers | Improves readability |
 
-**Good table**:
-
 | When | Do | Why |
-|------|-----|-----|
+| :--- | :--- | :--- |
 | Bug fix | Include issue reference | Traceability |
 | Security patch | Link CVE | Auditability |
 
 **Avoid**:
 
 | Situations where you might want to consider referencing issues | Recommended practices for those situations | Detailed rationale explaining the reasoning |
-|---|---|---|
+| :--- | :--- | :--- |
 | When fixing bugs that have been reported... | You should include a reference... | Because this helps with traceability... |
 
 ---
@@ -186,7 +185,7 @@ These documents serve both AI agents and human developers.
 ### AI Agent Considerations
 
 | Consideration | Technique | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | Token efficiency | Dense formatting, minimize filler | Maximizes info in context window |
 | Unambiguous instruction | Explicit statements, avoid pronouns | Prevents hallucination/misinterpretation |
 | Actionable guidance | Concrete right/wrong patterns | Enables reliable code generation |
@@ -195,7 +194,7 @@ These documents serve both AI agents and human developers.
 ### Human Reader Considerations
 
 | Consideration | Technique | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | Quick lookup | Clear headings, scannable tables | Reduces time-to-implementation |
 | Understanding "why" | Rationale alongside rules | Builds trust and allows judgment |
 | Pattern recognition | Multiple varying examples | Improves conceptual mental model |
@@ -203,7 +202,7 @@ These documents serve both AI agents and human developers.
 
 ### Balancing Both
 
-```
+```text
 // GOOD: Works for both audiences
 **Prefer early returns for guard clauses**
 - Reduces nesting
@@ -212,8 +211,8 @@ These documents serve both AI agents and human developers.
 
 // LESS GOOD: Too verbose, wastes tokens
 When you are writing functions that need to validate inputs or check 
-preconditions before executing the main logic, you should consider using 
-early return statements rather than deeply nested if-else structures...
+219: preconditions before executing the main logic, you should consider using 
+220: early return statements rather than deeply nested if-else structures...
 ```
 
 ---
@@ -223,7 +222,7 @@ early return statements rather than deeply nested if-else structures...
 ### Living Documentation
 
 | Practice | Implementation | Rationale |
-|----------|----------------|-----------|
+| :--- | :--- | :--- |
 | Version implicitly | Use present tense, avoid dates in content | Prevents immediate staleness |
 | Remove, don't deprecate | Delete outdated sections rather than marking them | Reduces cognitive noise |
 | Review triggers | Update when underlying practices change | Ensures accuracy |
@@ -232,7 +231,7 @@ early return statements rather than deeply nested if-else structures...
 ### Avoiding Documentation Drift
 
 | Signal | Action | Rationale |
-|--------|--------|-----------|
+| :--- | :--- | :--- |
 | Team consistently ignores a guideline | Re-evaluate if guideline is valuable | Rule likely doesn't fit context |
 | New patterns emerge in codebase | Document or explain why current pattern preferred | Maintains consistency |
 | Tooling enforces the rule | Reduce documentation (tooling is the source of truth) | Eliminates redundancy |
@@ -241,7 +240,7 @@ early return statements rather than deeply nested if-else structures...
 ### What to Keep, What to Cut
 
 | Keep | Cut |
-|------|-----|
+| :--- | :--- |
 | Actively used patterns | Deprecated approaches |
 | Hard-won lessons | Obvious advice |
 | Context-setting principles | Exhaustive edge cases |
@@ -255,7 +254,7 @@ early return statements rather than deeply nested if-else structures...
 ### Effective Examples
 
 | Quality | Guideline | Rationale |
-|---------|-----------|-----------|
+| :--- | :--- | :--- |
 | **Minimal** | Shows only what's necessary to illustrate the point | Optimizes for token limits |
 | **Realistic** | Uses plausible names, scenarios, data | Promotes correct application |
 | **Paired** | Shows both good and bad patterns | Clarifies by contrast |
@@ -263,9 +262,9 @@ early return statements rather than deeply nested if-else structures...
 
 ### Example Patterns
 
-**Good pattern: Paired comparison with brief annotation**
+#### Good pattern: Paired comparison with brief annotation
 
-```
+```javascript
 // Good: Descriptive, reveals intent
 const remainingAttempts = 3
 
@@ -273,17 +272,17 @@ const remainingAttempts = 3
 const r = 3
 ```
 
-**Good pattern: Table of options**
+#### Good pattern: Table of options
 
 | Approach | When to Use | Example |
-|----------|-------------|---------|
+| :--- | :--- | :--- |
 | Early return | Guard clauses | `if (!user) return null` |
 | Nested if | Complex branching logic | `if (a) { if (b) { ... } }` |
 
 ### Anti-patterns in Examples
 
 | Problem | Better Approach | Why |
-|---------|-----------------|-----|
+| :--- | :--- | :--- |
 | Examples too long | Extract to essential lines | Reduces noise |
 | Contrived scenarios | Use realistic code | Avoids credibility loss |
 | Missing context | Include enough to understand | Ensures clarity |
@@ -296,7 +295,7 @@ const r = 3
 ### Scope Creep
 
 | Symptom | Fix | Rationale |
-|---------|-----|-----------|
+| :--- | :--- | :--- |
 | Document covers too many topics | Split into focused documents | Improves discoverability |
 | Every edge case documented | Cover 80% case; let judgment handle rest | Prevents information overload |
 | Historical context dominates | Move history to ADRs or changelog | Keeps focus on current state |
@@ -304,7 +303,7 @@ const r = 3
 ### Staleness
 
 | Symptom | Fix | Rationale |
-|---------|-----|-----------|
+| :--- | :--- | :--- |
 | Guidelines contradict current code | Update guidelines or code | Maintains trust |
 | References to deprecated tools | Remove or update references | Prevents errors |
 | Examples use old patterns | Refresh examples | Encourages modern practices |
@@ -312,7 +311,7 @@ const r = 3
 ### Over-Engineering Guidelines
 
 | Symptom | Fix | Rationale |
-|---------|-----|-----------|
+| :--- | :--- | :--- |
 | Process for every situation | Focus on decisions that matter | Saves time |
 | Multi-level categorization | Flatten where possible | Simpler navigation |
 | Conditional rules with many branches | Simplify to principles | Easier to remember |
@@ -322,7 +321,7 @@ const r = 3
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
-|--------------|---------|-----|
+| :--- | :--- | :--- |
 | **Wall of text** | No one reads it; wastes context | Tables, lists, code examples |
 | **Rules without rationale** | Followed blindly or ignored | Explain "why" for each rule |
 | **Completeness obsession** | Covers edge cases at expense of clarity | Essential guidance only |
@@ -331,6 +330,28 @@ const r = 3
 | **Stale content** | Misleads readers | Regular review, remove outdated |
 | **Abstract principles only** | Not actionable | Concrete examples required |
 | **Rigid rules everywhere** | Hinders appropriate judgment | Prescriptive for safety, permissive for style |
+
+---
+
+## References and Citations
+
+Standardize how you link to resources to maintain clean, readable documentation.
+
+### Link Types
+
+| Type | Format | Rationale |
+| :--- | :--- | :--- |
+| **Internal** | Relative paths `[Title](../path/file.md)` | Ensures links work on GitHub and local editors. |
+| **External** | Inline `[Title](https://example.com)` | Keeps context close to the text. |
+| **Formal** | `[1]` in text, list at bottom | Use for academic papers or when citing multiple sources. |
+
+### Best Practices
+
+| Do | Don't | Why |
+| :--- | :--- | :--- |
+| **Use descriptive link text** | `[Click here](...)` | Accessibility and context scanning. |
+| **Check links** | Dead links | Erodes trust in documentation. |
+| **Anchor links** | `file.md#section-header` | Deep linking saves reader time. |
 
 ---
 

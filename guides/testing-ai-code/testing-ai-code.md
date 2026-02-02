@@ -1,13 +1,15 @@
 # Testing AI-Generated Code
 
-A reference for verifying correctness of AI-generated code through testing—what to test, how to test, and what AI typically misses.
+A reference for verifying correctness of AI-generated code through testing—what to test, how to test, and what AI
+typically misses.
 
-> **Scope**: These patterns help catch bugs in AI-generated code. AI optimizes for the happy path; testing must cover what AI ignores.
+> **Scope**: These patterns help catch bugs in AI-generated code. AI optimizes for the happy path; testing must cover
+> what AI ignores.
 
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [Verification Strategy](#verification-strategy) |
@@ -64,7 +66,7 @@ A reference for verifying correctness of AI-generated code through testing—wha
 
 ### Before Reviewing Code
 
-```
+```markdown
 1. Does it compile/typecheck?     → If no, stop and fix
 2. Do existing tests pass?        → If no, stop and fix
 3. Does the new functionality work? → If no, stop and fix
@@ -74,7 +76,7 @@ A reference for verifying correctness of AI-generated code through testing—wha
 ### Test Pyramid for AI Code
 
 | Level | What to Test | AI Reliability |
-|-------|--------------|----------------|
+| :--- | :--- | :--- |
 | **Unit tests** | Individual functions | Medium—AI writes happy path |
 | **Integration tests** | Component interactions | Low—AI misses boundaries |
 | **Edge case tests** | Unusual inputs | Low—must add manually |
@@ -415,7 +417,7 @@ describe('sortUsers', () => {
 ### Properties to Test
 
 | Property | Description | Example |
-|----------|-------------|---------|
+| :--- | :--- | :--- |
 | **Idempotence** | Applying twice = applying once | `parse(stringify(x)) = parse(stringify(parse(stringify(x))))` |
 | **Roundtrip** | Encode then decode = original | `decode(encode(x)) = x` |
 | **Invariants** | Property preserved | `sort(xs).length = xs.length` |
@@ -431,7 +433,7 @@ Verify test quality by mutating code and checking if tests catch it:
 ### Mutation Types
 
 | Mutation | Original | Mutated |
-|----------|----------|---------|
+| :--- | :--- | :--- |
 | Boundary | `<` | `<=` |
 | Constant | `0` | `1` |
 | Negation | `if (x)` | `if (!x)` |
@@ -453,7 +455,7 @@ npx stryker run
 ### Interpreting Results
 
 | Score | Meaning | Action |
-|-------|---------|--------|
+| :--- | :--- | :--- |
 | 100% | All mutants killed | Tests are thorough |
 | 80-99% | Some gaps | Review surviving mutants |
 | < 80% | Significant gaps | Add tests for uncovered logic |
@@ -468,7 +470,7 @@ Ask AI to generate tests, but verify they're comprehensive:
 
 **Generate edge case tests**:
 
-```
+```markdown
 Write tests for this function, focusing on edge cases:
 - null/undefined inputs
 - empty arrays/strings
@@ -481,13 +483,11 @@ function parseDate(input: string): Date | null {
 }
 ```
 
-```
-
+```markdown
 **Generate failure tests**:
-```
 
+```markdown
 Write tests that verify error handling for this API call:
-
 - Network failures
 - 4xx responses
 - 5xx responses
@@ -500,13 +500,11 @@ async function fetchUser(id: string): Promise<User> {
 }
 ```
 
-```
-
+```markdown
 **Generate property tests**:
-```
 
+```markdown
 Write property-based tests using fast-check for:
-
 - Round-trip (serialize/deserialize)
 - Invariants (length preservation, order)
 - Idempotence where applicable
@@ -517,12 +515,12 @@ function serializeUser(user: User): string
 function deserializeUser(data: string): User
 ```
 
-```
+---
 
 ### Review AI-Generated Tests
 
 | Check | What to Look For |
-|-------|------------------|
+| :--- | :--- |
 | **Real assertions** | Tests actually check behavior, not just call functions |
 | **Independence** | Tests don't depend on each other |
 | **No implementation leak** | Tests check behavior, not internal details |
@@ -531,6 +529,7 @@ function deserializeUser(data: string): User
 | **Meaningful names** | Test names describe expected behavior |
 
 **Red flag** – Tautological test:
+
 ```typescript
 // BAD: Tests the implementation, not behavior
 it('returns processed data', () => {
@@ -552,7 +551,7 @@ it('uppercases the name', () => {
 ### Coverage Targets
 
 | Code Type | Target | Rationale |
-|-----------|--------|-----------|
+| :--- | :--- | :--- |
 | AI-generated business logic | 80%+ | AI misses edge cases |
 | AI-generated utilities | 90%+ | Should be well-defined |
 | Error handling paths | 100% | Critical for reliability |
@@ -561,7 +560,7 @@ it('uppercases the name', () => {
 ### Coverage Gaps to Watch
 
 | Gap | Risk | Action |
-|-----|------|--------|
+| :--- | :--- | :--- |
 | Catch blocks not covered | Error handling untested | Force errors in tests |
 | Else branches not covered | Edge case untested | Add specific tests |
 | Early returns not covered | Validation untested | Test invalid inputs |
@@ -588,7 +587,7 @@ npm test -- --coverage --coverageReporters=text
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
-|--------------|---------|-----|
+| :--- | :--- | :--- |
 | **Happy path only** | Edge cases untested | Explicitly test boundaries |
 | **Tautological tests** | Tests pass by definition | Test expected behavior, not implementation |
 | **Over-mocking** | Tests pass, code fails | Integration tests with real dependencies |
@@ -607,7 +606,7 @@ Use canonical examples to verify AI agent behavior consistently.
 Golden tasks are hand-crafted, well-understood test cases that verify an AI agent produces expected outputs for known inputs.
 
 | Component | Description | Example |
-|-----------|-------------|---------|
+| :--- | :--- | :--- |
 | **Input** | Specific, reproducible prompt | "Add null check to function X" |
 | **Expected behavior** | What agent should do | Read file, add guard clause, run tests |
 | **Expected output** | Verifiable result | Specific code change pattern |
@@ -670,7 +669,7 @@ async function runGoldenTask(task: GoldenTask): Promise<TestResult> {
 Run golden tasks after any agent changes:
 
 | Trigger | Action |
-|---------|--------|
+| :--- | :--- |
 | Agent code change | Run full golden suite |
 | Prompt update | Run affected golden tasks |
 | Model upgrade | Run full suite, compare results |
@@ -679,7 +678,7 @@ Run golden tasks after any agent changes:
 ### Golden Task Categories
 
 | Category | Purpose | Examples |
-|----------|---------|----------|
+| :--- | :--- | :--- |
 | **Core operations** | Basic functionality | Read file, edit file, run tests |
 | **Error handling** | Failure scenarios | Invalid input, missing file |
 | **Edge cases** | Boundary behavior | Empty files, large files |
@@ -688,7 +687,7 @@ Run golden tasks after any agent changes:
 
 ### Evaluating Results
 
-```
+```text
 Golden Task Suite Results
 ─────────────────────────
 Total: 25

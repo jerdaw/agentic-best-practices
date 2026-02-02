@@ -2,12 +2,13 @@
 
 Guidelines for separating configuration from code and handling secrets securely.
 
-> **Scope**: Applies to application configuration, environment variables, API keys, database credentials, and any sensitive values. Agents must never hardcode secrets or commit them to repositories.
+> **Scope**: Applies to application configuration, environment variables, API keys, database credentials, and any
+> sensitive values. Agents must never hardcode secrets or commit them to repositories.
 
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [Configuration Hierarchy](#configuration-hierarchy) |
@@ -21,7 +22,7 @@ Guidelines for separating configuration from code and handling secrets securely.
 ## Quick Reference
 
 | Category | Guidance | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Always** | Read secrets from environment or secret store | Never embedded in code |
 | **Always** | Add secret files to `.gitignore` | Prevents accidental commits |
 | **Always** | Use different secrets per environment | Limits blast radius of leaks |
@@ -39,7 +40,7 @@ Guidelines for separating configuration from code and handling secrets securely.
 ## Core Principles
 
 | Principle | Guideline | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Config ≠ Code** | Configuration changes without code changes | Different deploy/release cycles |
 | **Secrets are special** | Encrypted, rotated, audited separately | Higher security requirements |
 | **Environment parity** | Same code, different config per env | Reduces "works on my machine" |
@@ -53,7 +54,7 @@ Guidelines for separating configuration from code and handling secrets securely.
 Configuration should be loaded in layers, with later sources overriding earlier ones:
 
 | Priority | Source | Use Case | Example |
-| --- | --- | --- | --- |
+| :--- | :--- | :--- | :--- |
 | 1 (lowest) | Hardcoded defaults | Sensible fallbacks | `timeout: 30s` |
 | 2 | Config file | Base configuration | `config.yaml` |
 | 3 | Environment-specific file | Per-environment overrides | `config.prod.yaml` |
@@ -63,7 +64,7 @@ Configuration should be loaded in layers, with later sources overriding earlier 
 ### What Goes Where
 
 | Config Type | Location | Rationale |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | App behavior (timeouts, limits) | Config file | Version controlled, reviewable |
 | Feature flags | Config file or remote | Toggleable without deploy |
 | Service URLs | Environment variable | Varies by deployment |
@@ -109,7 +110,7 @@ db_password = "super_secret_123"  # Never do this
 For production systems, use dedicated secret managers.
 
 | Provider | Tool | Use Case |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | Multi-cloud | HashiCorp Vault | Self-hosted, full control |
 | AWS | Secrets Manager | Native AWS integration |
 | GCP | Secret Manager | Native GCP integration |
@@ -175,7 +176,7 @@ def load_config():
     # 1. Load base config
     with open("config/config.yaml") as f:
         config = yaml.safe_load(f)
-    
+
     # 2. Load environment-specific overrides
     env = os.environ.get("APP_ENV", "dev")
     env_file = f"config/config.{env}.yaml"
@@ -183,11 +184,11 @@ def load_config():
         with open(env_file) as f:
             env_config = yaml.safe_load(f)
             deep_merge(config, env_config)
-    
+
     # 3. Environment variables override file config
     if db_url := os.environ.get("DATABASE_URL"):
         config["database"]["url"] = db_url
-    
+
     return config
 ```
 
@@ -210,7 +211,7 @@ security:
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | **Hardcoded secrets** | Committed to repo, exposed forever | Environment/secret manager |
 | **Secrets in logs** | Visible in monitoring systems | Redact before logging |
 | **Same secret everywhere** | One breach exposes all | Per-environment secrets |
@@ -244,7 +245,7 @@ config/local/
 ### Pre-Commit Checks
 
 | Check | Tool | Purpose |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | Secret scanning | `gitleaks`, `trufflehog` | Detect committed secrets |
 | Env file check | Custom script | Ensure `.env` is gitignored |
 | Config validation | Schema validator | Catch missing required config |
@@ -263,7 +264,7 @@ def validate_config(config: dict) -> None:
     for key in required:
         if not get_nested(config, key):
             raise ConfigError(f"Missing required config: {key}")
-    
+
     # Warn about insecure settings in production
     if os.environ.get("APP_ENV") == "prod":
         if config.get("security", {}).get("debug"):
