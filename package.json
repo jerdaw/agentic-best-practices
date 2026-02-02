@@ -7,7 +7,8 @@
     "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
     "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\" \"#node_modules\"",
     "validate": "bash ./scripts/validate-navigation.sh",
-    "precommit": "npm run lint:md && npm run validate"
+    "precommit": "npm run lint:md && npm run validate",
+    "prepare": "husky"
   },
   "devDependencies": {
     "husky": "^9.0.0",
