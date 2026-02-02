@@ -1,20 +1,20 @@
-# CI/CD Pipeline Design
+# CI/CD Pipelines with AI
 
-Guidelines for building continuous integration and delivery pipelines that are fast, reliable, and maintainable.
+Best practices for managing CI/CD pipelines while working with AI coding agents.
 
-> **Scope**: Applies to build automation, test execution, and deployment workflows. Agents must create pipelines that provide fast feedback while maintaining quality gates.
+> **Scope**: Applies to the creation, modification, and maintenance of CI/CD workflows (GitHub Actions, GitLab CI, etc.).
+> Goal: Enable AI to work within safety boundaries while ensuring automated deployments remain secure and robust.
 
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
-| [Pipeline Stages](#pipeline-stages) |
-| [Build Stage](#build-stage) |
-| [Test Stage](#test-stage) |
-| [Deploy Stage](#deploy-stage) |
-| [Pipeline Patterns](#pipeline-patterns) |
+| [Workflow Structure](#workflow-structure) |
+| [Security Boundaries](#security-boundaries) |
+| [Testing in CI](#testing-in-ci) |
+| [Deployment Gates](#deployment-gates) |
 | [Anti-Patterns](#anti-patterns) |
 
 ---
@@ -22,279 +22,117 @@ Guidelines for building continuous integration and delivery pipelines that are f
 ## Quick Reference
 
 | Category | Guidance | Rationale |
-| --- | --- | --- |
-| **Always** | Fail fast—run quick checks first | Faster feedback for common errors |
-| **Always** | Use caching for dependencies | Speeds up builds significantly |
-| **Always** | Pin dependency versions | Reproducible builds |
-| **Always** | Treat main/master as always deployable | Trunk-based development |
-| **Prefer** | Parallel stages over sequential | Faster overall pipeline |
-| **Prefer** | Small, focused jobs over monolithic | Easier debugging and rerunning |
-| **Never** | Store secrets in pipeline files | Use secret management |
-| **Never** | Skip tests to "ship faster" | Tech debt compounds |
-| **Never** | Allow failed pipelines to merge | Protects main branch |
+| :--- | :--- | :--- |
+| **Always** | Require manual approval for production | Prevent automated rogue deployments |
+| **Always** | Use short-lived OIDC tokens for cloud | Avoid permanent secrets in CI |
+| **Always** | Pin action versions to full SHAs | Prevent supply chain attacks |
+| **Always** | Run security scans in the pipeline | Automate vulnerability detection |
+| **Prefer** | Smaller, modular workflows | Easier for AI to reason about |
+| **Never** | Allow AI to modify deployment secrets | Protects critical infrastructure |
 
 ---
 
 ## Core Principles
 
-| Principle | Guideline | Rationale |
-| --- | --- | --- |
-| **Fast feedback** | Pipeline results in <10 min | Developers stay in flow |
-| **Fail fast** | Cheap checks run first | Quick rejection of bad commits |
-| **Reproducible** | Same commit → same result | Debuggable, trusted builds |
-| **Parallelized** | Independent stages run concurrently | Optimizes total time |
-| **Trunk-based** | Main is always deployable | Continuous delivery |
+1. **Security first** – CI/CD is the most sensitive part of the system; agents need strict boundaries.
+2. **Deterministic steps** – Avoid "magic" scripts; make every pipeline stage explicit.
+3. **Fail fast** – Run the fastest, most critical checks first (lint, types).
+4. **Immutable artifacts** – Build once, deploy across environments.
+5. **Auditable changes** – Every pipeline change must be human-reviewed.
 
 ---
 
-## Pipeline Stages
+## Workflow Structure
 
-### Recommended Stage Order
+Break pipelines into logical stages that agents can understand and verify independently.
 
-| Order | Stage | Duration | Parallel? |
-| --- | --- | --- | --- |
-| 1 | **Lint & Format** | <1 min | Yes (with 2) |
-| 2 | **Build** | 1-3 min | Yes (with 1) |
-| 3 | **Unit Tests** | 1-3 min | After build |
-| 4 | **Integration Tests** | 3-10 min | After unit |
-| 5 | **Security Scan** | 2-5 min | Yes (with 3-4) |
-| 6 | **Deploy Staging** | 2-5 min | After tests pass |
-| 7 | **E2E Tests** | 5-15 min | On staging |
-| 8 | **Deploy Production** | 2-5 min | Manual gate or auto |
+### Recommended Stages
 
-### Stage Dependencies
+| Stage | Actions | Goal |
+| :--- | :--- | :--- |
+| **1. Validate** | Lint, Type-check, Format check | Code quality gate |
+| **2. Test** | Unit tests, Integration tests | Functional correctness |
+| **3. Security** | SAST, Dependency scan, Secret scan | Attack surface reduction |
+| **4. Build** | Compile, Containerize, Sign | Artifact creation |
+| **5. Deploy** | Update infra, Run migrations | Release execution |
 
-```text
-      ┌─────────────┐
-      │  Checkout   │
-      └──────┬──────┘
-             │
-    ┌────────┼────────┐
-    ▼        ▼        ▼
-┌──────┐ ┌──────┐ ┌──────┐
-│ Lint │ │Build │ │SecScan│
-└──┬───┘ └──┬───┘ └──┬───┘
-   │        │        │
-   └────────┼────────┘
-            ▼
-      ┌───────────┐
-      │ Unit Test │
-      └─────┬─────┘
-            ▼
-   ┌─────────────────┐
-   │ Integration Test │
-   └────────┬────────┘
-            ▼
-      ┌───────────┐
-      │  Staging  │
-      └─────┬─────┘
-            ▼
-    ┌──────────────┐
-    │ E2E on Stage │
-    └──────┬───────┘
-            ▼
-      ┌───────────┐
-      │Production │
-      └───────────┘
-```
-
----
-
-## Build Stage
-
-### Caching Strategy
-
-| Cache Target | Key Pattern | Invalidate On |
-| --- | --- | --- |
-| Dependencies | `hash(lockfile)` | Lockfile changes |
-| Build artifacts | `hash(src) + hash(config)` | Source changes |
-| Docker layers | Previous image layers | Dockerfile changes |
-
-```yaml
-# GitHub Actions caching example
-- uses: actions/cache@v3
-  with:
-    path: ~/.npm
-    key: npm-${{ hashFiles('package-lock.json') }}
-    restore-keys: npm-
-
-- uses: actions/cache@v3
-  with:
-    path: node_modules
-    key: node-modules-${{ hashFiles('package-lock.json') }}
-```
-
-### Dependency Pinning
-
-```json
-// package-lock.json - exact versions locked
-// requirements.txt - pin exact versions
-flask==2.3.2
-requests==2.31.0
-```
-
----
-
-## Test Stage
-
-### Test Selection
-
-| Trigger | Test Scope | Rationale |
-| --- | --- | --- |
-| Pull request | Unit + changed integration | Fast PR feedback |
-| Merge to main | Full test suite | Comprehensive validation |
-| Nightly | Full + E2E + performance | Catch slow-burning issues |
-| Release tag | Full + regression | Release confidence |
-
-### Test Parallelization
-
-```yaml
-# Matrix strategy for parallel test runs
-test:
-  strategy:
-    matrix:
-      shard: [1, 2, 3, 4]
-  steps:
-    - run: pytest --shard-id=${{ matrix.shard }} --num-shards=4
-```
-
-### Test Failure Handling
-
-| Failure Type | Action |
-| --- | --- |
-| Flaky test | Retry once, then fail and alert |
-| Timeout | Fail with diagnostic info |
-| Infrastructure error | Retry job, not individual test |
-| Consistent failure | Block merge, require fix |
-
----
-
-## Deploy Stage
-
-### Environment Progression
-
-| Environment | Auto-deploy? | Purpose |
-| --- | --- | --- |
-| **Dev** | Yes | Individual feature branches |
-| **Staging** | Yes (on main) | Integration testing |
-| **Production** | Manual gate or canary | User-facing traffic |
-
-### Deployment Configuration
-
-```yaml
-# Environment-specific config, not hardcoded
-deploy:
-  staging:
-    replicas: 2
-    resources:
-      memory: 512Mi
-  production:
-    replicas: 10
-    resources:
-      memory: 2Gi
-```
-
-### Rollback Triggers
-
-| Condition | Action |
-| --- | --- |
-| Deploy timeout | Rollback automatically |
-| Health check fails | Rollback automatically |
-| Error rate spike | Alert + manual decision or auto-rollback |
-
----
-
-## Pipeline Patterns
-
-### Fail-Fast Pipeline
-
-Order checks from cheapest to most expensive.
+### GitHub Actions Pattern
 
 ```yaml
 jobs:
-  lint:
+  validate:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - run: npm run lint  # Fails in seconds
-
-  build:
-    needs: lint  # Don't waste time if lint fails
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: npm run build
+      - uses: actions/checkout@v4
+      - name: Lint
+        run: npm run lint
+      - name: Type-check
+        run: npm run typecheck
 
   test:
-    needs: build
+    needs: validate
     runs-on: ubuntu-latest
     steps:
-      - run: npm test
+      - uses: actions/checkout@v4
+      - name: Unit Tests
+        run: npm test
 ```
 
-### Branch Protection
+---
 
-| Rule | Effect |
-| --- | --- |
-| Require status checks | CI must pass to merge |
-| Require up-to-date branch | Rebase before merge |
-| Require code review | At least 1 approval |
-| No force push to main | Protect history |
+## Security Boundaries
 
-```yaml
-# GitHub branch protection (settings.yml format)
-branches:
-  - name: main
-    protection:
-      required_status_checks:
-        strict: true
-        contexts:
-          - lint
-          - test
-          - build
-      required_pull_request_reviews:
-        required_approving_review_count: 1
-```
+Strict rules for agents when modifying CI/CD infrastructure.
 
-### Secret Management
+| Action | Policy | Rationale |
+| :--- | :--- | :--- |
+| **Secret Access** | **Never** share with agent | Agents should only know secret *names* |
+| **Token Scopes** | **Minimum** required | Limits blast radius of compromised runs |
+| **Approval** | **Human Review** always | Prevents automated infrastructure changes |
+| **Pinning** | **Always** use SHAs | `actions/checkout@v4` → `actions/checkout@[sha]` |
 
-| Practice | Implementation |
-| --- | --- |
-| Never hardcode | Use CI secret storage |
-| Mask in logs | CI should redact automatically |
-| Rotate regularly | Automate with secret manager |
-| Least privilege | Scope secrets to environments |
+---
 
-```yaml
-# Good: Secrets from CI secret storage
-deploy:
-  steps:
-    - run: ./deploy.sh
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-```
+## Testing in CI
+
+Automate the verification of agent-produced code.
+
+| Type | Best Practice |
+| :--- | :--- |
+| **Coverage** | Block PRs that decrease coverage threshold |
+| **Regression**| Run targeted tests on changed modules |
+| **E2E** | Run in ephemeral environments before merge |
+| **Performance**| Track bundle size and API latency trends |
+
+---
+
+## Deployment Gates
+
+Safety mechanisms to prevent bad deployments.
+
+| Gate | Implementation |
+| :--- | :--- |
+| **Manual Trigger**| `on: workflow_dispatch` in GitHub Actions |
+| **Environment** | Use GitHub Environments with required reviewers |
+| **Rollback** | Automated rollback on health check failure |
+| **Smoke Test** | Post-deployment validation in staging |
 
 ---
 
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
-| --- | --- | --- |
-| **30+ minute pipelines** | Too slow for feedback loops | Parallelize, cache, fail fast |
-| **Flaky tests tolerated** | Erodes trust in CI | Fix or remove immediately |
-| **Secrets in repo** | Security vulnerability | Use CI secret management |
-| **Works on my machine** | Not reproducible | Pin versions, use containers |
-| **Skip CI escape hatch** | Bypasses quality gates | Remove or require approval |
-| **Manual deployment steps** | Error-prone, slow | Automate everything |
-| **One mega-job** | Hard to debug, can't rerun | Split into focused jobs |
-| **Testing in production** | User impact | Test in staging first |
+| :--- | :--- | :--- |
+| **Monolithic script** | AI can't debug partial failures | Break into distinct pipeline steps |
+| **Broad permissions** | Agent could leak all secrets | Use scoped OIDC/Identity Federation |
+| **No version pinning** | Breaking changes from actions | Pin to exact commit SHAs |
+| **Skipping CI** | Untested code reaches prod | Enforce branch protection rules |
+| **Implicit state** | Flaky, non-reproducible builds | Use containers for build environments |
 
 ---
 
 ## See Also
 
-- [Deployment Strategies](../deployment-strategies/deployment-strategies.md) – Release patterns
-- [Testing Strategy](../testing-strategy/testing-strategy.md) – Test pyramid and coverage
-- [Git Workflows with AI](../git-workflows-ai/git-workflows-ai.md) – Branch strategies
-- [Secrets & Configuration](../secrets-configuration/secrets-configuration.md) – Secret handling
+- [Security Boundaries](../security-boundaries/security-boundaries.md) – General agent safety
+- [Supply Chain Security](../supply-chain-security/supply-chain-security.md) – Hardening dependencies
+- [Observability Patterns](../observability-patterns/observability-patterns.md) – Monitoring deployments
