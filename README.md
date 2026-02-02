@@ -24,6 +24,24 @@ A collection of opinionated, actionable guides for software development. Each gu
 
 ---
 
+## Why This Project?
+
+AI coding tools offer "skills" (scripts, commands, specialized tasks) that extend *what* an agent can do. This project fills a different gap: establishing *how* AI approaches any task.
+
+| Aspect | Skills | agentic-best-practices |
+| --- | --- | --- |
+| **Focus** | Capabilities (deploy, test, build) | Standards (error handling, logging, API design) |
+| **Scope** | Task-specific | Cross-cutting principles |
+| **Usage** | On-demand invocation | Continuous reference |
+| **Ownership** | Often tool-specific | Tool-agnostic (Claude, Gemini, ChatGPT) |
+| **Update model** | Per-project embedding | Central repo, one `git pull` updates all |
+
+**In short**: Skills = "What to do." This project = "How to do things well."
+
+The result is consistent engineering judgment across all AI work—AI consults these standards before making decisions rather than reinventing patterns or making arbitrary choices.
+
+---
+
 ## Getting Started
 
 Use this repository as a shared standards library across all your projects.
