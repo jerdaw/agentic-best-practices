@@ -1,19 +1,20 @@
 # Deployment Strategies
 
-Guidelines for releasing changes to production safely with minimal risk.
+Best practices for AI agents on planning, executing, and monitoring safe deployments.
 
-> **Scope**: Applies to any system deployment—APIs, web apps, background workers, infrastructure. Agents must deploy with quick rollback capability and minimal user impact.
+> **Scope**: Applies to CI/CD pipelines, release management, and production rollouts. Goal: Ensure high availability
+> and rapid recovery through structured, automated deployment patterns.
 
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [Deployment Patterns](#deployment-patterns) |
-| [Feature Flags](#feature-flags) |
-| [Rollback Strategies](#rollback-strategies) |
-| [Monitoring During Rollout](#monitoring-during-rollout) |
+| [Verification and Smoke Tests](#verification-and-smoke-tests) |
+| [Rollback Procedures](#rollback-procedures) |
+| [Infrastructure as Code (IaC)](#infrastructure-as-code-iac) |
 | [Anti-Patterns](#anti-patterns) |
 
 ---
@@ -21,248 +22,83 @@ Guidelines for releasing changes to production safely with minimal risk.
 ## Quick Reference
 
 | Category | Guidance | Rationale |
-| --- | --- | --- |
-| **Always** | Deploy to staging first | Catches issues before production |
-| **Always** | Have a rollback plan before deploying | Recovery must be instant |
-| **Always** | Monitor error rates during rollout | Detect issues within minutes |
-| **Prefer** | Feature flags over big-bang releases | Decouple deploy from release |
-| **Prefer** | Gradual rollouts over all-at-once | Limits blast radius |
-| **Prefer** | Blue-green or canary over in-place | Zero downtime, instant rollback |
-| **Never** | Deploy without tested rollback | Traps you if something breaks |
-| **Never** | Deploy during incidents or off-hours | Reduced response capacity |
-| **Never** | Skip staging for "simple" changes | Simple changes can still break prod |
+| :--- | :--- | :--- |
+| **Safety** | Always test in staging first | Catches environmental issues |
+| **Velocity** | Use small, frequent deployments | Reduces change risk and blast radius |
+| **Recovery** | Define rollback triggers upfront | Pre-planned recovery is faster |
+| **Monitoring** | Watch "Golden Signals" during rollout| Immediate feedback on health |
+| **Gates** | Use manual approval for production | Human oversight for critical infra |
 
 ---
 
 ## Core Principles
 
-| Principle | Guideline | Rationale |
-| --- | --- | --- |
-| **Fast rollback** | Seconds to revert, not minutes | Limits user impact |
-| **Progressive delivery** | Start small, expand gradually | Early detection, limited blast |
-| **Decouple deploy from release** | Code ships first, activation later | Separate deployment risk from feature risk |
-| **Observable changes** | Every deploy is monitored | Know instantly when things break |
-| **Backward compatible** | Old clients work with new code | Enables safe rollback |
+1. **Automate everything** – Manual steps are errors waiting to happen.
+2. **Immutable infrastructure** – Replace, don't patch, existing servers.
+3. **Zero-downtime** – Users should not experience interruptions during rollout.
+4. **Visibility** – Deployments must be visible and trackable by the whole team.
+5. **Fail-safe** – If a deployment fails, the system should return to a known good state.
 
 ---
 
 ## Deployment Patterns
 
-### Pattern Comparison
-
-| Pattern | Downtime | Rollback Speed | Resource Cost | Complexity | Best For |
-| --- | --- | --- | --- | --- | --- |
-| **Rolling** | None | Minutes | 1x | Low | Stateless services |
-| **Blue-Green** | None | Seconds | 2x | Medium | Critical services |
-| **Canary** | None | Seconds | 1.1x | Medium | User-facing changes |
-| **Feature Flag** | None | Milliseconds | 1x | Low-Medium | Gradual feature rollout |
-
-### Rolling Deployment
-
-Old instances replaced one at a time. Simple but slower to rollback.
-
-```yaml
-# Kubernetes rolling update
-spec:
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 1
-      maxSurge: 1
-```
-
-| Phase | State | Effect |
-| --- | --- | --- |
-| Start | 4 old instances | 100% on old version |
-| Mid | 2 old, 2 new | 50% each version |
-| End | 4 new instances | 100% on new version |
-
-### Blue-Green Deployment
-
-Two identical environments. Switch traffic instantly via load balancer.
-
-| Step | Action | Rollback |
-| --- | --- | --- |
-| 1 | Deploy new version to Green | N/A |
-| 2 | Run smoke tests on Green | Delete Green |
-| 3 | Switch LB from Blue → Green | Switch LB back to Blue |
-| 4 | Monitor for issues | Switch LB back to Blue |
-| 5 | Decommission Blue | N/A |
-
-```text
-                 ┌─────────────┐
-                 │   Load      │
-                 │  Balancer   │
-                 └──────┬──────┘
-                        │
-         ┌──────────────┼──────────────┐
-         ▼              │              ▼
-   ┌─────────┐          │        ┌─────────┐
-   │  Blue   │◄─────────┘        │  Green  │
-   │  (v1)   │   (active)        │  (v2)   │
-   └─────────┘                   └─────────┘
-```
-
-### Canary Deployment
-
-Route small percentage of traffic to new version. Expand if healthy.
-
-| Stage | Traffic Split | Duration | Action on Failure |
-| --- | --- | --- | --- |
-| Deploy | 0% canary | Immediate | No impact |
-| Canary | 5% canary | 10-30 min | Route all to stable |
-| Expand | 25% canary | 30 min | Route all to stable |
-| Expand | 50% canary | 1 hour | Route all to stable |
-| Full | 100% canary | N/A | Rollback deploy |
-
-```yaml
-# Istio canary routing
-apiVersion: networking.istio.io/v1alpha3
-kind: VirtualService
-spec:
-  http:
-  - route:
-    - destination:
-        host: myservice
-        subset: stable
-      weight: 95
-    - destination:
-        host: myservice
-        subset: canary
-      weight: 5
-```
+| Pattern | How it Works | Pros |
+| :--- | :--- | :--- |
+| **Blue/Green** | Switch traffic between two identical envs| Instant rollback, zero downtime |
+| **Canary** | Rollout to 5% of users first | Limits blast radius of failures |
+| **Rolling** | Update instances one by one | Resource efficient |
+| **Shadow** | Route real traffic to new env (no output)| Tests performance with real load |
 
 ---
 
-## Feature Flags
+## Verification and Smoke Tests
 
-Decouple code deployment from feature activation.
+A deployment is not "done" until it is verified.
 
-### Flag Lifecycle
-
-| Phase | State | Purpose |
-| --- | --- | --- |
-| **Create** | Off | Code deployed but feature disabled |
-| **Test** | Internal only | QA and dogfooding |
-| **Rollout** | 5% → 25% → 50% → 100% | Gradual user exposure |
-| **Stable** | 100% for 30+ days | Ready for cleanup |
-| **Cleanup** | Remove flag code | Eliminate tech debt |
-
-### Implementation
-
-```python
-# Good: Feature flag with consistent user bucketing
-def is_feature_enabled(user_id: str, feature: str, percentage: int = 100) -> bool:
-    # Consistent hash ensures same user always gets same experience
-    bucket = hash(f"{user_id}:{feature}") % 100
-    return bucket < percentage
-
-# Usage
-if is_feature_enabled(user.id, "new_checkout", percentage=10):
-    return new_checkout_flow(cart)
-else:
-    return legacy_checkout_flow(cart)
-```
-
-```python
-# Bad: Random assignment (inconsistent experience)
-if random.random() < 0.1:  # User sees different versions each time
-    return new_checkout_flow(cart)
-```
-
-### Flag Cleanup Rules
-
-| Signal | Action |
-| --- | --- |
-| Flag at 100% for 30+ days | Schedule cleanup PR |
-| Flag at 0% for 14+ days | Remove feature and flag |
-| Flag unchanged for 90 days | Review: stale or forgotten |
+1. **Health Check** – `GET /health` must return 200.
+2. **Smoke Test** – Critical user path execution (e.g., "Can I log in?").
+3. **Metric Analysis** – Compare 5xx error rates against the previous version.
+4. **Log Review** – Check for new unique errors in the aggregator.
 
 ---
 
-## Rollback Strategies
+## Rollback Procedures
 
-### Rollback Decision Matrix
+Pre-planned steps to undo a bad deployment.
 
-| Signal | Threshold | Action |
-| --- | --- | --- |
-| Error rate spike | >1% increase | Investigate immediately |
-| Error rate sustained | >2% for 5 min | Rollback |
-| Latency spike | >50% p99 increase | Investigate |
-| Latency sustained | >100% p99 for 5 min | Rollback |
-| Customer reports | 3+ related issues | Investigate |
-
-### Rollback Mechanisms
-
-| Method | Speed | Scope | Use When |
-| --- | --- | --- | --- |
-| Feature flag off | Milliseconds | Feature only | Flag-controlled feature |
-| Traffic shift | Seconds | All traffic | Blue-green/canary |
-| Revert deploy | Minutes | Full codebase | Rolling deployment |
-| Revert commit | Minutes (needs deploy) | Specific change | Post-incident fix |
-
-### Rollback Checklist
-
-Before any deployment:
-
-- [ ] Rollback mechanism identified
-- [ ] Rollback tested in staging
-- [ ] Monitoring dashboards open
-- [ ] On-call aware of deployment
-- [ ] Deployment window appropriate (not Friday 5pm)
+| Trigger | Action |
+| :--- | :--- |
+| **High error rate** | Automated rollback to N-1 |
+| **Performance drop** | Manual rollback after investigation |
+| **Security flaw** | Emergency hotfix or immediate rollback |
 
 ---
 
-## Monitoring During Rollout
+## Infrastructure as Code (IaC)
 
-### Golden Signals
+Manage infrastructure with the same rigor as application code.
 
-| Signal | Metric | Alert Threshold |
-| --- | --- | --- |
-| **Latency** | p50, p95, p99 response time | >50% increase from baseline |
-| **Traffic** | Requests per second | Unexpected drop (>20%) |
-| **Errors** | Error rate (5xx / total) | >1% or 2x baseline |
-| **Saturation** | CPU, memory, queue depth | >80% capacity |
-
-### Deployment Monitoring
-
-```python
-# Good: Automated rollback on error spike
-async def monitored_rollout(deployment):
-    baseline_error_rate = get_current_error_rate()
-    
-    await deployment.start()
-    
-    for _ in range(30):  # Check every minute for 30 min
-        await asyncio.sleep(60)
-        current_error_rate = get_current_error_rate()
-        
-        if current_error_rate > baseline_error_rate * 2:
-            await deployment.rollback()
-            alert("Deployment rolled back due to error spike")
-            return False
-    
-    return True
-```
+- **Version Control** – Track every infra change in Git.
+- **Pull Requests** – Review infra changes like code changes.
+- **Drift Detection** – Ensure real infra matches the code definition.
 
 ---
 
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
-| --- | --- | --- |
-| **Big-bang deploys** | All-or-nothing risk | Progressive rollout |
-| **Friday deploys** | Reduced response capacity | Deploy early in week |
-| **No rollback plan** | Stuck when things break | Test rollback before deploy |
-| **Skipping staging** | Prod is the first test | Always stage first |
-| **Ignoring metrics** | Issues found by users | Monitor during rollout |
-| **Long-lived feature flags** | Tech debt accumulates | Cleanup after stability |
-| **Breaking changes without migration** | Old clients fail | Backward compatibility first |
+| :--- | :--- | :--- |
+| **Friday Deploys** | No support if things break | Deploy Monday-Thursday |
+| **Big Bang Release** | High risk, hard to debug | Use feature flags and canaries |
+| **Manual Config** | Environment drift, non-reproducible| Use IaC and config management |
+| **No Monitoring** | Flying blind during rollout | Implement health checks and metrics |
+| **Missing Rollback** | Stuck in a broken state | Test your rollback procedure |
 
 ---
 
 ## See Also
 
-- [Resilience Patterns](../resilience-patterns/resilience-patterns.md) – Handling failures gracefully
-- [Idempotency Patterns](../idempotency-patterns/idempotency-patterns.md) – Safe retry during deployments
-- [Git Workflows with AI](../git-workflows-ai/git-workflows-ai.md) – Version control for releases
+- [CI/CD Pipelines](../cicd-pipelines/cicd-pipelines.md) – Automated workflow
+- [Observability Patterns](../observability-patterns/observability-patterns.md) – Monitoring health
+- [Resilience Patterns](../resilience-patterns/resilience-patterns.md) – Handling failures
