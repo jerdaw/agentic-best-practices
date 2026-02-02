@@ -18,40 +18,44 @@ echo ""
 # --- 1. Check that all guide directories have a matching file in AGENTS.md ---
 echo "=== Checking Guide Index completeness ==="
 
-for dir in */; do
-    # Skip hidden dirs and non-guide dirs
-    [[ "$dir" == .* ]] && continue
-    [[ "$dir" == "scripts/" ]] && continue
-    
-    guide_file="${dir}${dir%/}.md"
-    
+for dir in guides/*/; do
+    # Skip if guides directory doesn't exist
+    [[ -d "guides" ]] || continue
+    [[ "$dir" == "guides/*/" ]] && continue
+
+    dir_name=$(basename "$dir")
+    guide_file="${dir}${dir_name}.md"
+
     if [[ -f "$guide_file" ]]; then
-        # Check if it's in AGENTS.md
-        if ! grep -q "($guide_file)" AGENTS.md 2>/dev/null; then
-            echo -e "${RED}ERROR${NC}: Guide '$guide_file' not in AGENTS.md Guide Index"
+        # Check if it's in AGENTS.md or CLAUDE.md
+        if ! grep -q "($guide_file)" AGENTS.md 2>/dev/null && ! grep -q "($guide_file)" CLAUDE.md 2>/dev/null; then
+            echo -e "${RED}ERROR${NC}: Guide '$guide_file' not in AGENTS.md/CLAUDE.md Guide Index"
             ((ERRORS++))
         fi
     fi
 done
 
-# --- 2. Check that AGENTS.md links point to existing files ---
+# --- 2. Check that AGENTS.md/CLAUDE.md links point to existing files ---
 echo ""
-echo "=== Checking AGENTS.md links ==="
+echo "=== Checking AGENTS.md/CLAUDE.md links ==="
 
-while IFS= read -r link; do
-    # Extract path from markdown link
-    path=$(echo "$link" | sed -n 's/.*(\([^)]*\.md\)).*/\1/p')
-    if [[ -n "$path" && ! -f "$path" ]]; then
-        echo -e "${RED}ERROR${NC}: AGENTS.md links to non-existent file: $path"
-        ((ERRORS++))
-    fi
-done < <(grep -oE '\[[^]]+\]\([^)]+\.md\)' AGENTS.md 2>/dev/null || true)
+for doc in AGENTS.md CLAUDE.md; do
+    [[ -f "$doc" ]] || continue
+    while IFS= read -r link; do
+        # Extract path from markdown link
+        path=$(echo "$link" | sed -n 's/.*(\([^)]*\.md\)).*/\1/p')
+        if [[ -n "$path" && ! -f "$path" ]]; then
+            echo -e "${RED}ERROR${NC}: $doc links to non-existent file: $path"
+            ((ERRORS++))
+        fi
+    done < <(grep -oE '\[[^]]+\]\([^)]+\.md\)' "$doc" 2>/dev/null || true)
+done
 
 # --- 3. Check Contents tables match actual H2 sections ---
 echo ""
 echo "=== Checking Contents tables match H2 sections ==="
 
-for guide in */*.md; do
+for guide in guides/*/*.md; do
     [[ -f "$guide" ]] || continue
     
     # Skip if no Contents section
@@ -90,7 +94,7 @@ done
 echo ""
 echo "=== Checking internal anchor links ==="
 
-for guide in */*.md; do
+for guide in guides/*/*.md; do
     [[ -f "$guide" ]] || continue
     
     # Find anchor links within the same file
@@ -109,7 +113,7 @@ for guide in */*.md; do
             ((WARNINGS++))
         fi
     done < <(grep -oE '\(#[a-z0-9-]+\)' "$guide" 2>/dev/null | head -50 || true)
-done
+done || true
 
 # --- Summary ---
 echo ""
