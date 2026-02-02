@@ -21,48 +21,49 @@ Directives for AI agents working within this repository.
 
 | Guide | Note |
 | --- | --- |
-| [Writing Best Practices](writing-best-practices/writing-best-practices.md) | **Start here.** Meta-guide for writing this documentation. |
-| [Coding Guidelines](coding-guidelines/coding-guidelines.md) | |
-| [Commenting Guidelines](commenting-guidelines/commenting-guidelines.md) | |
-| [Documentation Guidelines](documentation-guidelines/documentation-guidelines.md) | READMEs, API docs, ADRs |
-| [Error Handling](error-handling/error-handling.md) | |
-| [Logging Practices](logging-practices/logging-practices.md) | |
-| [API Design](api-design/api-design.md) | |
-| [Dependency Management](dependency-management/dependency-management.md) | |
-| [Supply Chain Security](supply-chain-security/supply-chain-security.md) | SLSA, provenance |
-| [Resilience Patterns](resilience-patterns/resilience-patterns.md) | Retries, circuit breakers |
-| [Planning Documentation](planning-documentation/planning-documentation.md) | Roadmaps, RFCs, ADRs |
+| [Writing Best Practices](guides/writing-best-practices/writing-best-practices.md) | **Start here.** Meta-guide for writing this documentation. |
+| [Coding Guidelines](guides/coding-guidelines/coding-guidelines.md) | |
+| [Commenting Guidelines](guides/commenting-guidelines/commenting-guidelines.md) | |
+| [Documentation Guidelines](guides/documentation-guidelines/documentation-guidelines.md) | READMEs, API docs, ADRs |
+| [Error Handling](guides/error-handling/error-handling.md) | |
+| [Logging Practices](guides/logging-practices/logging-practices.md) | |
+| [API Design](guides/api-design/api-design.md) | |
+| [Dependency Management](guides/dependency-management/dependency-management.md) | |
+| [Supply Chain Security](guides/supply-chain-security/supply-chain-security.md) | SLSA, provenance |
+| [Resilience Patterns](guides/resilience-patterns/resilience-patterns.md) | Retries, circuit breakers |
+| [Planning Documentation](guides/planning-documentation/planning-documentation.md) | Roadmaps, RFCs, ADRs |
 
 ### AI-Assisted Development
 
 | Guide | Note |
 | --- | --- |
-| [AGENTS.md Guidelines](agents-md/agents-md-guidelines.md) | Creating effective AGENTS.md files |
-| [Agentic Workflow](agentic-workflow/agentic-workflow.md) | MAP-FIRST workflow |
-| [Prompting Patterns](prompting-patterns/prompting-patterns.md) | |
-| [Context Management](context-management/context-management.md) | |
-| [Code Review for AI Output](code-review-ai/code-review-ai.md) | |
-| [Security Boundaries](security-boundaries/security-boundaries.md) | |
-| [Testing AI-Generated Code](testing-ai-code/testing-ai-code.md) | |
-| [Git Workflows with AI](git-workflows-ai/git-workflows-ai.md) | |
-| [Debugging with AI](debugging-with-ai/debugging-with-ai.md) | |
-| [Multi-File Refactoring](multi-file-refactoring/multi-file-refactoring.md) | |
-| [Human-AI Collaboration](human-ai-collaboration/human-ai-collaboration.md) | |
-| [Tool Configuration](tool-configuration/tool-configuration.md) | |
-| [PRD for Agents](prd-for-agents/prd-for-agents.md) | Specs AI can consume |
-| [Architecture for AI](architecture-for-ai/architecture-for-ai.md) | System docs that prevent hallucination |
+| [Adoption Guide](adoption/adoption.md) | **Start here.** Integrate best-practices into projects. |
+| [AGENTS.md Guidelines](guides/agents-md/agents-md-guidelines.md) | Creating effective AGENTS.md files |
+| [Agentic Workflow](guides/agentic-workflow/agentic-workflow.md) | MAP-FIRST workflow |
+| [Prompting Patterns](guides/prompting-patterns/prompting-patterns.md) | |
+| [Context Management](guides/context-management/context-management.md) | |
+| [Code Review for AI Output](guides/code-review-ai/code-review-ai.md) | |
+| [Security Boundaries](guides/security-boundaries/security-boundaries.md) | |
+| [Testing AI-Generated Code](guides/testing-ai-code/testing-ai-code.md) | |
+| [Git Workflows with AI](guides/git-workflows-ai/git-workflows-ai.md) | |
+| [Debugging with AI](guides/debugging-with-ai/debugging-with-ai.md) | |
+| [Multi-File Refactoring](guides/multi-file-refactoring/multi-file-refactoring.md) | |
+| [Human-AI Collaboration](guides/human-ai-collaboration/human-ai-collaboration.md) | |
+| [Tool Configuration](guides/tool-configuration/tool-configuration.md) | |
+| [PRD for Agents](guides/prd-for-agents/prd-for-agents.md) | Specs AI can consume |
+| [Architecture for AI](guides/architecture-for-ai/architecture-for-ai.md) | System docs that prevent hallucination |
 
 ---
 
 ## Style Requirements
 
-Follow [Writing Best Practices](writing-best-practices/writing-best-practices.md) strictly.
+Follow [Writing Best Practices](guides/writing-best-practices/writing-best-practices.md) strictly.
 
 | Requirement | Rationale |
 | --- | --- |
 | Tables > bullets > prose | Maximizes scannability |
 | Good/Bad code examples | Clarifies by contrast |
-| Each guide in own subdirectory | Predictable file locations |
+| Each guide in `guides/` subdirectory | Predictable file locations |
 
 ---
 
