@@ -1,5 +1,1 @@
-# Run markdown linting on staged files
-npm run lint:md
-
-# Run navigation validation
-npm run validate
+npm run precommit
