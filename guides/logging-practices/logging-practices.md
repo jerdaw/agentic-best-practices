@@ -2,12 +2,13 @@
 
 Best practices for AI agents on implementing effective logging—what to log, how to structure it, and what to avoid.
 
-> **Scope**: These guidelines are for AI agents performing coding tasks. Good logging makes systems debuggable and observable; bad logging creates noise or security risks.
+> **Scope**: These guidelines are for AI agents performing coding tasks. Good logging makes systems debuggable and
+> observable; bad logging creates noise or security risks.
 
 ## Contents
 
 | Section |
-| --- |
+| :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [Log Levels](#log-levels) |
@@ -67,16 +68,16 @@ Best practices for AI agents on implementing effective logging—what to log, ho
 ### When to Use Each Level
 
 | Level | When | Example |
-|-------|------|---------|
-| `error` | Unexpected failure requiring attention | Database connection lost, unhandled exception |
-| `warn` | Concerning but handled | Retry succeeded, deprecated API used, rate limit approaching |
-| `info` | Significant business events | User registered, order completed, job started |
-| `debug` | Development/troubleshooting details | Function parameters, intermediate state |
-| `trace` | Very detailed (rarely used) | Every database query, full objects |
+| :--- | :--- | :--- |
+| `error` | Unexpected failure | Database connection lost |
+| `warn` | Concerning but handled | Retry succeeded, deprecated API |
+| `info` | Business events | User registered, order completed |
+| `debug` | Development details | Function parameters, state |
+| `trace` | Very detailed | Every database query, full objects |
 
 ### Level Selection Guide
 
-```
+```text
 error:
 - Unhandled exceptions
 - Failed operations that impact users
@@ -109,7 +110,7 @@ debug:
 
 ### Format: Key-Value Pairs
 
-```
+```javascript
 // BAD: Unstructured string
 logger.info(`User ${userId} logged in from ${ip} at ${time}`)
 
@@ -125,7 +126,7 @@ logger.info('User logged in', {
 ### Why Structured Matters
 
 | Unstructured | Structured |
-|--------------|------------|
+| :--- | :--- |
 | Hard to parse | Machine-readable |
 | Hard to search | Queryable fields |
 | Inconsistent format | Consistent schema |
@@ -134,7 +135,7 @@ logger.info('User logged in', {
 ### Standard Fields
 
 | Field | Purpose | Example |
-|-------|---------|---------|
+| :--- | :--- | :--- |
 | `timestamp` | When it happened | ISO 8601 format |
 | `level` | Severity | info, error, etc. |
 | `message` | Human description | "Order processed" |
@@ -143,7 +144,7 @@ logger.info('User logged in', {
 | `service` | What system | "payment-service" |
 | `duration` | How long | Milliseconds |
 
-```
+```json
 // Example structured log entry
 {
   "timestamp": "2024-01-15T10:30:00.000Z",
@@ -164,7 +165,7 @@ logger.info('User logged in', {
 
 ### Application Lifecycle
 
-```
+```javascript
 // Startup
 logger.info('Application starting', {
   version: process.env.APP_VERSION,
@@ -186,7 +187,7 @@ logger.info('Application shutting down', {
 
 ### Request Handling
 
-```
+```javascript
 // Request received (at entry point)
 logger.info('Request received', {
   requestId,
@@ -205,7 +206,7 @@ logger.info('Request completed', {
 
 ### Error Events
 
-```
+```javascript
 // Error with full context
 logger.error('Payment processing failed', {
   requestId,
@@ -220,7 +221,7 @@ logger.error('Payment processing failed', {
 
 ### Security Events
 
-```
+```javascript
 // Authentication
 logger.info('User authenticated', { userId, method: 'password' })
 logger.warn('Authentication failed', { email, reason: 'invalid_password', ip })
@@ -235,7 +236,7 @@ logger.warn('Rate limit exceeded', { userId, endpoint, count })
 
 ### External Service Calls
 
-```
+```javascript
 // Before call
 logger.debug('Calling external service', {
   service: 'stripe',
@@ -269,42 +270,35 @@ logger.error('External service failed', {
 ### Sensitive Data
 
 | Never Log | Why | Alternative |
-|-----------|-----|-------------|
-| Passwords | Security | Log "password provided: yes/no" |
-| API keys/tokens | Security | Log "token valid: yes/no" |
-| Credit card numbers | PCI compliance | Log last 4 digits only |
-| Social Security Numbers | Privacy | Log "SSN provided: yes/no" |
-| Full medical records | HIPAA | Log event type only |
-| Personal addresses | Privacy | Log country/region only |
+| :--- | :--- | :--- |
+| Passwords | Security | Log "provided: true/false" |
+| API keys/tokens | Security | Log "valid: true/false" |
+| Credit card numbers | PCI | Log last 4 digits only |
+| SSNs | Privacy | Log "provided: true/false" |
+| Medical records | HIPAA | Log event type only |
+| Addresses | Privacy | Log country/region only |
 | Session contents | Security | Log session ID only |
 
 ### Sanitization Patterns
 
-```
+```javascript
 // BAD
 logger.info('User login', { email, password })
 logger.info('Payment', { cardNumber, cvv, expiry })
-logger.debug('Request body', req.body)
 
 // GOOD
 logger.info('User login', { email, passwordProvided: !!password })
 logger.info('Payment', { cardLastFour: cardNumber.slice(-4), amountCents })
-logger.debug('Request received', {
-  path: req.path,
-  bodySize: JSON.stringify(req.body).length
-})
 ```
 
 ### Excessive Logging
 
-```
-// BAD: Too verbose, fills logs
+```javascript
+// BAD: Too verbose
 function add(a, b) {
   logger.debug('Entering add function')
   logger.debug('Parameter a', { a })
-  logger.debug('Parameter b', { b })
   const result = a + b
-  logger.debug('Calculated result', { result })
   logger.debug('Exiting add function')
   return result
 }
@@ -323,7 +317,7 @@ function processOrder(order) {
 
 ### Request IDs
 
-```
+```javascript
 // Generate at entry point
 function requestMiddleware(req, res, next) {
   req.requestId = req.headers['x-request-id'] || generateUUID()
@@ -337,7 +331,7 @@ logger.info('Processing request', { requestId: req.requestId, ... })
 
 ### Correlation Across Services
 
-```
+```javascript
 // Pass request ID to downstream services
 async function callDownstream(requestId, data) {
   return await fetch(url, {
@@ -352,13 +346,12 @@ async function callDownstream(requestId, data) {
 
 ### Context Propagation
 
-```
+```javascript
 // Create logger with context
 function createContextLogger(baseLogger, context) {
   return {
     info: (message, data) => baseLogger.info(message, { ...context, ...data }),
     error: (message, data) => baseLogger.error(message, { ...context, ...data }),
-    // ... other levels
   }
 }
 
@@ -370,7 +363,6 @@ function handleRequest(req, res) {
   })
 
   log.info('Starting request processing')
-  // All logs from here include requestId and userId
 }
 ```
 
@@ -380,7 +372,7 @@ function handleRequest(req, res) {
 
 ### Duration Tracking
 
-```
+```javascript
 // Track operation duration
 const start = Date.now()
 await performOperation()
@@ -395,7 +387,7 @@ logger.info('Operation completed', {
 
 ### Threshold Warnings
 
-```
+```javascript
 // Log slow operations
 const SLOW_THRESHOLD_MS = 1000
 
@@ -418,7 +410,7 @@ async function trackedOperation(name, fn) {
 
 ### Environment-Based Levels
 
-```
+```javascript
 // Development: verbose
 const logLevel = process.env.NODE_ENV === 'production' ? 'info' : 'debug'
 
@@ -427,18 +419,17 @@ const logConfig = {
   default: 'info',
   'database': 'warn',      // Quiet
   'http': 'debug',         // Verbose
-  'auth': 'info'
 }
 ```
 
 ### Production vs Development
 
 | Setting | Development | Production |
-|---------|-------------|------------|
+| :--- | :--- | :--- |
 | Level | debug | info or warn |
 | Format | Pretty printed | JSON |
 | Output | Console | Aggregator |
-| Sampling | None | May sample high-volume |
+| Sampling | None | High-volume maybe |
 
 ---
 
@@ -447,31 +438,29 @@ const logConfig = {
 ### Message Guidelines
 
 | Do | Don't |
-|----|-------|
+| :--- | :--- |
 | Start with what happened | Start with "Error:" |
 | Use present tense | Use past tense |
 | Be specific | Be vague |
-| Use consistent terminology | Mix terms |
+| Use consistent terms | Mix terms |
 
-```
+```text
 // Good messages
 'User registered'
 'Order payment processed'
 'Cache miss, fetching from database'
 'Rate limit exceeded'
-'Database connection established'
 
 // Bad messages
 'Error: something went wrong'
 'Done'
 'OK'
 'Processing...'
-'An error has occurred'
 ```
 
 ### Error Messages
 
-```
+```javascript
 // Include actionable information
 logger.error('Database connection failed', {
   host: config.db.host,
@@ -488,7 +477,7 @@ logger.error('Database connection failed', {
 
 ### Testing Logging
 
-```
+```javascript
 // Mock logger for tests
 const mockLogger = {
   logs: [],
@@ -510,15 +499,14 @@ test('logs order completion', async () => {
 
 ### Avoiding Test Noise
 
-```
+```javascript
 // Suppress logs in tests
 beforeAll(() => {
   jest.spyOn(logger, 'info').mockImplementation(() => {})
-  jest.spyOn(logger, 'debug').mockImplementation(() => {})
 })
 
 // Or use test log level
-process.env.LOG_LEVEL = 'error'  // Only show errors in tests
+process.env.LOG_LEVEL = 'error'
 ```
 
 ---
@@ -531,7 +519,7 @@ When logging agent operations, additional observability patterns apply.
 
 Every agent operation should have a unique run ID:
 
-```
+```javascript
 // Generate at operation start
 const runId = generateUUID()
 
@@ -544,19 +532,13 @@ logger.info('Agent operation started', {
 
 // Include in all subsequent logs
 logger.info('Tool invoked', { runId, tool: 'read_file', file: path })
-logger.info('Operation completed', {
-  runId,
-  duration: elapsed,
-  outputTokens: response.length,
-  success: true
-})
 ```
 
 ### Token and Cost Tracking
 
 Track resource consumption for budgeting:
 
-```
+```json
 {
   "timestamp": "2024-01-15T10:30:00Z",
   "runId": "run-123",
@@ -564,9 +546,7 @@ Track resource consumption for budgeting:
   "model": "claude-3-sonnet",
   "inputTokens": 1500,
   "outputTokens": 800,
-  "estimatedCost": 0.012,
-  "cumulativeTokens": 12500,
-  "budgetRemaining": 0.45
+  "estimatedCost": 0.012
 }
 ```
 
@@ -575,33 +555,29 @@ Track resource consumption for budgeting:
 Log metrics that support service level objectives:
 
 | Metric | Purpose | Example |
-|--------|---------|---------|
-| `latency_ms` | Response time tracking | `{ latency_ms: 2300 }` |
-| `tokens_used` | Cost control | `{ inputTokens: 500, outputTokens: 200 }` |
-| `retry_count` | Reliability | `{ attempts: 2, maxAttempts: 3 }` |
-| `tool_calls` | Behavior analysis | `{ toolCalls: ['read', 'edit', 'read'] }` |
-| `error_rate` | Quality monitoring | Log every error with category |
+| :--- | :--- | :--- |
+| `latency_ms` | Response time | `{ latency_ms: 2300 }` |
+| `tokens_used` | Cost control | `{ inputTokens: 500 }` |
+| `retry_count` | Reliability | `{ attempts: 2 }` |
+| `tool_calls` | Behavior | `{ toolCalls: 5 }` |
 
 ### Agent-Specific Fields
 
 | Field | Purpose | Example |
-|-------|---------|---------|
-| `runId` | Correlate across operations | UUID |
-| `parentRunId` | Link sub-agents to parent | Parent's UUID |
-| `taskType` | Categorize operations | "code-review", "refactor" |
-| `toolName` | Track tool usage | "read_file", "edit" |
-| `budgetUsed` | Cost tracking | Percentage or absolute |
+| :--- | :--- | :--- |
+| `runId` | Correlate run | UUID |
+| `parentRunId` | Link sub-agents | Parent UUID |
+| `taskType` | Categorize | "code-review" |
+| `toolName` | Track tools | "read_file" |
 
-```
+```javascript
 // Good agent logging structure
 logger.info('Agent task completed', {
   runId: 'run-abc-123',
-  parentRunId: 'run-parent-456',  // If sub-agent
   taskType: 'code-review',
   duration: 45000,
   toolCalls: 12,
   tokens: { input: 5000, output: 2000 },
-  files: { read: 8, modified: 2 },
   success: true
 })
 ```
@@ -611,17 +587,15 @@ logger.info('Agent task completed', {
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
-|--------------|---------|-----|
-| **Logging sensitive data** | Security breach | Redact or omit |
+| :--- | :--- | :--- |
+| **Logged sensitive data** | Security breach | Redact or omit |
 | **Unstructured strings** | Hard to parse | Use key-value pairs |
-| **No context** | Hard to trace | Include IDs, user, operation |
+| **No context** | Hard to trace | Include IDs, user |
 | **Wrong level** | Noise or missed alerts | Choose level carefully |
 | **Log and throw** | Duplicate entries | Do one or the other |
-| **console.log in production** | Not aggregated | Use proper logger |
+| **console.log** | Not aggregated | Use proper logger |
 | **Logging every line** | Performance, noise | Log meaningful events |
-| **Inconsistent format** | Hard to query | Standardize fields |
-| **No run ID** | Can't trace agent operations | Include runId in all logs |
-| **No cost tracking** | Budget overruns | Log token usage |
+| **No run ID** | Can't trace agent | Include runId |
 
 ---
 
