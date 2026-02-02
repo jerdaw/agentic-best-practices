@@ -31,6 +31,19 @@ Directives for AI agents working within this repository.
 | [Dependency Management](guides/dependency-management/dependency-management.md) | |
 | [Supply Chain Security](guides/supply-chain-security/supply-chain-security.md) | SLSA, provenance |
 | [Resilience Patterns](guides/resilience-patterns/resilience-patterns.md) | Retries, circuit breakers |
+| [Idempotency Patterns](guides/idempotency-patterns/idempotency-patterns.md) | Safe retry, deduplication |
+| [Secrets & Configuration](guides/secrets-configuration/secrets-configuration.md) | Config separation, secret management |
+| [Secure Coding](guides/secure-coding/secure-coding.md) | OWASP patterns, injection prevention |
+| [Deployment Strategies](guides/deployment-strategies/deployment-strategies.md) | Blue-green, canary, feature flags |
+| [Observability Patterns](guides/observability-patterns/observability-patterns.md) | Metrics, tracing, health checks |
+| [Testing Strategy](guides/testing-strategy/testing-strategy.md) | Test pyramid, coverage |  
+| [CI/CD Pipelines](guides/cicd-pipelines/cicd-pipelines.md) | Build, test, deploy automation |
+| [Codebase Organization](guides/codebase-organization/codebase-organization.md) | Directory structure, layering |
+| [Static Analysis](guides/static-analysis/static-analysis.md) | Linters, formatters, SAST |
+| [Privacy & Compliance](guides/privacy-compliance/privacy-compliance.md) | GDPR, data protection |
+| [Accessibility & i18n](guides/accessibility-i18n/accessibility-i18n.md) | WCAG, localization |
+| [Distributed Sagas](guides/distributed-sagas/distributed-sagas.md) | Multi-service transactions |
+| [Database Indexing](guides/database-indexing/database-indexing.md) | Query optimization |
 | [Planning Documentation](guides/planning-documentation/planning-documentation.md) | Roadmaps, RFCs, ADRs |
 
 ### AI-Assisted Development
