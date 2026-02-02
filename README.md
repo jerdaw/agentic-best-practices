@@ -32,10 +32,10 @@ Use this repository as a shared standards library across all your projects.
 
 ```bash
 # One-time: clone to standard location
-git clone https://github.com/[org]/best-practices.git ~/best-practices
+git clone https://github.com/[org]/agentic-best-practices.git ~/agentic-best-practices
 
 # Per-project: copy template and customize
-cp ~/best-practices/adoption/template-agents.md ./AGENTS.md
+cp ~/agentic-best-practices/adoption/template-agents.md ./AGENTS.md
 ln -s AGENTS.md CLAUDE.md
 # Edit AGENTS.md to fill in project-specific sections
 ```
@@ -44,12 +44,12 @@ ln -s AGENTS.md CLAUDE.md
 
 | Component | Purpose |
 | --- | --- |
-| **This repo** (`~/best-practices/`) | Single source of truth for all standards |
-| **Project AGENTS.md** | Points AI to consult best-practices for guidance |
+| **This repo** (`~/agentic-best-practices/`) | Single source of truth for all standards |
+| **Project AGENTS.md** | Points AI to consult agentic-best-practices for guidance |
 | **Template** | Ready-to-use AGENTS.md with reference directive built in |
 
 The template includes a **Standards Reference** section that tells AI:
-> *Before implementing patterns for error handling, logging, API design, etc., consult the relevant guide in `~/best-practices/`.*
+> *Before implementing patterns for error handling, logging, API design, etc., consult the relevant guide in `~/agentic-best-practices/`.*
 
 This ensures consistent AI behavior across all your projects.
 
@@ -100,7 +100,7 @@ Best practices specific to working with AI coding assistants.
 
 | Guide | Description |
 | --- | --- |
-| [Adoption Guide](adoption/adoption.md) | **Start Here.** Integrate best-practices into your projects. |
+| [Adoption Guide](adoption/adoption.md) | **Start Here.** Integrate agentic-best-practices into your projects. |
 | [AGENTS.md Guidelines](guides/agents-md/agents-md-guidelines.md) | Creating effective AGENTS.md files. |
 | [Agentic Workflow](guides/agentic-workflow/agentic-workflow.md) | MAP-FIRST workflow for safe coding. |
 | [Prompting Patterns](guides/prompting-patterns/prompting-patterns.md) | Crafting effective prompts for AI tools. |
