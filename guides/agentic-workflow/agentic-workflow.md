@@ -35,6 +35,7 @@ Best practices for AI agents on operating safely and effectively in codebases—
 | **PR** | Package for review | Review-ready submission |
 
 **Core invariants**:
+
 - No edits before understanding (MAP-FIRST)
 - No writes without dry-run first
 - No destructive actions without approval

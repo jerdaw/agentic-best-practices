@@ -26,6 +26,7 @@ A reference for maintaining security when using AI coding assistants—what to p
 ## Quick Reference
 
 **Never share with AI**:
+
 - API keys, tokens, passwords
 - `.env` files or secrets configuration
 - Private keys (SSL, SSH, signing)
@@ -33,6 +34,7 @@ A reference for maintaining security when using AI coding assistants—what to p
 - Customer PII or sensitive data
 
 **Always verify in AI output**:
+
 - User input handling (injection vectors)
 - Authentication/authorization logic
 - Database queries with dynamic values
@@ -40,6 +42,7 @@ A reference for maintaining security when using AI coding assistants—what to p
 - Cryptographic implementations
 
 **Highest-risk AI changes**:
+
 - Authentication flows
 - Payment processing
 - Access control
@@ -95,6 +98,7 @@ AI output used without validation.
 ### LLM03: Training Data Poisoning
 
 Not directly applicable to code agents, but:
+
 - AI may suggest vulnerable patterns from training data
 - Always verify security regardless of AI confidence
 
@@ -109,6 +113,7 @@ Not directly applicable to code agents, but:
 ### LLM05: Supply Chain Vulnerabilities
 
 AI may suggest:
+
 - Malicious or typosquatted packages
 - Outdated dependencies with known CVEs
 - Packages from untrusted sources
@@ -203,6 +208,7 @@ config/production.json (if contains secrets)
 ### Safe Patterns
 
 **Using environment variables**:
+
 ```typescript
 // Good: Reference by name
 const apiKey = process.env.STRIPE_API_KEY
@@ -212,6 +218,7 @@ const apiKey = 'sk_live_...'  // Never do this
 ```
 
 **Placeholder pattern for AI context**:
+
 ```typescript
 // When showing AI code that uses secrets, use placeholders:
 const config = {
@@ -252,6 +259,7 @@ AI generates code that trusts input. Add validation at system boundaries.
 ### Validation Patterns
 
 **API input validation**:
+
 ```typescript
 // AI often writes (no validation)
 app.post('/users', async (req, res) => {
@@ -271,6 +279,7 @@ app.post('/users', async (req, res) => {
 ```
 
 **Path validation**:
+
 ```typescript
 // AI often writes (vulnerable to traversal)
 app.get('/files/:filename', (req, res) => {
@@ -404,6 +413,7 @@ For every protected endpoint, verify:
 ### Authorization Patterns
 
 **AI often forgets authorization**:
+
 ```typescript
 // AI often writes (missing ownership check)
 app.delete('/posts/:id', authenticate, async (req, res) => {
@@ -489,6 +499,7 @@ AI makes subtle crypto mistakes. Never trust AI crypto without expert review.
 ### Safe Patterns
 
 **Password hashing**:
+
 ```typescript
 // BAD - AI might suggest
 const hash = crypto.createHash('sha256').update(password).digest('hex')
@@ -499,6 +510,7 @@ const hash = await bcrypt.hash(password, 12)
 ```
 
 **Token generation**:
+
 ```typescript
 // BAD
 const token = Math.random().toString(36)
@@ -509,6 +521,7 @@ const token = crypto.randomBytes(32).toString('hex')
 ```
 
 **Encryption**:
+
 ```typescript
 // BAD - ECB mode, hardcoded IV
 const cipher = crypto.createCipher('aes-256-ecb', key)
@@ -628,6 +641,7 @@ Include in your AGENTS.md:
 Before deploying AI-generated code:
 
 ### Input Handling
+
 - [ ] All user input validated at boundaries
 - [ ] SQL queries use parameterization
 - [ ] HTML output escaped properly
@@ -635,6 +649,7 @@ Before deploying AI-generated code:
 - [ ] Shell commands avoid user input
 
 ### Authentication & Authorization
+
 - [ ] All protected routes require authentication
 - [ ] Authorization checks verify ownership/permissions
 - [ ] Tokens use secure generation (crypto.randomBytes)
@@ -642,6 +657,7 @@ Before deploying AI-generated code:
 - [ ] Rate limiting on auth endpoints
 
 ### Secrets & Configuration
+
 - [ ] No hardcoded secrets in code
 - [ ] Environment variables for sensitive config
 - [ ] .env files in .gitignore
@@ -649,12 +665,14 @@ Before deploying AI-generated code:
 - [ ] Secrets not logged or exposed in errors
 
 ### Dependencies
+
 - [ ] All new packages verified (source, maintenance, security)
 - [ ] No known vulnerabilities (npm audit, etc.)
 - [ ] Lockfile committed
 - [ ] Minimal dependencies added
 
 ### Crypto
+
 - [ ] Password hashing uses bcrypt/argon2/scrypt
 - [ ] Token generation uses crypto-secure random
 - [ ] No DIY encryption

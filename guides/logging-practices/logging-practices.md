@@ -28,6 +28,7 @@ Best practices for AI agents on implementing effective logging—what to log, ho
 ## Quick Reference
 
 **Always log**:
+
 - Application startup and configuration
 - Errors with full context
 - Security events (auth failures, access denials)
@@ -35,6 +36,7 @@ Best practices for AI agents on implementing effective logging—what to log, ho
 - External service interactions
 
 **Never log**:
+
 - Passwords, tokens, API keys
 - Personal data (PII) unless required
 - Credit card numbers, SSNs
@@ -42,6 +44,7 @@ Best practices for AI agents on implementing effective logging—what to log, ho
 - Every function entry/exit
 
 **Log levels**:
+
 - `error`: Something failed that shouldn't have
 - `warn`: Something concerning but handled
 - `info`: Significant business events

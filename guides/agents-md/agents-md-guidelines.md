@@ -124,6 +124,7 @@ Not every section is required. Start with Agent Role, Tech Stack, Commands, and 
 Define a specialist persona with ordered priorities. The agent should know what to optimize for when trade-offs arise.
 
 **Good:**
+
 ```markdown
 You are a **security-conscious backend developer** working on a payment processing API. Your priorities:
 1. Security over convenience
@@ -133,6 +134,7 @@ You are a **security-conscious backend developer** working on a payment processi
 ```
 
 **Bad:**
+
 ```markdown
 You are a helpful coding assistant that helps with this project.
 ```
@@ -154,6 +156,7 @@ Use a table with explicit versions. Agents often assume the latest version, whic
 | ORM | Prisma | 5.x |
 
 **Bad:**
+
 ```markdown
 We use Express, TypeScript, and Node.
 ```
@@ -163,6 +166,7 @@ We use Express, TypeScript, and Node.
 Include full syntax with flags. Group by category (dev, test, build, deploy).
 
 **Good:**
+
 ```bash
 # Development
 npm run dev              # Start with hot reload (port 3000)
@@ -181,6 +185,7 @@ npm run lint -- --fix    # Auto-fix lint issues
 ```
 
 **Bad:**
+
 ```markdown
 Run tests with npm test. You can also run coverage tests.
 ```
@@ -224,6 +229,7 @@ Show real patterns. An example is worth a thousand words of explanation.
 **Good:**
 
 **Error handling** – Always use the Result pattern:
+
 ```typescript
 // Good: Explicit error handling
 const result = await fetchUser(id)
@@ -235,6 +241,7 @@ return { data: result.data }
 ```
 
 **Bad:**
+
 ```markdown
 Use proper error handling in all functions.
 ```
@@ -310,6 +317,7 @@ Point agents to the most important files. Use `file:line` format for precise nav
 | Types | `src/types/` |
 
 **Bad:**
+
 ```markdown
 The main files are in src/. Look at index.ts to start.
 ```
@@ -330,6 +338,7 @@ Mark sections that are explicitly authored by humans and must not be modified, r
 | **Policy/Legal** | Ensures critical compliance text is never "optimized". |
 
 **Good:**
+
 ```markdown
 <!-- BEGIN USER-SPECIFIED: Do not modify -->
 ## Deployment Philosophy

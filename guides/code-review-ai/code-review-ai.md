@@ -231,6 +231,7 @@ AI invents functions, parameters, and APIs that don't exist.
 | **4. Search codebase** | If uncertain, search the project to see if the function exists elsewhere. |
 
 **Example hallucination**:
+
 ```typescript
 // AI generated
 import { parseJSON } from 'lodash'
@@ -257,6 +258,7 @@ AI lacks threat modeling. Scrutinize security-sensitive code closely.
 | **Path Traversal** | User input in file paths | Validate against allowed paths |
 
 **SQL Injection example**:
+
 ```typescript
 // AI often writes (VULNERABLE)
 const query = `SELECT * FROM users WHERE id = '${userId}'`
@@ -267,6 +269,7 @@ db.query(query, [userId])
 ```
 
 **XSS example**:
+
 ```typescript
 // AI often writes (VULNERABLE)
 element.innerHTML = `<div>${userInput}</div>`
@@ -309,6 +312,7 @@ AI optimizes for readability, not always performance.
 | **Unbound growth** | Arrays/maps that never clear | Implement eviction policy |
 
 **N+1 query example**:
+
 ```typescript
 // AI often writes (N+1 queries)
 const users = await getUsers()

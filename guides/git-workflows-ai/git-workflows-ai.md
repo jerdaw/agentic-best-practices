@@ -277,6 +277,7 @@ git rebase -i HEAD~N
 ### Preserving Meaningful History
 
 **Good history**:
+
 ```text
 abc1234 feat: add user validation
 def5678 feat: add validation error messages
@@ -284,6 +285,7 @@ ghi9012 test: add validation edge case tests
 ```
 
 **Bad history** (AI iteration noise):
+
 ```text
 abc1234 add validation
 def5678 fix validation
@@ -451,6 +453,7 @@ repos:
 ### PR Checks
 
 Required before merge:
+
 - All tests pass
 - Linting passes
 - Type checking passes

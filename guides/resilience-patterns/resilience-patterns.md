@@ -37,6 +37,7 @@ Best practices for AI agents on building resilient systems—retries, circuit br
 | **Bulkhead** | Isolate failures | Critical vs non-critical paths |
 
 **Key numbers**:
+
 - Retry: 3 attempts max, exponential backoff
 - Timeout: Always set one (default: 30s for APIs)
 - Circuit breaker: Trip after 5 consecutive failures

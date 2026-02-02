@@ -27,6 +27,7 @@ A reference for verifying correctness of AI-generated code through testing—wha
 ## Quick Reference
 
 **Always test these in AI code**:
+
 - Edge cases (null, empty, zero, max values)
 - Error conditions (network failures, invalid input)
 - Boundary conditions (off-by-one, limits)
@@ -34,12 +35,14 @@ A reference for verifying correctness of AI-generated code through testing—wha
 - Async behavior (race conditions, timeouts)
 
 **AI-generated tests need review for**:
+
 - Missing edge cases
 - Tautological assertions (testing the implementation)
 - Mocking too much (tests pass but code fails)
 - Happy path bias
 
 **Testing priorities for AI code**:
+
 1. Does it compile/run?
 2. Does it handle null/undefined?
 3. Does it match expected behavior?
@@ -464,6 +467,7 @@ Ask AI to generate tests, but verify they're comprehensive:
 ### Effective Prompts
 
 **Generate edge case tests**:
+
 ```
 Write tests for this function, focusing on edge cases:
 - null/undefined inputs
@@ -476,11 +480,14 @@ function parseDate(input: string): Date | null {
   // implementation
 }
 ```
+
 ```
 
 **Generate failure tests**:
 ```
+
 Write tests that verify error handling for this API call:
+
 - Network failures
 - 4xx responses
 - 5xx responses
@@ -492,11 +499,14 @@ async function fetchUser(id: string): Promise<User> {
   // implementation
 }
 ```
+
 ```
 
 **Generate property tests**:
 ```
+
 Write property-based tests using fast-check for:
+
 - Round-trip (serialize/deserialize)
 - Invariants (length preservation, order)
 - Idempotence where applicable
@@ -506,6 +516,7 @@ function sortUsers(users: User[]): User[]
 function serializeUser(user: User): string
 function deserializeUser(data: string): User
 ```
+
 ```
 
 ### Review AI-Generated Tests
