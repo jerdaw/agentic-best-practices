@@ -36,7 +36,7 @@ How we maintain the project roadmap with minimal drift and minimal human time.
 
 | Item type | Include? | Where details go |
 | --- | --- | --- |
-| Adoption milestones | Yes | Issues / `docs/plans/implementation-plan.md` |
+| Adoption milestones | Yes | Issues (keep the roadmap lightweight) |
 | New guides | Yes | Issue + target file path |
 | Tooling/validation improvements | Yes | PR(s) + `docs/process/release-process.md` notes |
 | One-off cleanup chores | No | Commit/PR description |
