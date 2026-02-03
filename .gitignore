@@ -28,3 +28,6 @@ build/
 coverage/
 *.log
 tmp/
+
+# Husky internal hooks path (generated)
+.husky/_/

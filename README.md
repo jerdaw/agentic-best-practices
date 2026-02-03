@@ -96,21 +96,6 @@ See the full [Adoption Guide](adoption/adoption.md) for detailed setup instructi
 
 ## Roadmap
 
-### Agent-Led (Minimal Human Input)
-
-| Work Item | Output | Minimal Input | Status |
-| --- | --- | --- | --- |
-| Clear dev-only security advisories | `npm audit` clean after dependency updates | Yes/No on taking breaking upgrades | Done |
-| Keep quality gates green | `npm run precommit` passes locally and in CI | None | Done |
-| Validate navigation + internal links | Passing `npm run validate` | None | Done |
-| Split changes into PR-sized patches | PR series + staging commands in `docs/phase-1-pr-split.md` | Yes/No on proposed split | Done |
-| Summarize doc deltas for fast approval | Checklist in `docs/phase-1-ship-revert-summary.md` | Yes/No per bucket | Done |
-| Document release process | Release checklist + notes template in `docs/release-process.md` | Yes/No on convention | Done |
-| Add downstream update guidance | Update commands in README + Adoption Guide | Yes/No on wording | Done |
-| Add feedback intake + triage rubric | `docs/feedback-template.md` + `docs/triage-rubric.md` | Yes/No on docs | Done |
-| Add scheduled CI validation | Weekly + manual runs in `.github/workflows/lint.yml` | Yes/No on schedule | Done |
-| Validate README index drift | README completeness checks in `scripts/validate-navigation.sh` | None | Done |
-
 ### Human-Led (Non-trivial Context/Time)
 
 | Work Item | Why Human-Owned | Output | Status |
@@ -187,6 +172,12 @@ New guides must follow the [Writing Best Practices](guides/writing-best-practice
 | **Actionable** | Concrete examples over abstract principles. |
 | **Scannable** | Tables and lists over prose. |
 | **Maintained** | Updated when practices evolve. |
+
+### Roadmap
+
+| Topic | Doc |
+| --- | --- |
+| How we maintain the roadmap | `docs/roadmap-process.md` |
 
 ### Feedback
 
