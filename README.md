@@ -185,7 +185,7 @@ New guides must follow the [Writing Best Practices](guides/writing-best-practice
 | If you found... | Use |
 | --- | --- |
 | A missing pattern, conflict, or confusing guidance | `docs/templates/feedback-template.md` |
-| A consistent way to classify and resolve feedback | `docs/rubrics/triage-rubric.md` |
+| A consistent way to classify and resolve feedback | `docs/templates/feedback-template.md` |
 
 ---
 
