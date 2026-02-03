@@ -209,7 +209,7 @@ When you want to understand what changed (before pulling):
 | Fetch tags (optional) | `git -C ~/agentic-best-practices fetch --tags` |
 | List recent tags | `git -C ~/agentic-best-practices tag --sort=-creatordate \| head -20` |
 
-See `docs/release-process.md` for the release checklist and release note format.
+See `docs/process/release-process.md` for the release checklist and release note format.
 
 ### Adding Project-Specific Patterns
 

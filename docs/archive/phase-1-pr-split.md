@@ -1,6 +1,6 @@
 # Phase 1 PR Split (Archived, v0.1)
 
-PR-sized patch set proposal for Phase 1 (“Make Current Changes Reviewable”) from `docs/implementation-plan.md`.
+PR-sized patch set proposal for Phase 1 (“Make Current Changes Reviewable”) from `docs/plans/implementation-plan.md`.
 
 | Field | Value |
 | --- | --- |
@@ -89,9 +89,9 @@ git reset
 git add \
   README.md \
   AGENTS.md \
-  docs/implementation-plan.md \
-  docs/phase-1-pr-split.md \
-  docs/phase-1-ship-revert-summary.md
+  docs/plans/implementation-plan.md \
+  docs/archive/phase-1-pr-split.md \
+  docs/archive/phase-1-ship-revert-summary.md
 ```
 
 ### PR 3 — Adoption template (Contents table)
