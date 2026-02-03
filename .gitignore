@@ -31,3 +31,7 @@ tmp/
 
 # Husky internal hooks path (generated)
 .husky/_/
+
+# Husky accidental arg directories (e.g., `npx husky -h` / `npx husky --help`)
+-h/
+--help/
