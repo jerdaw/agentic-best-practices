@@ -5,7 +5,7 @@ Highly detailed, agent-first execution plan for evolving `agentic-best-practices
 | Field | Value |
 | --- | --- |
 | **Version** | `0.1.4` |
-| **Last updated** | 2026-02-02 |
+| **Last updated** | 2026-02-03 |
 | **Primary constraint** | Human time is scarce; prefer agent-executable work |
 | **Quality gates** | `npm run precommit` (Markdown lint + navigation validation) |
 | **Source of truth** | `README.md` + `AGENTS.md` + `guides/` + `adoption/` |
@@ -37,7 +37,7 @@ Highly detailed, agent-first execution plan for evolving `agentic-best-practices
 | **Tooling** | Node-based Markdown linting (`markdownlint-cli2`) and a repo-specific navigation validator (`scripts/validate-navigation.sh`). |
 | **CI** | GitHub Actions runs markdown lint and navigation validation (`.github/workflows/lint.yml`). |
 | **Local quality gates** | `npm run precommit` runs `lint:md` then `validate`. Husky pre-commit invokes the same gates. |
-| **Notable work-in-progress** | Large set of modified Markdown files exists in the working tree; these need to be packaged into reviewable, PR-sized chunks. |
+| **Notable work-in-progress** | Maintenance mode: keep gates green, keep roadmap accurate, and iterate based on adoption feedback. |
 
 ---
 
@@ -91,8 +91,8 @@ The next batch is selected to (a) reduce review risk and (b) make incremental sh
 
 | Priority | Work item | Why now | Human input |
 | --- | --- | --- | --- |
-| P0 | Split current working changes into PR-sized patch sets | Large diffs are hard to review; splitting enables safe merge/rollback | Yes/No on the proposed split |
-| P0 | Generate “ship vs revert” change summary | Lets you approve large doc updates quickly | Yes/No per bucket |
+| P0 | Maintain repo hygiene and docs navigation | Keeps the repo trustworthy and easy to contribute to | None (agent-only) |
+| P0 | Keep CI + local gates aligned | Prevents drift between local and CI validation | None (agent-only) |
 | P1 | Add lightweight release hygiene (tag + changelog discipline) | Makes it easy to pull updates into downstream repos | Yes/No on release format |
 | P1 | Add adoption feedback loop scaffolding | Converts “standards” into “standards that work in practice” | Choose pilot repos (separate human-led item) |
 

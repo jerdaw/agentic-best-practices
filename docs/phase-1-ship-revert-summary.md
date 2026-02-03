@@ -1,4 +1,4 @@
-# Phase 1 Ship / Hold Summary (v0.1)
+# Phase 1 Ship / Hold Summary (Archived, v0.1)
 
 Fast approval checklist for the Phase 1 PR split.
 
@@ -6,6 +6,7 @@ Fast approval checklist for the Phase 1 PR split.
 | --- | --- |
 | **Version** | `0.1` |
 | **Last updated** | 2026-02-02 |
+| **Status** | Archived (Phase 1 complete; kept for reference) |
 | **Default posture** | Ship low-risk infra/meta; isolate guide rewrites |
 | **Why** | Large guide rewrites can change intent; ship them in isolated PRs |
 
