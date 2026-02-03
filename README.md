@@ -178,6 +178,7 @@ New guides must follow the [Writing Best Practices](guides/writing-best-practice
 | Topic | Doc |
 | --- | --- |
 | How we maintain the roadmap | `docs/roadmap-process.md` |
+| Project maintenance docs index | `docs/README.md` |
 
 ### Feedback
 

@@ -1,4 +1,4 @@
-# Phase 1 PR Split (v0.1)
+# Phase 1 PR Split (Archived, v0.1)
 
 PR-sized patch set proposal for Phase 1 (“Make Current Changes Reviewable”) from `docs/implementation-plan.md`.
 
@@ -6,6 +6,7 @@ PR-sized patch set proposal for Phase 1 (“Make Current Changes Reviewable”) 
 | --- | --- |
 | **Version** | `0.1` |
 | **Last updated** | 2026-02-02 |
+| **Status** | Archived (Phase 1 complete; kept for reference) |
 | **Primary goal** | Make large diffs reviewable with minimal human time |
 | **Quality gate** | `npm run precommit` (must be green for every PR) |
 

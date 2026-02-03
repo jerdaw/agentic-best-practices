@@ -39,7 +39,7 @@ Structured prompts for reporting “the standards didn’t work in practice” w
 | Yes | What you expected vs what happened | 1–2 sentences each |
 | Yes | Exact guide file(s) used | Path(s) under `guides/` |
 | Yes | Minimal reproduction or snippet | Smallest example that shows the issue |
-| Yes | Environment/tool | “Codex CLI”, “Claude Code”, etc. |
+| Yes | Environment/tool | Your editor/CLI/tooling (if relevant) |
 | Recommended | Proposed fix | “Add a note under X”, “Add a Bad example”, etc. |
 
 ---
