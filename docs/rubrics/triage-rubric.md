@@ -6,7 +6,7 @@ How to classify and act on incoming feedback with minimal human time.
 | --- | --- |
 | **Version** | `0.1.0` |
 | **Last updated** | 2026-02-02 |
-| **Input** | Issues/notes using `docs/feedback-template.md` |
+| **Input** | Issues/notes using `docs/templates/feedback-template.md` |
 | **Output** | Clear next action: fix, clarify, cross-link, or defer |
 
 ## Contents

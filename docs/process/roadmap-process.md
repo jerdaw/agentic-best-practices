@@ -36,9 +36,9 @@ How we maintain the project roadmap with minimal drift and minimal human time.
 
 | Item type | Include? | Where details go |
 | --- | --- | --- |
-| Adoption milestones | Yes | Issues / `docs/implementation-plan.md` |
+| Adoption milestones | Yes | Issues / `docs/plans/implementation-plan.md` |
 | New guides | Yes | Issue + target file path |
-| Tooling/validation improvements | Yes | PR(s) + `docs/release-process.md` notes |
+| Tooling/validation improvements | Yes | PR(s) + `docs/process/release-process.md` notes |
 | One-off cleanup chores | No | Commit/PR description |
 | “Nice ideas” without scope | No | Issues backlog |
 
@@ -74,4 +74,4 @@ Completed items should not remain in the roadmap table.
 | Action | Why | How |
 | --- | --- | --- |
 | Remove Done items from Roadmap | Keeps focus on active work | Edit `README.md` table |
-| Preserve traceability | “Where did this go?” remains answerable | Link PRs/releases in Git history and `docs/release-process.md` |
+| Preserve traceability | “Where did this go?” remains answerable | Link PRs/releases in Git history and `docs/process/release-process.md` |

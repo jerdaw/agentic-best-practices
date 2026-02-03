@@ -33,7 +33,7 @@ Highly detailed, agent-first execution plan for evolving `agentic-best-practices
 | Area | Current state |
 | --- | --- |
 | **Purpose** | Repo provides opinionated, scannable best-practice guides for humans and AI agents; adoption is via copying `adoption/template-agents.md` into other repos. |
-| **Structure** | Guides live under `guides/<topic>/<topic>.md` (one level deep). Adoption materials in `adoption/`. References for humans in `docs/references.md`. |
+| **Structure** | Guides live under `guides/<topic>/<topic>.md` (one level deep). Adoption materials in `adoption/`. References for humans in `docs/reference/references.md`. |
 | **Tooling** | Node-based Markdown linting (`markdownlint-cli2`) and a repo-specific navigation validator (`scripts/validate-navigation.sh`). |
 | **CI** | GitHub Actions runs markdown lint and navigation validation (`.github/workflows/lint.yml`). |
 | **Local quality gates** | `npm run precommit` runs `lint:md` then `validate`. Husky pre-commit invokes the same gates. |
@@ -100,21 +100,21 @@ Phase 1 execution artifacts (produced by the agent):
 
 | Artifact | Purpose |
 | --- | --- |
-| `docs/phase-1-pr-split.md` | Proposed PR sequence and exact staging commands |
-| `docs/phase-1-ship-revert-summary.md` | Fast “ship vs hold” checklist for all modified files |
+| `docs/archive/phase-1-pr-split.md` | Proposed PR sequence and exact staging commands |
+| `docs/archive/phase-1-ship-revert-summary.md` | Fast “ship vs hold” checklist for all modified files |
 
 Phase 2 execution artifacts (produced by the agent):
 
 | Artifact | Purpose |
 | --- | --- |
-| `docs/release-process.md` | Tagging + release notes + rollback guidance for low-maintenance shipping |
+| `docs/process/release-process.md` | Tagging + release notes + rollback guidance for low-maintenance shipping |
 
 Phase 3 execution artifacts (produced by the agent):
 
 | Artifact | Purpose |
 | --- | --- |
-| `docs/feedback-template.md` | Structured prompts for reporting guide gaps/conflicts |
-| `docs/triage-rubric.md` | Minimal-human rubric for classifying and resolving feedback |
+| `docs/templates/feedback-template.md` | Structured prompts for reporting guide gaps/conflicts |
+| `docs/rubrics/triage-rubric.md` | Minimal-human rubric for classifying and resolving feedback |
 
 Phase 4 execution artifacts (produced by the agent):
 
@@ -166,15 +166,15 @@ Phase 4 execution artifacts (produced by the agent):
 
 | Work item | Deliverable | Validation | Human decision |
 | --- | --- | --- | --- |
-| Release convention | `docs/release-process.md` specifying tagging, release notes, and rollback | Lint + validate | Yes/No on proposed convention |
+| Release convention | `docs/process/release-process.md` specifying tagging, release notes, and rollback | Lint + validate | Yes/No on proposed convention |
 | Downstream update guidance | “Updating Standards” snippet in `README.md` and “Release Notes and Tags” in `adoption/adoption.md` | Lint + validate | Yes/No on wording |
 
 ### Phase 3 — Adoption Feedback Loop (minimal-human variant)
 
 | Work item | Deliverable | Validation | Human decision |
 | --- | --- | --- | --- |
-| Feedback capture template | `docs/feedback-template.md` (structured prompts for “what confused the agent?”) | Lint + validate | Yes/No on template |
-| Issue triage rubric | `docs/triage-rubric.md` (bug vs gap vs conflict vs preference) | Lint + validate | Yes/No |
+| Feedback capture template | `docs/templates/feedback-template.md` (structured prompts for “what confused the agent?”) | Lint + validate | Yes/No on template |
+| Issue triage rubric | `docs/rubrics/triage-rubric.md` (bug vs gap vs conflict vs preference) | Lint + validate | Yes/No |
 
 ### Phase 4 — Continuous Maintenance Automation
 

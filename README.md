@@ -7,7 +7,7 @@ A collection of opinionated, actionable guides for software development. Each gu
 | Topic | Guidance |
 | --- | --- |
 | **For Agents** | Adopt patterns immediately; no need to ask permission for standard practices. |
-| **For Humans** | Use as a reference; challenge guidelines if they impede valid edge cases. See [references](docs/references.md) for external sources. |
+| **For Humans** | Use as a reference; challenge guidelines if they impede valid edge cases. See [references](docs/reference/references.md) for external sources. |
 | **Contributing** | Follow [Writing Best Practices](guides/writing-best-practices/writing-best-practices.md) strictly. |
 | **Philosophy** | Examples > Prose. Tables > Paragraphs. Actionable > Theoretical. |
 
@@ -88,7 +88,7 @@ The [Adoption Guide](adoption/adoption.md) includes mechanisms to prevent projec
 | Update local standards | `git -C ~/agentic-best-practices pull` |
 | Review recent changes | `git -C ~/agentic-best-practices log --oneline -20` |
 
-Release hygiene and tagging conventions are documented in `docs/release-process.md`.
+Release hygiene and tagging conventions are documented in `docs/process/release-process.md`.
 
 See the full [Adoption Guide](adoption/adoption.md) for detailed setup instructions.
 
@@ -177,15 +177,15 @@ New guides must follow the [Writing Best Practices](guides/writing-best-practice
 
 | Topic | Doc |
 | --- | --- |
-| How we maintain the roadmap | `docs/roadmap-process.md` |
+| How we maintain the roadmap | `docs/process/roadmap-process.md` |
 | Project maintenance docs index | `docs/README.md` |
 
 ### Feedback
 
 | If you found... | Use |
 | --- | --- |
-| A missing pattern, conflict, or confusing guidance | `docs/feedback-template.md` |
-| A consistent way to classify and resolve feedback | `docs/triage-rubric.md` |
+| A missing pattern, conflict, or confusing guidance | `docs/templates/feedback-template.md` |
+| A consistent way to classify and resolve feedback | `docs/rubrics/triage-rubric.md` |
 
 ---
 

@@ -53,9 +53,9 @@ Change size is computed as `insertions + deletions` for tracked files.
 | `.github/workflows/lint.yml` | Tooling/CI | 2 | Low | Ship (PR 1) |
 | `README.md` | Repo meta | 19 | Low | Ship (PR 2) |
 | `AGENTS.md` | Repo meta | 1 | Low | Ship (PR 2) |
-| `docs/implementation-plan.md` | Repo docs | New | Low | Ship (PR 2) |
-| `docs/phase-1-pr-split.md` | Repo docs | New | Low | Ship (PR 2) |
-| `docs/phase-1-ship-revert-summary.md` | Repo docs | New | Low | Ship (PR 2) |
+| `docs/plans/implementation-plan.md` | Repo docs | New | Low | Ship (PR 2) |
+| `docs/archive/phase-1-pr-split.md` | Repo docs | New | Low | Ship (PR 2) |
+| `docs/archive/phase-1-ship-revert-summary.md` | Repo docs | New | Low | Ship (PR 2) |
 | `adoption/template-agents.md` | Adoption | 14 | Low | Ship (PR 3) |
 | `guides/coding-guidelines/coding-guidelines.md` | Guide rewrite | 586 | High | Hold; ship alone (PR 4) |
 | `guides/debugging-with-ai/debugging-with-ai.md` | Guide rewrite | 554 | High | Hold; ship alone (PR 5) |

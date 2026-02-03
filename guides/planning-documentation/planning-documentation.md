@@ -25,10 +25,12 @@ proposals.
 
 | Document Type | When to Create | Lifecycle | Location |
 | :--- | :--- | :--- | :--- |
-| **Roadmap** | Project/quarter start | Updated quarterly, items archived | `docs/roadmap.md` |
-| **Implementation Plan** | Before feature work | Archived on completion | `docs/planning/` |
-| **RFC/Proposal** | When seeking input | Archived after decision | `docs/rfcs/` |
-| **Spike** | Before unfamiliar work | Deleted or converted | `docs/planning/` |
+| **Roadmap** | Project/quarter start | Updated quarterly, items archived | `README.md` (or `docs/`) |
+| **Implementation Plan** | Before feature work | Archived on completion | `docs/plans/` |
+| **RFC/Proposal** | When seeking input | Archived after decision | `docs/` (often `docs/rfcs/`) |
+| **Spike** | Before unfamiliar work | Deleted or converted | `docs/plans/` |
+
+For this repository’s internal docs layout, see `docs/README.md`.
 
 | Always | Rationale |
 | :--- | :--- |
@@ -104,12 +106,12 @@ Planning documents move through defined stages, with clear locations and respons
 
 | Stage | Location | Naming | Actions |
 | :--- | :--- | :--- | :--- |
-| **1. Draft** | `docs/planning/` | `PLAN-NNN-feature.md` | Write, iterate, seek feedback |
-| **2. Review** | `docs/planning/` | Same | Gather stakeholder input |
-| **3. Approved** | `docs/planning/` | Same | Link from roadmap |
-| **4. In Progress** | `docs/planning/` | Same | Update as work progresses |
+| **1. Draft** | `docs/plans/` | `PLAN-NNN-feature.md` | Write, iterate, seek feedback |
+| **2. Review** | `docs/plans/` | Same | Gather stakeholder input |
+| **3. Approved** | `docs/plans/` | Same | Link from roadmap |
+| **4. In Progress** | `docs/plans/` | Same | Update as work progresses |
 | **5. Complete** | — | — | Extract to docs, then archive |
-| **6. Archived** | `docs/planning/archive/` | `YYYY-MM-DD-PLAN-NNN.md` | Reference only |
+| **6. Archived** | `docs/archive/` | `YYYY-MM-DD-PLAN-NNN.md` | Reference only |
 
 ### Version Numbering
 
@@ -190,7 +192,7 @@ Planning documents move through defined stages, with clear locations and respons
 | **1. Extract** | Move ADRs, insights to permanent docs | Official docs survive |
 | **2. Outcome** | Note at top: built vs. planned | Historial reference |
 | **3. Date-stamp** | `2024-01-15-PLAN-NNN-feature.md` | Chronological sorting |
-| **4. Archive** | Move to `docs/planning/archive/` | Separate active from historical |
+| **4. Archive** | Move to `docs/archive/` | Separate active from historical |
 | **5. Roadmap** | Link to archived location | Preserves traceability |
 
 ### What to Extract Before Archiving
