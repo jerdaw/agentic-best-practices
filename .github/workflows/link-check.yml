@@ -28,17 +28,8 @@ jobs:
             --accept 200,204,429
             --timeout 20
             --max-retries 3
-            --exclude-mail
             '**/*.md'
-          # Allow some failures for transient external issues
+          # Fail on broken links
           fail: true
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-      - name: Create Issue on Failure
-        if: failure()
-        uses: peter-evans/create-issue-from-file@v5
-        with:
-          title: 'Broken links detected'
-          content-filepath: ./lychee/out.md
-          labels: bug, link-check
