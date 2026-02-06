@@ -96,7 +96,7 @@ See the full [Adoption Guide](adoption/adoption.md) for detailed setup instructi
 
 ## Roadmap
 
-### Pre-v1 Launch (85% Complete)
+### Pre-v1 Launch (86% Complete)
 
 | Work Item | Status | Notes |
 | --- | --- | --- |
@@ -104,8 +104,8 @@ See the full [Adoption Guide](adoption/adoption.md) for detailed setup instructi
 | Infrastructure (CI, issue templates, health dashboard) | ✅ Complete | Link checking, freshness tracking, feedback templates |
 | Self-dogfooding (CLAUDE.md, validation) | ✅ Complete | Repository follows own best practices |
 | Maintenance process defined | ✅ Complete | [Quarterly + event-driven cadence](docs/process/maintenance-cadence-decision.md) |
-| Add CODE_OF_CONDUCT.md | 🔴 Blocked | Need to select and add standard template |
-| Add LICENSE file | 🔴 Blocked | Recommend MIT or Apache 2.0 |
+| Add CODE_OF_CONDUCT.md | ✅ Complete | Contributor Covenant v2.1 |
+| Add LICENSE file | ✅ Complete | MIT license |
 | Choose 1–2 adoption pilot repos | 🔴 Blocked | Requires org priorities. See [selection criteria](docs/planning/pilot-repo-selection.md) |
 
 See [health dashboard](docs/process/health-dashboard.md) for detailed metrics.
