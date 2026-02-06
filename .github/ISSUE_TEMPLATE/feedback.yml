@@ -1,0 +1,70 @@
+name: Guide Feedback
+description: Provide feedback on an existing guide
+title: "[Feedback]: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for providing feedback! Your input helps us improve the guides.
+
+  - type: input
+    id: guide-name
+    attributes:
+      label: Guide Name
+      description: Which guide is this feedback about?
+      placeholder: "e.g., Prompting Patterns, API Design"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: feedback-type
+    attributes:
+      label: Feedback Type
+      description: What kind of feedback are you providing?
+      options:
+        - Missing information
+        - Needs more examples
+        - Too complex
+        - Too basic
+        - Needs clarification
+        - General improvement
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: feedback-details
+    attributes:
+      label: Feedback Details
+      description: Please describe your feedback in detail
+      placeholder: |
+        What could be improved?
+        What's missing?
+        What's confusing?
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested Improvement
+      description: If you have a specific suggestion, please share it here
+      placeholder: "It would be helpful if..."
+
+  - type: dropdown
+    id: experience-level
+    attributes:
+      label: Your Experience Level
+      description: How familiar are you with this topic?
+      options:
+        - Beginner
+        - Intermediate
+        - Advanced
+        - Expert
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other information that would help us understand your feedback?

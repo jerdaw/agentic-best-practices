@@ -75,6 +75,62 @@ Before adding a new dependency, an agent should evaluate:
 | **Minor** | `^1.2.3` | General use (default in most tools) |
 | **Ranges** | `>=1.0.0` | Library authors (peer dependencies) |
 
+### Examples
+
+**Good: Lockfile prevents version drift**
+
+```json
+// package.json
+{
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
+
+// package-lock.json (committed to git)
+{
+  "dependencies": {
+    "express": {
+      "version": "4.18.2",
+      "resolved": "https://registry.npmjs.org/express/-/express-4.18.2.tgz"
+    }
+  }
+}
+```
+
+CI, staging, and production all install Express 4.18.2 - no surprises.
+
+**Bad: No lockfile = version drift**
+
+```json
+// package.json only, no lockfile
+{
+  "dependencies": {
+    "express": "^4.18.0"
+  }
+}
+```
+
+Dev has 4.18.0, CI installs 4.18.5, production gets 4.19.0 - inconsistent behavior.
+
+**Good: Audit before adding dependency**
+
+```bash
+# Check security before install
+npm audit
+npm install lodash
+npm audit  # Verify no new vulnerabilities
+
+# Output: 0 vulnerabilities
+```
+
+**Bad: Blindly adding packages**
+
+```bash
+npm install left-pad micro-dep tiny-util another-util
+# No security check, unknown provenance, potential supply chain risk
+```
+
 ---
 
 ## Cleanup and Pruning

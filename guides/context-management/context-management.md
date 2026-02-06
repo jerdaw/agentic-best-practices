@@ -66,6 +66,55 @@ Techniques to keep the context window focused.
 | **Doc stripping** | Remove verbose comments from shared code |
 | **Focus area** | Explicitly tell the AI which 2-3 files are critical |
 
+### Examples
+
+**Good: Focused context with file tree**
+
+```
+I need to fix authentication. Relevant structure:
+src/
+  auth/
+    auth.service.ts    # Contains validateToken()
+    auth.controller.ts # Route handlers
+  types/
+    user.types.ts      # User interface
+
+Error: "Invalid token" on line 42 of auth.service.ts
+```
+
+**Bad: Context dump**
+
+```
+Here's my entire src/ folder (150 files)...
+Can you fix authentication?
+```
+
+**Good: Snippet with types**
+
+```typescript
+// user.types.ts
+interface User {
+  id: string;
+  email: string;
+  role: 'admin' | 'user';
+}
+
+// auth.service.ts - Line 42 fails here
+function validateToken(token: string): User | null {
+  const decoded = jwt.verify(token, SECRET); // Error: SECRET undefined
+  return decoded as User;
+}
+```
+
+**Bad: Missing type context**
+
+```typescript
+// Just the broken function, AI doesn't know what User is
+function validateToken(token: string) {
+  return jwt.verify(token, SECRET);
+}
+```
+
 ---
 
 ## Managing Long Sessions

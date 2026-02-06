@@ -64,6 +64,51 @@ When asking an AI to fix a bug, provide:
 | **The Code** | The specific functions mentioned in the trace |
 | **The Goal** | What the expected behavior was |
 
+### Examples
+
+**Good: Complete error report**
+
+```
+Error: Cannot read property 'id' of undefined
+  at UserService.getProfile (user.service.ts:42)
+  at UserController.profile (user.controller.ts:18)
+
+Environment:
+  Node.js v18.12.0
+  Express 4.18.2
+
+Input:
+  GET /api/users/profile
+  Headers: { Authorization: "Bearer eyJ..." }
+
+Code (user.service.ts:42):
+  async getProfile(userId: string): Promise<UserProfile> {
+    const user = await this.db.findUser(userId);
+    return { id: user.id, name: user.name }; // <- Line 42
+  }
+
+Expected: Return user profile for authenticated user
+Actual: Crashes when user not found in database
+```
+
+**Bad: Vague error report**
+
+```
+"It's broken when I try to get the user profile.
+Can you fix it?"
+```
+
+**Good: Debugging conversation with AI**
+
+```
+Human: "Fix this TypeError: Cannot read property 'length' of null"
+
+AI: "I need more context to help effectively:
+1. Full stack trace showing where the error occurs
+2. The function code where this happens
+3. Example input that triggers it"
+```
+
 ---
 
 ## Investigation Techniques

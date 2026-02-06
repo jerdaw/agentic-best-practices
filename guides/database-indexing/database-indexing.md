@@ -63,6 +63,60 @@ Never index without investigating.
 3. **Review** – Check filter conditions (`WHERE`) and join conditions (`ON`).
 4. **Verification** – Run `EXPLAIN` again after adding the index.
 
+### Examples
+
+**Good: Analyze before indexing**
+
+```sql
+-- Before: Sequential scan on large table
+EXPLAIN ANALYZE
+SELECT * FROM orders
+WHERE customer_id = 12345 AND status = 'pending';
+
+-- Output shows: Seq Scan on orders (cost=0.00..1234567.00 rows=50)
+
+-- Add composite index
+CREATE INDEX CONCURRENTLY idx_orders_customer_status
+ON orders(customer_id, status);
+
+-- After: Index scan
+EXPLAIN ANALYZE
+SELECT * FROM orders
+WHERE customer_id = 12345 AND status = 'pending';
+
+-- Output shows: Index Scan using idx_orders_customer_status (cost=0.42..12.45 rows=50)
+```
+
+**Bad: Index without analysis**
+
+```sql
+-- "Slow queries? Index everything!"
+CREATE INDEX idx_orders_col1 ON orders(col1);
+CREATE INDEX idx_orders_col2 ON orders(col2);
+CREATE INDEX idx_orders_col3 ON orders(col3);
+-- Result: Write performance tanks, most indexes unused
+```
+
+**Good: Partial index for subset**
+
+```sql
+-- Only index active users (90% of queries)
+CREATE INDEX idx_users_active_email
+ON users(email)
+WHERE status = 'active';
+
+-- Query uses index
+SELECT * FROM users WHERE email = 'user@example.com' AND status = 'active';
+```
+
+**Bad: Full index for rare queries**
+
+```sql
+-- Indexes ALL users including 99% inactive accounts
+CREATE INDEX idx_users_email ON users(email);
+-- Wastes space on rows never queried
+```
+
 ---
 
 ## Optimization Strategies

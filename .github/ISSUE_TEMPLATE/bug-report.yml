@@ -1,0 +1,57 @@
+name: Bug Report
+description: Report broken links, incorrect information, or errors
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! This helps keep the guides accurate and useful.
+
+  - type: dropdown
+    id: bug-type
+    attributes:
+      label: Bug Type
+      description: What kind of issue did you find?
+      options:
+        - Broken link
+        - Incorrect code example
+        - Outdated information
+        - Typo or formatting issue
+        - Navigation/structure problem
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: guide-name
+    attributes:
+      label: Affected Guide
+      description: Which guide contains the bug?
+      placeholder: "e.g., guides/error-handling/error-handling.md"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: What is wrong? Please be specific.
+      placeholder: |
+        The link on line 42 points to a 404 page.
+        The code example uses deprecated syntax.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What should it be instead?
+      placeholder: "The link should point to..."
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Screenshots, links, or other helpful information
