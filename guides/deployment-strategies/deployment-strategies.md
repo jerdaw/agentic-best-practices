@@ -50,6 +50,111 @@ Best practices for AI agents on planning, executing, and monitoring safe deploym
 | **Rolling** | Update instances one by one | Resource efficient |
 | **Shadow** | Route real traffic to new env (no output)| Tests performance with real load |
 
+### Examples
+
+**Good: Blue/Green deployment with instant rollback**
+
+```yaml
+# kubernetes/deployment.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp
+spec:
+  selector:
+    app: myapp
+    version: blue  # Switch to 'green' to cut over
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-blue
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: myapp
+        version: blue
+    spec:
+      containers:
+      - name: myapp
+        image: myapp:v1.2.3
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-green
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+      version: green
+  template:
+    metadata:
+      labels:
+        app: myapp
+        version: green
+    spec:
+      containers:
+      - name: myapp
+        image: myapp:v1.2.4  # New version
+```
+
+Deploy green, verify health, update Service selector to `version: green`, instant cutover. Rollback = change selector back to `blue`.
+
+**Bad: Direct in-place update**
+
+```bash
+# Update running containers directly
+kubectl set image deployment/myapp myapp=myapp:v1.2.4
+# If it fails, users see errors during rollback
+```
+
+**Good: Canary with gradual rollout**
+
+```yaml
+# 95% traffic to stable, 5% to canary
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: myapp
+spec:
+  http:
+  - match:
+    - headers:
+        canary:
+          exact: "true"
+    route:
+    - destination:
+        host: myapp
+        subset: canary
+  - route:
+    - destination:
+        host: myapp
+        subset: stable
+      weight: 95
+    - destination:
+        host: myapp
+        subset: canary
+      weight: 5
+```
+
+Monitor error rates for canary subset. Increase weight if healthy, rollback if errors spike.
+
+**Bad: All-or-nothing release**
+
+```bash
+# Deploy to all servers at once
+ansible-playbook deploy.yml --limit production
+# If bugs exist, 100% of users affected
+```
+
 ---
 
 ## Verification and Smoke Tests

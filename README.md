@@ -1,6 +1,6 @@
 # Best Practices
 
-A collection of opinionated, actionable guides for software development. Each guide distills real-world patterns into scannable references with concrete examples.
+An opinionated set of best practices for agentic, AI-assisted software development. Each guide distills real-world patterns into scannable references with concrete examples.
 
 ## Quick Reference
 
@@ -96,12 +96,19 @@ See the full [Adoption Guide](adoption/adoption.md) for detailed setup instructi
 
 ## Roadmap
 
-### Human-Led (Non-trivial Context/Time)
+### Pre-v1 Launch (85% Complete)
 
-| Work Item | Why Human-Owned | Output | Status |
-| --- | --- | --- | --- |
-| Choose 1–2 adoption pilot repos | Requires org priorities + stakeholders | Pilot list + where feedback is captured | Planned |
-| Define “v1” success criteria + cadence | Product/ownership decision | Definition of Done + maintenance schedule | Planned |
+| Work Item | Status | Notes |
+| --- | --- | --- |
+| Content complete (38 guides with examples) | ✅ Complete | All guides have 2+ code examples |
+| Infrastructure (CI, issue templates, health dashboard) | ✅ Complete | Link checking, freshness tracking, feedback templates |
+| Self-dogfooding (CLAUDE.md, validation) | ✅ Complete | Repository follows own best practices |
+| Maintenance process defined | ✅ Complete | [Quarterly + event-driven cadence](docs/process/maintenance-cadence-decision.md) |
+| Add CODE_OF_CONDUCT.md | 🔴 Blocked | Need to select and add standard template |
+| Add LICENSE file | 🔴 Blocked | Recommend MIT or Apache 2.0 |
+| Choose 1–2 adoption pilot repos | 🔴 Blocked | Requires org priorities. See [selection criteria](docs/planning/pilot-repo-selection.md) |
+
+See [health dashboard](docs/process/health-dashboard.md) for detailed metrics.
 
 ---
 
