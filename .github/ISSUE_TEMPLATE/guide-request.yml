@@ -1,0 +1,56 @@
+name: Guide Request
+description: Suggest a new guide or topic to be added
+title: "[Guide]: "
+labels: ["enhancement", "guide-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new guide! Please provide as much detail as possible.
+
+  - type: input
+    id: guide-name
+    attributes:
+      label: Proposed Guide Name
+      description: What should this guide be called?
+      placeholder: "e.g., Container Security, GraphQL Best Practices"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Guide Description
+      description: What should this guide cover? What problems would it solve?
+      placeholder: |
+        This guide should cover:
+        - Topic 1
+        - Topic 2
+        - Use cases...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: Which category does this guide belong to?
+      options:
+        - Coding Foundations
+        - AI-Assisted Development
+        - Not sure
+    validations:
+      required: true
+
+  - type: textarea
+    id: related-guides
+    attributes:
+      label: Related Guides
+      description: Are there existing guides that relate to this topic?
+      placeholder: "e.g., Similar to Security Boundaries but for containers"
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other information that would help us create this guide?

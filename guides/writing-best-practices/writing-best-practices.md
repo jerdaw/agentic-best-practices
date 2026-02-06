@@ -247,6 +247,36 @@ When you are writing functions that need to validate inputs or check
 | Common mistake prevention | Rarely-encountered scenarios |
 | Examples that clarify | Redundant examples |
 
+### Tracking Guide Freshness
+
+Monitor guide age to ensure documentation stays current:
+
+| Practice | Implementation | Rationale |
+| :--- | :--- | :--- |
+| **File modification time** | Use git commit dates, not manual timestamps | Automated, accurate tracking |
+| **Freshness threshold** | Flag guides >6 months old for review | Prevents staleness |
+| **Automated checking** | Run `scripts/check-guide-freshness.sh` quarterly | Scales maintenance |
+| **Dashboard tracking** | Include freshness metrics in health dashboard | Visibility drives action |
+
+**Optional**: Add YAML frontmatter for explicit versioning:
+
+```markdown
+---
+last_reviewed: 2026-02-06
+status: current
+---
+
+# Guide Title
+```
+
+Only add frontmatter if:
+
+- Guides have complex versioning needs
+- Manual review dates differ from file modification
+- You need to track status beyond freshness (e.g., "deprecated", "in-review")
+
+For most cases, file modification time is sufficient and avoids manual maintenance overhead.
+
 ---
 
 ## Examples and Illustrations
