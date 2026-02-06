@@ -273,6 +273,6 @@ pytest
 
 ## See Also
 
-- [Testing AI-Generated Code](../testing-ai-generated-code/testing-ai-generated-code.md) – Testing AI output
+- [Testing AI-Generated Code](../testing-ai-code/testing-ai-code.md) – Testing AI output
 - [Coding Guidelines](../coding-guidelines/coding-guidelines.md) – Code structure patterns
 - [Error Handling](../error-handling/error-handling.md) – Testing error paths

@@ -148,6 +148,6 @@ A fix is only complete when:
 
 ## See Also
 
-- [Testing Best Practices](../testing-best-practices/testing-best-practices.md) – Writing reproduction tests
+- [Testing Strategy](../testing-strategy/testing-strategy.md) – Writing reproduction tests
 - [Logging Practices](../logging-practices/logging-practices.md) – Enabling better investigation
 - [Error Handling Patterns](../error-handling/error-handling.md) – Preventing common bugs
