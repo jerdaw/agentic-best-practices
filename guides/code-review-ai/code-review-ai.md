@@ -157,5 +157,5 @@ Don't just take the AI's word; ask it to prove the suggestion.
 ## See Also
 
 - [Secure Coding](../secure-coding/secure-coding.md) – What to look for in security reviews
-- [Testing Best Practices](../testing-best-practices/testing-best-practices.md) – Verifying fixes
+- [Testing Strategy](../testing-strategy/testing-strategy.md) – Verifying fixes
 - [Prompting Patterns](../prompting-patterns/prompting-patterns.md) – Crafting review prompts

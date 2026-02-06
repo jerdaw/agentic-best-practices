@@ -4,7 +4,7 @@ This directory contains historical planning documents, decision records, and ret
 
 ## Purpose
 
-Per [Planning Documentation](../../guides/planning-documentation/planning-documentation.md), this archive:
+Per [Planning Documentation](../../../guides/planning-documentation/planning-documentation.md), this archive:
 
 - Preserves context for future contributors
 - Documents why decisions were made
