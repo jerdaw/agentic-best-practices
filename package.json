@@ -7,7 +7,13 @@
     "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
     "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\" \"#node_modules\"",
     "validate": "bash ./scripts/validate-navigation.sh",
-    "precommit": "npm run lint:md && npm run validate",
+    "validate:adoption:sim": "bash ./scripts/simulate-adoption-check.sh",
+    "adopt:help": "bash ./scripts/adopt-into-project.sh --help",
+    "pilot:prepare:help": "bash ./scripts/prepare-pilot-project.sh --help",
+    "pin:help": "bash ./scripts/pin-standards-version.sh --help",
+    "merge:help": "bash ./scripts/merge-standards-reference.sh --help",
+    "validate:adoption:help": "bash ./scripts/validate-adoption.sh --help",
+    "precommit": "npm run lint:md && npm run validate && npm run validate:adoption:sim",
     "prepare": "husky"
   },
   "devDependencies": {

@@ -2,12 +2,11 @@
 
 <!--
   SETUP INSTRUCTIONS (delete this block after setup):
-  1. Replace [Project Name] with your project name
-  2. Fill in all [bracketed placeholders]
+  1. Recommended: run scripts/adopt-into-project.sh from agentic-best-practices to render this template
+  2. If editing manually: replace [Project Name], [bracketed placeholders], and {{STANDARDS_PATH}}
   3. Customize the Tech Stack, Commands, and Boundaries sections
-  4. Verify the ~/agentic-best-practices path is correct for your setup
-  5. Delete this comment block
-  6. Commit: git add AGENTS.md && ln -s AGENTS.md CLAUDE.md && git add CLAUDE.md
+  4. Delete this comment block
+  5. Commit: git add AGENTS.md && ln -s AGENTS.md CLAUDE.md && git add CLAUDE.md
 -->
 
 ## Agent Role
@@ -38,20 +37,20 @@ You are a [specific role, e.g., "security-conscious backend developer"] working 
 
 ## Standards Reference
 
-This project follows organizational standards defined in `~/agentic-best-practices/`.
+This project follows organizational standards defined in `{{STANDARDS_PATH}}/`.
 
 **Before implementing**, consult the relevant guide:
 
 | Topic | Guide |
 | --- | --- |
-| Error handling | `~/agentic-best-practices/guides/error-handling/error-handling.md` |
-| Logging | `~/agentic-best-practices/guides/logging-practices/logging-practices.md` |
-| API design | `~/agentic-best-practices/guides/api-design/api-design.md` |
-| Documentation | `~/agentic-best-practices/guides/documentation-guidelines/documentation-guidelines.md` |
-| Code style | `~/agentic-best-practices/guides/coding-guidelines/coding-guidelines.md` |
-| Comments | `~/agentic-best-practices/guides/commenting-guidelines/commenting-guidelines.md` |
+| Error handling | `{{STANDARDS_PATH}}/guides/error-handling/error-handling.md` |
+| Logging | `{{STANDARDS_PATH}}/guides/logging-practices/logging-practices.md` |
+| API design | `{{STANDARDS_PATH}}/guides/api-design/api-design.md` |
+| Documentation | `{{STANDARDS_PATH}}/guides/documentation-guidelines/documentation-guidelines.md` |
+| Code style | `{{STANDARDS_PATH}}/guides/coding-guidelines/coding-guidelines.md` |
+| Comments | `{{STANDARDS_PATH}}/guides/commenting-guidelines/commenting-guidelines.md` |
 
-For other topics, check `~/agentic-best-practices/README.md` for the full guide index (all guides are in `~/agentic-best-practices/guides/`).
+For other topics, check `{{STANDARDS_PATH}}/README.md` for the full guide index (all guides are in `{{STANDARDS_PATH}}/guides/`).
 
 **Deviation policy**: Do not deviate from these standards without explicit approval. If deviation is necessary, document it in the Project-Specific Overrides section below with rationale.
 
@@ -108,7 +107,7 @@ For other topics, check `~/agentic-best-practices/README.md` for the full guide 
 ## Project-Specific Overrides
 
 <!--
-  Document any intentional deviations from ~/agentic-best-practices here.
+  Document any intentional deviations from {{STANDARDS_PATH}} here.
   If this section is empty, the project follows all standards without exception.
 
   Format:
@@ -141,6 +140,6 @@ None. This project follows all organizational standards.
 
 | Frequency | Action |
 | --- | --- |
-| Weekly | `git -C ~/agentic-best-practices pull` to update standards |
+| Weekly | `git -C {{STANDARDS_PATH}} pull` to update standards |
 | Per feature | Verify patterns align with current standards |
 | Quarterly | Review Project-Specific Overrides for continued relevance |

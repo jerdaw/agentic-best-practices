@@ -5,7 +5,7 @@ How we ship updates to `agentic-best-practices` safely with minimal human time.
 | Field | Value |
 | --- | --- |
 | **Version** | `0.1.0` |
-| **Last updated** | 2026-02-02 |
+| **Last updated** | 2026-02-08 |
 | **Release unit** | Git tag + GitHub Release notes |
 | **Quality gate** | `npm run precommit` must be green |
 | **Default posture** | Small, reviewable changes; easy rollback via revert |
@@ -28,6 +28,7 @@ How we ship updates to `agentic-best-practices` safely with minimal human time.
 | Goal | Why |
 | --- | --- |
 | Make updates easy to consume | Downstream repos just `git pull` |
+| Support deterministic adoption | Pinned consumers can target exact tags/SHAs |
 | Minimize human time | Prefer Yes/No approvals and repeatable steps |
 | Preserve trust | Releases are small, validated, and documented |
 | Enable fast rollback | Bad guidance is worse than no guidance |
@@ -67,6 +68,7 @@ Breaking means: “a downstream project following the old standard is now consid
 | Step | Command | Expected result |
 | --- | --- | --- |
 | Ensure clean working tree | `git status --porcelain=v1` | No output (or only expected files) |
+| Verify commit author identity | `git config user.name && git config user.email` | Human maintainer identity configured |
 | Update dependencies (if needed) | `npm ci` | Installs cleanly |
 
 ### 2. Validate
@@ -96,6 +98,7 @@ Use this for GitHub Releases.
 | **Highlights** | 3–7 bullets max |
 | **Breaking changes** | Explicit, actionable migration guidance |
 | **Adoption impact** | Whether downstream repos should update immediately |
+| **Pinned adoption impact** | Which tag/SHA pinned consumers should move to |
 | **Validation** | Paste `npm run precommit` output (or confirm green) |
 
 Example structure:
@@ -113,6 +116,9 @@ Example structure:
 ## Adoption impact
 - Safe to pull: Yes/No
 
+## Pinned adoption impact
+- Recommended target: vX.Y.Z
+
 ## Validation
 - npm run precommit: ✅
 ```
@@ -126,3 +132,4 @@ Example structure:
 | Tooling/validation change | Ship first in its own PR | Revert PR; re-run `npm run precommit` |
 | Guide content change | Ship in isolated PRs | Revert PR for that guide |
 | Adoption template change | Announce clearly in release notes | Revert template + document revert |
+| Pinned-mode relevant release | Publish clear target tag in notes | Revert and publish corrected guidance tag |

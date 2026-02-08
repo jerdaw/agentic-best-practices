@@ -2,6 +2,18 @@
 
 This directory contains historical planning documents, decision records, and retired documentation.
 
+## Contents
+
+| Section |
+| --- |
+| [Purpose](#purpose) |
+| [Archival Criteria](#archival-criteria) |
+| [Active Planning](#active-planning) |
+| [Archive Structure](#archive-structure) |
+| [Retrieval](#retrieval) |
+| [Examples](#examples) |
+| [Current Archive Entries](#current-archive-entries) |
+
 ## Purpose
 
 Per [Planning Documentation](../../../guides/planning-documentation/planning-documentation.md), this archive:
@@ -11,7 +23,7 @@ Per [Planning Documentation](../../../guides/planning-documentation/planning-doc
 - Tracks the evolution of the repository
 - Provides historical reference without cluttering active docs
 
-## Contents
+## Archival Criteria
 
 Documents are archived here when:
 
@@ -55,3 +67,9 @@ archive/
   decisions/
     2026-02-maintenance-cadence.md  # Why quarterly maintenance
 ```
+
+## Current Archive Entries
+
+| File | Summary |
+| --- | --- |
+| `2026-02-08-adoption-integration-hardening-plan-v0.2.0.md` | Completed implementation record for adoption hardening Phase 1-4. |

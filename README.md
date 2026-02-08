@@ -52,22 +52,55 @@ Use this repository as a shared standards library across all your projects.
 # One-time: clone to standard location
 git clone https://github.com/[org]/agentic-best-practices.git ~/agentic-best-practices
 
-# Per-project: copy template and customize
-cp ~/agentic-best-practices/adoption/template-agents.md ./AGENTS.md
-ln -s AGENTS.md CLAUDE.md
-# Edit AGENTS.md to fill in project-specific sections
+# Set standards path (customize if needed)
+export AGENTIC_BEST_PRACTICES_HOME="${AGENTIC_BEST_PRACTICES_HOME:-$HOME/agentic-best-practices}"
+
+# Per-project: render AGENTS.md + CLAUDE.md with project defaults
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
+  --project-dir . \
+  --standards-path "$AGENTIC_BEST_PRACTICES_HOME"
+
+# Existing project with AGENTS.md: merge standards section in-place
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
+  --project-dir . \
+  --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
+  --existing-mode merge \
+  --claude-mode skip
+
+# Optional pinned mode: snapshot standards at a specific tag/commit
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
+  --project-dir . \
+  --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
+  --adoption-mode pinned \
+  --pinned-ref v1.0.0
+
+# Validate adoption output
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/validate-adoption.sh" \
+  --project-dir . \
+  --expect-standards-path "$AGENTIC_BEST_PRACTICES_HOME"
+# For pinned mode validation, omit --expect-standards-path or pass the pinned path from AGENTS.md
+
+# Optional: prepare pilot artifacts (kickoff, weekly check-in, retrospective)
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/prepare-pilot-project.sh" \
+  --project-dir . \
+  --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
+  --existing-mode merge \
+  --pilot-owner "Team Name"
 ```
 
 ### How It Works
 
 | Component | Purpose |
 | --- | --- |
-| **This repo** (`~/agentic-best-practices/`) | Single source of truth for all standards |
+| **This repo** (`$AGENTIC_BEST_PRACTICES_HOME/`) | Single source of truth for all standards |
 | **Project AGENTS.md** | Points AI to consult agentic-best-practices for guidance |
-| **Template** | Ready-to-use AGENTS.md with reference directive built in |
+| **Bootstrap script** | Renders template with project defaults and standards path |
+| **Merge workflow** | Updates existing `AGENTS.md` with a managed Standards Reference block |
+| **Pinned mode** | Creates project-local standards snapshot at a specific git ref |
+| **Pilot prep script** | Bootstraps adoption + strict validation + pilot artifacts in one command |
 
 The template includes a **Standards Reference** section that tells AI:
-> *Before implementing patterns for error handling, logging, API design, etc., consult the relevant guide in `~/agentic-best-practices/`.*
+> *Before implementing patterns for error handling, logging, API design, etc., consult the relevant guide in `{{STANDARDS_PATH}}/`.*
 
 This ensures consistent AI behavior across all your projects.
 
@@ -85,8 +118,9 @@ The [Adoption Guide](adoption/adoption.md) includes mechanisms to prevent projec
 
 | Task | Command |
 | --- | --- |
-| Update local standards | `git -C ~/agentic-best-practices pull` |
-| Review recent changes | `git -C ~/agentic-best-practices log --oneline -20` |
+| Update local standards | `git -C "$AGENTIC_BEST_PRACTICES_HOME" pull` |
+| Review recent changes | `git -C "$AGENTIC_BEST_PRACTICES_HOME" log --oneline -20` |
+| Refresh pinned project to new ref | `bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" --project-dir . --adoption-mode pinned --pinned-ref vX.Y.Z --existing-mode merge` |
 
 Release hygiene and tagging conventions are documented in `docs/process/release-process.md`.
 
@@ -96,19 +130,16 @@ See the full [Adoption Guide](adoption/adoption.md) for detailed setup instructi
 
 ## Roadmap
 
-### Pre-v1 Launch (86% Complete)
+### Pre-v1 Launch (Active Items)
 
 | Work Item | Status | Notes |
 | --- | --- | --- |
-| Content complete (38 guides with examples) | ✅ Complete | All guides have 2+ code examples |
-| Infrastructure (CI, issue templates, health dashboard) | ✅ Complete | Link checking, freshness tracking, feedback templates |
-| Self-dogfooding (CLAUDE.md, validation) | ✅ Complete | Repository follows own best practices |
-| Maintenance process defined | ✅ Complete | [Quarterly + event-driven cadence](docs/process/maintenance-cadence-decision.md) |
-| Add CODE_OF_CONDUCT.md | ✅ Complete | Contributor Covenant v2.1 |
-| Add LICENSE file | ✅ Complete | MIT license |
-| Choose 1–2 adoption pilot repos | 🔴 Blocked | Requires org priorities. See [selection criteria](docs/planning/pilot-repo-selection.md) |
+| Choose 1-2 adoption pilot repos | 🔴 Blocked | Human decision needed. Use [selection criteria](docs/planning/pilot-repo-selection.md). |
+| Execute pilot validation cycle (6-8 weeks) | 🟡 Planned | Use [pilot execution playbook](docs/process/pilot-execution-playbook.md). |
+| Feed pilot outcomes into next release backlog | 🟡 Planned | File actionable updates via [feedback template](docs/templates/feedback-template.md). |
 
-See [health dashboard](docs/process/health-dashboard.md) for detailed metrics.
+Completed implementation details are archived in `docs/planning/archive/2026-02-08-adoption-integration-hardening-plan-v0.2.0.md`.
+See [health dashboard](docs/process/health-dashboard.md) for readiness metrics.
 
 ---
 
