@@ -52,6 +52,7 @@ Directives for AI agents working within this repository.
 | --- | --- |
 | [Adoption Guide](adoption/adoption.md) | **Start here.** Integrate agentic-best-practices into projects. |
 | [AGENTS.md Template](adoption/template-agents.md) | Copy into a project as a starting point. |
+| [Adoption Config Template](adoption/template-adoption-config.env) | Reusable config for script-driven AGENTS customization. |
 | [AGENTS.md Guidelines](guides/agents-md/agents-md-guidelines.md) | Creating effective AGENTS.md files |
 | [Agentic Workflow](guides/agentic-workflow/agentic-workflow.md) | MAP-FIRST workflow |
 | [Prompting Patterns](guides/prompting-patterns/prompting-patterns.md) | |

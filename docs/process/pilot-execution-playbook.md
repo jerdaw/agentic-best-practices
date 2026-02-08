@@ -15,6 +15,8 @@ Operational playbook for running external adoption pilots with consistent setup 
 | --- |
 | [When to Use](#when-to-use) |
 | [Pilot Workflow](#pilot-workflow) |
+| [Readiness Check](#readiness-check) |
+| [Findings Summary](#findings-summary) |
 | [Cadence](#cadence) |
 | [Exit Criteria](#exit-criteria) |
 | [Escalation Paths](#escalation-paths) |
@@ -37,10 +39,12 @@ Operational playbook for running external adoption pilots with consistent setup 
 | --- | --- | --- |
 | 1. Select repository | Apply `docs/planning/pilot-repo-selection.md` rubric | Chosen pilot repo + owner |
 | 2. Prepare project | Run `scripts/prepare-pilot-project.sh` against target repo | Validated `AGENTS.md`/`CLAUDE.md` + pilot artifacts |
-| 3. Kickoff alignment | Fill `kickoff.md` and agree weekly cadence | Shared baseline + success criteria |
-| 4. Run weekly check-ins | Duplicate `weekly-checkin-template.md` each week | Weekly outcomes and blockers |
-| 5. Log issues | File concrete gaps via `docs/templates/feedback-template.md` | Actionable backlog |
-| 6. Close pilot | Fill retrospective template and summarize decisions | Go/no-go and follow-up plan |
+| 3. Run readiness check | Run `scripts/check-pilot-readiness.sh` | Early signal for missing setup artifacts |
+| 4. Kickoff alignment | Fill `kickoff.md` and agree weekly cadence | Shared baseline + success criteria |
+| 5. Run weekly check-ins | Duplicate `weekly-checkin-template.md` each week | Weekly outcomes and blockers |
+| 6. Generate findings summary | Run `scripts/summarize-pilot-findings.sh` | Consolidated evidence and backlog intake checklist |
+| 7. Log issues | File concrete gaps via `docs/templates/feedback-template.md` | Actionable backlog |
+| 8. Close pilot | Fill retrospective template and summarize decisions | Go/no-go and follow-up plan |
 
 ### Prepare Project Command
 
@@ -51,6 +55,39 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/prepare-pilot-project.sh" \
   --existing-mode merge \
   --pilot-owner "Team Name"
 ```
+
+## Readiness Check
+
+Run this after pilot setup and during weekly cadence to detect missing artifacts early.
+
+```bash
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/check-pilot-readiness.sh" \
+  --project-dir /path/to/target-repo \
+  --min-weekly-checkins 0 \
+  --strict
+```
+
+| Option | When to use |
+| --- | --- |
+| `--min-weekly-checkins 0` | Immediately after kickoff setup (before week 1 artifacts exist). |
+| `--min-weekly-checkins 4` | Mid/late pilot to enforce cadence completion. |
+| `--require-retrospective` | End-of-pilot gate before final decision review. |
+
+## Findings Summary
+
+Run this during pilot cadence and before retrospective close-out.
+
+```bash
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/summarize-pilot-findings.sh" \
+  --project-dir /path/to/target-repo \
+  --pilot-dir ".agentic-best-practices/pilot" \
+  --require-retrospective
+```
+
+| Output | Use |
+| --- | --- |
+| `pilot-summary.md` | Weekly + retrospective evidence in one file for release planning. |
+| Backlog intake checklist | Converts pilot observations into tracked implementation items. |
 
 ---
 

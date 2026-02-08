@@ -10,6 +10,7 @@ PIN_SCRIPT="$REPO_ROOT/scripts/pin-standards-version.sh"
 PROJECT_DIR=""
 STANDARDS_PATH="${AGENTIC_BEST_PRACTICES_HOME:-$HOME/agentic-best-practices}"
 TEMPLATE_PATH="$DEFAULT_TEMPLATE"
+CONFIG_FILE=""
 FORCE=0
 CLAUDE_MODE="auto" # auto | symlink | copy | skip
 EXISTING_MODE="fail" # fail | overwrite | merge
@@ -24,6 +25,16 @@ PRIORITY_ONE="Correctness over speed"
 PRIORITY_TWO="Security over convenience"
 PRIORITY_THREE="Readability over cleverness"
 
+STANDARDS_TOPICS=""
+DEVIATION_POLICY="Do not deviate from these standards without explicit approval. If deviation is necessary, document it in the Project-Specific Overrides section below with rationale."
+
+DEV_CMD_OVERRIDE=""
+TEST_CMD_OVERRIDE=""
+COVERAGE_CMD_OVERRIDE=""
+LINT_CMD_OVERRIDE=""
+TYPECHECK_CMD_OVERRIDE=""
+BUILD_CMD_OVERRIDE=""
+
 print_usage() {
     cat <<'EOF'
 Usage:
@@ -35,6 +46,7 @@ Required:
 Options:
   --standards-path <path>       Location of agentic-best-practices (default: $AGENTIC_BEST_PRACTICES_HOME or ~/agentic-best-practices)
   --template-path <path>        Template file to render (default: adoption/template-agents.md in this repo)
+  --config-file <path>          Optional adoption config file (KEY=VALUE lines)
   --project-name <name>         Project name override (default: basename of --project-dir)
   --agent-role <text>           Agent role text
   --project-description <text>  Short project description
@@ -51,6 +63,7 @@ Options:
 
 Examples:
   bash scripts/adopt-into-project.sh --project-dir ~/work/my-api --standards-path ~/agentic-best-practices
+  bash scripts/adopt-into-project.sh --project-dir . --config-file .agentic-best-practices/adoption.env
   bash scripts/adopt-into-project.sh --project-dir . --adoption-mode pinned --pinned-ref v1.0.0
   bash scripts/adopt-into-project.sh --project-dir . --existing-mode merge --claude-mode skip
   bash scripts/adopt-into-project.sh --project-dir . --force --claude-mode copy
@@ -77,6 +90,135 @@ replace_literal() {
     mv "$temp_file" "$file"
 }
 
+trim_whitespace() {
+    local value="$1"
+    value="${value#"${value%%[![:space:]]*}"}"
+    value="${value%"${value##*[![:space:]]}"}"
+    printf '%s\n' "$value"
+}
+
+strip_wrapping_quotes() {
+    local value="$1"
+    if [[ "$value" == \"*\" && "$value" == *\" ]]; then
+        value="${value:1:-1}"
+    elif [[ "$value" == \'*\' && "$value" == *\' ]]; then
+        value="${value:1:-1}"
+    fi
+    printf '%s\n' "$value"
+}
+
+load_adoption_config() {
+    local config_path="$1"
+    local line
+    local key
+    local value
+    local line_no=0
+
+    if [[ ! -f "$config_path" ]]; then
+        echo "Error: config file not found: $config_path" >&2
+        exit 1
+    fi
+
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        line_no=$((line_no + 1))
+        line="$(trim_whitespace "$line")"
+        [[ -z "$line" || "$line" == \#* ]] && continue
+
+        if [[ "$line" != *=* ]]; then
+            echo "Error: invalid config entry at $config_path:$line_no (expected KEY=VALUE)." >&2
+            exit 1
+        fi
+
+        key="$(trim_whitespace "${line%%=*}")"
+        value="$(trim_whitespace "${line#*=}")"
+        value="$(strip_wrapping_quotes "$value")"
+
+        case "$key" in
+        PROJECT_NAME) PROJECT_NAME="$value" ;;
+        AGENT_ROLE) AGENT_ROLE="$value" ;;
+        PROJECT_DESCRIPTION) PROJECT_DESCRIPTION="$value" ;;
+        PRIORITY_ONE) PRIORITY_ONE="$value" ;;
+        PRIORITY_TWO) PRIORITY_TWO="$value" ;;
+        PRIORITY_THREE) PRIORITY_THREE="$value" ;;
+        STANDARDS_TOPICS) STANDARDS_TOPICS="$value" ;;
+        DEVIATION_POLICY) DEVIATION_POLICY="$value" ;;
+        DEV_CMD) DEV_CMD_OVERRIDE="$value" ;;
+        TEST_CMD) TEST_CMD_OVERRIDE="$value" ;;
+        COVERAGE_CMD) COVERAGE_CMD_OVERRIDE="$value" ;;
+        LINT_CMD) LINT_CMD_OVERRIDE="$value" ;;
+        TYPECHECK_CMD) TYPECHECK_CMD_OVERRIDE="$value" ;;
+        BUILD_CMD) BUILD_CMD_OVERRIDE="$value" ;;
+        "")
+            ;;
+        *)
+            echo "Warning: unknown config key '$key' ignored ($config_path:$line_no)." >&2
+            ;;
+        esac
+    done <"$config_path"
+}
+
+resolve_guide_doc_path() {
+    local standards_path="$1"
+    local guide_value="$2"
+    local guide_path
+
+    guide_path="$(expand_home_path "$guide_value")"
+    if [[ "$guide_path" == *"{{STANDARDS_PATH}}"* ]]; then
+        guide_path="${guide_path//\{\{STANDARDS_PATH\}\}/$standards_path}"
+    elif [[ "$guide_path" == /* ]]; then
+        :
+    else
+        guide_path="$standards_path/${guide_path#./}"
+    fi
+    printf '%s\n' "$guide_path"
+}
+
+build_standards_rows() {
+    local standards_path="$1"
+    local topics_config="$2"
+    local default_topics
+    local topics_source
+    local rows=""
+    local entry
+    local topic
+    local guide_value
+    local guide_path
+
+    default_topics="Error handling|guides/error-handling/error-handling.md;Logging|guides/logging-practices/logging-practices.md;API design|guides/api-design/api-design.md;Documentation|guides/documentation-guidelines/documentation-guidelines.md;Code style|guides/coding-guidelines/coding-guidelines.md;Comments|guides/commenting-guidelines/commenting-guidelines.md"
+    topics_source="$topics_config"
+    if [[ -z "$topics_source" ]]; then
+        topics_source="$default_topics"
+    fi
+
+    IFS=';' read -r -a topics_array <<<"$topics_source"
+    for entry in "${topics_array[@]}"; do
+        entry="$(trim_whitespace "$entry")"
+        [[ -z "$entry" ]] && continue
+        if [[ "$entry" != *"|"* ]]; then
+            echo "Error: invalid STANDARDS_TOPICS entry '$entry' (expected 'Topic|path')." >&2
+            exit 1
+        fi
+
+        topic="$(trim_whitespace "${entry%%|*}")"
+        guide_value="$(trim_whitespace "${entry#*|}")"
+        guide_path="$(resolve_guide_doc_path "$standards_path" "$guide_value")"
+
+        if [[ -z "$topic" || -z "$guide_path" ]]; then
+            echo "Error: invalid STANDARDS_TOPICS entry '$entry' (topic/path cannot be empty)." >&2
+            exit 1
+        fi
+
+        rows+=$'| '"$topic"$' | `'"$guide_path"$'` |\n'
+    done
+
+    if [[ -z "$rows" ]]; then
+        echo "Error: standards topics list is empty after parsing." >&2
+        exit 1
+    fi
+
+    printf '%s' "${rows%$'\n'}"
+}
+
 detect_package_manager() {
     local project_dir="$1"
     if [[ -f "$project_dir/pnpm-lock.yaml" ]]; then
@@ -94,23 +236,9 @@ detect_package_manager() {
     printf '%s\n' "npm"
 }
 
-has_package_script() {
-    local project_dir="$1"
-    local script_name="$2"
-    local package_json="$project_dir/package.json"
-    [[ -f "$package_json" ]] || return 1
-    grep -Eq "\"$script_name\"[[:space:]]*:" "$package_json"
-}
-
 command_for_script() {
     local package_manager="$1"
     local script_name="$2"
-    local project_dir="$3"
-
-    if ! has_package_script "$project_dir" "$script_name"; then
-        printf '%s\n' "TODO: set command for $script_name"
-        return
-    fi
 
     case "$package_manager" in
     yarn)
@@ -125,17 +253,128 @@ command_for_script() {
     esac
 }
 
-detect_language() {
+detect_project_stack() {
     local project_dir="$1"
-    if [[ -f "$project_dir/tsconfig.json" || -f "$project_dir/tsconfig.base.json" ]]; then
-        printf '%s\n' "TypeScript"
-        return
-    fi
     if [[ -f "$project_dir/package.json" ]]; then
-        printf '%s\n' "JavaScript/TypeScript"
+        printf '%s\n' "node"
         return
     fi
-    printf '%s\n' "TBD"
+    if [[ -f "$project_dir/pyproject.toml" || -f "$project_dir/requirements.txt" || -f "$project_dir/setup.py" || -f "$project_dir/Pipfile" ]]; then
+        printf '%s\n' "python"
+        return
+    fi
+    if [[ -f "$project_dir/go.mod" ]]; then
+        printf '%s\n' "go"
+        return
+    fi
+    if [[ -f "$project_dir/Cargo.toml" ]]; then
+        printf '%s\n' "rust"
+        return
+    fi
+    if [[ -f "$project_dir/pom.xml" || -f "$project_dir/build.gradle" || -f "$project_dir/build.gradle.kts" ]]; then
+        printf '%s\n' "jvm"
+        return
+    fi
+    printf '%s\n' "generic"
+}
+
+detect_language_for_stack() {
+    local stack="$1"
+    local project_dir="$2"
+    case "$stack" in
+    node)
+        if [[ -f "$project_dir/tsconfig.json" || -f "$project_dir/tsconfig.base.json" ]]; then
+            printf '%s\n' "TypeScript"
+        else
+            printf '%s\n' "JavaScript/TypeScript"
+        fi
+        ;;
+    python) printf '%s\n' "Python" ;;
+    go) printf '%s\n' "Go" ;;
+    rust) printf '%s\n' "Rust" ;;
+    jvm) printf '%s\n' "Java/Kotlin" ;;
+    *) printf '%s\n' "TBD" ;;
+    esac
+}
+
+runtime_for_stack() {
+    local stack="$1"
+    case "$stack" in
+    node) printf '%s\n' "Node.js|20+" ;;
+    python) printf '%s\n' "Python|3.11+" ;;
+    go) printf '%s\n' "Go|1.22+" ;;
+    rust) printf '%s\n' "Rust|stable" ;;
+    jvm) printf '%s\n' "JVM|17+" ;;
+    *) printf '%s\n' "TBD|TBD" ;;
+    esac
+}
+
+framework_for_stack() {
+    local stack="$1"
+    case "$stack" in
+    node) printf '%s\n' "Express/Next.js/TBD" ;;
+    python) printf '%s\n' "Django/FastAPI/TBD" ;;
+    go) printf '%s\n' "net/http/Fiber/TBD" ;;
+    rust) printf '%s\n' "Axum/Actix/TBD" ;;
+    jvm) printf '%s\n' "Spring Boot/TBD" ;;
+    *) printf '%s\n' "TBD" ;;
+    esac
+}
+
+testing_for_stack() {
+    local stack="$1"
+    case "$stack" in
+    node) printf '%s\n' "Jest/Vitest/TBD" ;;
+    python) printf '%s\n' "pytest" ;;
+    go) printf '%s\n' "go test" ;;
+    rust) printf '%s\n' "cargo test" ;;
+    jvm) printf '%s\n' "JUnit/TestNG" ;;
+    *) printf '%s\n' "TBD" ;;
+    esac
+}
+
+choose_existing_path() {
+    local project_dir="$1"
+    local fallback="$2"
+    shift 2
+    local candidate
+
+    for candidate in "$@"; do
+        if [[ -e "$project_dir/$candidate" ]]; then
+            printf '%s\n' "$candidate"
+            return
+        fi
+    done
+    printf '%s\n' "$fallback"
+}
+
+detect_go_entry_path() {
+    local project_dir="$1"
+    local candidate
+
+    shopt -s nullglob
+    for candidate in "$project_dir"/cmd/*/main.go; do
+        printf '%s\n' "${candidate#$project_dir/}"
+        shopt -u nullglob
+        return
+    done
+    shopt -u nullglob
+
+    if [[ -f "$project_dir/main.go" ]]; then
+        printf '%s\n' "main.go"
+        return
+    fi
+
+    printf '%s\n' "cmd/<service>/main.go"
+}
+
+java_build_tool() {
+    local project_dir="$1"
+    if [[ -f "$project_dir/gradlew" || -f "$project_dir/build.gradle" || -f "$project_dir/build.gradle.kts" ]]; then
+        printf '%s\n' "gradle"
+        return
+    fi
+    printf '%s\n' "maven"
 }
 
 render_template() {
@@ -153,21 +392,177 @@ render_template() {
     local typecheck_cmd
     local build_cmd
     local language
-    local runtime
+    local stack
+    local runtime_name
+    local runtime_version
+    local framework_name
+    local testing_name
+    local language_version
+    local framework_version
+    local testing_version
+    local critical_entry
+    local critical_config
+    local critical_routes
+    local critical_services
+    local critical_types
+    local python_prefix
+    local java_tool
+    local runtime_info
+    local standards_rows
 
-    dev_cmd="$(command_for_script "$package_manager" "dev" "$project_dir")"
-    test_cmd="$(command_for_script "$package_manager" "test" "$project_dir")"
-    coverage_cmd="$(command_for_script "$package_manager" "test:coverage" "$project_dir")"
-    lint_cmd="$(command_for_script "$package_manager" "lint" "$project_dir")"
-    typecheck_cmd="$(command_for_script "$package_manager" "typecheck" "$project_dir")"
-    build_cmd="$(command_for_script "$package_manager" "build" "$project_dir")"
-    language="$(detect_language "$project_dir")"
+    stack="$(detect_project_stack "$project_dir")"
+    language="$(detect_language_for_stack "$stack" "$project_dir")"
+    runtime_info="$(runtime_for_stack "$stack")"
+    runtime_name="${runtime_info%%|*}"
+    runtime_version="${runtime_info#*|}"
+    framework_name="$(framework_for_stack "$stack")"
+    testing_name="$(testing_for_stack "$stack")"
 
-    if [[ -f "$project_dir/package.json" ]]; then
-        runtime="Node.js"
-    else
-        runtime="TBD"
+    language_version="TBD"
+    framework_version="TBD"
+    testing_version="TBD"
+
+    case "$stack" in
+    node)
+        dev_cmd="$(command_for_script "$package_manager" "dev")"
+        test_cmd="$(command_for_script "$package_manager" "test")"
+        coverage_cmd="$(command_for_script "$package_manager" "test:coverage")"
+        lint_cmd="$(command_for_script "$package_manager" "lint")"
+        typecheck_cmd="$(command_for_script "$package_manager" "typecheck")"
+        build_cmd="$(command_for_script "$package_manager" "build")"
+        critical_entry="$(choose_existing_path "$project_dir" "src/index.ts" "src/index.ts" "src/index.js" "index.ts" "index.js")"
+        critical_config="$(choose_existing_path "$project_dir" "src/config/" "src/config" "config")"
+        critical_routes="$(choose_existing_path "$project_dir" "src/routes/" "src/routes" "routes")"
+        critical_services="$(choose_existing_path "$project_dir" "src/services/" "src/services" "services" "src/lib")"
+        critical_types="$(choose_existing_path "$project_dir" "src/types/" "src/types" "types")"
+        ;;
+    python)
+        if [[ -f "$project_dir/uv.lock" ]]; then
+            python_prefix="uv run "
+        elif [[ -f "$project_dir/poetry.lock" ]]; then
+            python_prefix="poetry run "
+        elif [[ -f "$project_dir/Pipfile.lock" || -f "$project_dir/Pipfile" ]]; then
+            python_prefix="pipenv run "
+        else
+            python_prefix=""
+        fi
+
+        if [[ -f "$project_dir/manage.py" ]]; then
+            dev_cmd="${python_prefix}python manage.py runserver"
+        elif [[ -f "$project_dir/app.py" ]]; then
+            dev_cmd="${python_prefix}python app.py"
+        elif [[ -f "$project_dir/src/main.py" ]]; then
+            dev_cmd="${python_prefix}python src/main.py"
+        elif [[ -f "$project_dir/main.py" ]]; then
+            dev_cmd="${python_prefix}python main.py"
+        else
+            dev_cmd="${python_prefix}python -m app"
+        fi
+
+        test_cmd="${python_prefix}pytest"
+        coverage_cmd="${python_prefix}pytest --cov"
+        lint_cmd="${python_prefix}ruff check ."
+        typecheck_cmd="${python_prefix}mypy ."
+        build_cmd="${python_prefix}python -m build"
+        critical_entry="$(choose_existing_path "$project_dir" "src/main.py" "manage.py" "app.py" "src/main.py" "main.py")"
+        critical_config="$(choose_existing_path "$project_dir" "config/" "app/config" "src/config" "config")"
+        critical_routes="$(choose_existing_path "$project_dir" "app/routes/" "app/routes" "src/routes" "routes")"
+        critical_services="$(choose_existing_path "$project_dir" "app/services/" "app/services" "src/services" "services")"
+        critical_types="$(choose_existing_path "$project_dir" "app/schemas/" "app/schemas" "src/types" "types")"
+        ;;
+    go)
+        dev_cmd="go run ."
+        test_cmd="go test ./..."
+        coverage_cmd="go test ./... -cover"
+        lint_cmd="go vet ./..."
+        typecheck_cmd="go test ./..."
+        build_cmd="go build ./..."
+        critical_entry="$(detect_go_entry_path "$project_dir")"
+        critical_config="$(choose_existing_path "$project_dir" "internal/config/" "internal/config" "pkg/config" "config")"
+        critical_routes="$(choose_existing_path "$project_dir" "internal/http/" "internal/http" "pkg/http" "api")"
+        critical_services="$(choose_existing_path "$project_dir" "internal/service/" "internal/service" "pkg/service" "service")"
+        critical_types="$(choose_existing_path "$project_dir" "internal/types/" "internal/types" "pkg/types" "api/types")"
+        ;;
+    rust)
+        dev_cmd="cargo run"
+        test_cmd="cargo test"
+        coverage_cmd="cargo test"
+        lint_cmd="cargo clippy --all-targets --all-features -- -D warnings"
+        typecheck_cmd="cargo check"
+        build_cmd="cargo build --release"
+        critical_entry="$(choose_existing_path "$project_dir" "src/main.rs" "src/main.rs" "src/lib.rs")"
+        critical_config="$(choose_existing_path "$project_dir" "config/" "src/config" "config")"
+        critical_routes="$(choose_existing_path "$project_dir" "src/routes/" "src/routes" "src/http")"
+        critical_services="$(choose_existing_path "$project_dir" "src/services/" "src/services" "src/domain")"
+        critical_types="$(choose_existing_path "$project_dir" "src/types/" "src/types" "src/domain/types")"
+        ;;
+    jvm)
+        java_tool="$(java_build_tool "$project_dir")"
+        if [[ "$java_tool" == "gradle" ]]; then
+            dev_cmd="./gradlew run"
+            test_cmd="./gradlew test"
+            coverage_cmd="./gradlew test"
+            lint_cmd="./gradlew check"
+            typecheck_cmd="./gradlew classes"
+            build_cmd="./gradlew build"
+        else
+            if [[ -f "$project_dir/mvnw" ]]; then
+                dev_cmd="./mvnw spring-boot:run"
+                test_cmd="./mvnw test"
+                coverage_cmd="./mvnw test"
+                lint_cmd="./mvnw -q -DskipTests verify"
+                typecheck_cmd="./mvnw -q -DskipTests compile"
+                build_cmd="./mvnw -DskipTests package"
+            else
+                dev_cmd="mvn spring-boot:run"
+                test_cmd="mvn test"
+                coverage_cmd="mvn test"
+                lint_cmd="mvn -q -DskipTests verify"
+                typecheck_cmd="mvn -q -DskipTests compile"
+                build_cmd="mvn -DskipTests package"
+            fi
+        fi
+        critical_entry="$(choose_existing_path "$project_dir" "src/main/java/" "src/main/java" "src/main/kotlin")"
+        critical_config="$(choose_existing_path "$project_dir" "src/main/resources/" "src/main/resources" "config")"
+        critical_routes="$(choose_existing_path "$project_dir" "src/main/java/" "src/main/java" "src/main/kotlin")"
+        critical_services="$(choose_existing_path "$project_dir" "src/main/java/" "src/main/java" "src/main/kotlin")"
+        critical_types="$(choose_existing_path "$project_dir" "src/main/java/" "src/main/java" "src/main/kotlin")"
+        ;;
+    *)
+        dev_cmd="make dev"
+        test_cmd="make test"
+        coverage_cmd="make test-coverage"
+        lint_cmd="make lint"
+        typecheck_cmd="make typecheck"
+        build_cmd="make build"
+        critical_entry="$(choose_existing_path "$project_dir" "src/" "src" "app")"
+        critical_config="$(choose_existing_path "$project_dir" "config/" "config" "src/config")"
+        critical_routes="$(choose_existing_path "$project_dir" "src/" "src/routes" "routes")"
+        critical_services="$(choose_existing_path "$project_dir" "src/" "src/services" "services")"
+        critical_types="$(choose_existing_path "$project_dir" "src/" "src/types" "types")"
+        ;;
+    esac
+
+    if [[ -n "$DEV_CMD_OVERRIDE" ]]; then
+        dev_cmd="$DEV_CMD_OVERRIDE"
     fi
+    if [[ -n "$TEST_CMD_OVERRIDE" ]]; then
+        test_cmd="$TEST_CMD_OVERRIDE"
+    fi
+    if [[ -n "$COVERAGE_CMD_OVERRIDE" ]]; then
+        coverage_cmd="$COVERAGE_CMD_OVERRIDE"
+    fi
+    if [[ -n "$LINT_CMD_OVERRIDE" ]]; then
+        lint_cmd="$LINT_CMD_OVERRIDE"
+    fi
+    if [[ -n "$TYPECHECK_CMD_OVERRIDE" ]]; then
+        typecheck_cmd="$TYPECHECK_CMD_OVERRIDE"
+    fi
+    if [[ -n "$BUILD_CMD_OVERRIDE" ]]; then
+        build_cmd="$BUILD_CMD_OVERRIDE"
+    fi
+
+    standards_rows="$(build_standards_rows "$standards_path" "$STANDARDS_TOPICS")"
 
     {
         sed -n '1p' "$template_path"
@@ -183,15 +578,15 @@ render_template() {
     replace_literal "$rendered_path" "[Third priority, e.g., \"Readability over cleverness\"]" "$PRIORITY_THREE"
 
     replace_literal "$rendered_path" "[e.g., TypeScript]" "$language"
-    replace_literal "$rendered_path" "[e.g., 5.x]" "TBD"
-    replace_literal "$rendered_path" "[e.g., Express]" "TBD"
-    replace_literal "$rendered_path" "[e.g., 4.x]" "TBD"
-    replace_literal "$rendered_path" "[e.g., Node.js]" "$runtime"
-    replace_literal "$rendered_path" "[e.g., 20+]" "TBD"
+    replace_literal "$rendered_path" "[e.g., 5.x]" "$language_version"
+    replace_literal "$rendered_path" "[e.g., Express]" "$framework_name"
+    replace_literal "$rendered_path" "[e.g., 4.x]" "$framework_version"
+    replace_literal "$rendered_path" "[e.g., Node.js]" "$runtime_name"
+    replace_literal "$rendered_path" "[e.g., 20+]" "$runtime_version"
     replace_literal "$rendered_path" "[e.g., PostgreSQL]" "TBD"
     replace_literal "$rendered_path" "[e.g., 15]" "TBD"
-    replace_literal "$rendered_path" "[e.g., Jest]" "TBD"
-    replace_literal "$rendered_path" "[e.g., 29.x]" "TBD"
+    replace_literal "$rendered_path" "[e.g., Jest]" "$testing_name"
+    replace_literal "$rendered_path" "[e.g., 29.x]" "$testing_version"
 
     replace_literal "$rendered_path" "[npm run dev]" "$dev_cmd"
     replace_literal "$rendered_path" "[npm test]" "$test_cmd"
@@ -215,12 +610,14 @@ render_template() {
     replace_literal "$rendered_path" "[Why the deviation is necessary]" "Explain rationale"
     replace_literal "$rendered_path" "[Date]" "YYYY-MM-DD"
 
-    replace_literal "$rendered_path" "[src/index.ts]" "TBD"
-    replace_literal "$rendered_path" "[src/config/]" "TBD"
-    replace_literal "$rendered_path" "[src/routes/]" "TBD"
-    replace_literal "$rendered_path" "[src/services/]" "TBD"
-    replace_literal "$rendered_path" "[src/types/]" "TBD"
+    replace_literal "$rendered_path" "[src/index.ts]" "$critical_entry"
+    replace_literal "$rendered_path" "[src/config/]" "$critical_config"
+    replace_literal "$rendered_path" "[src/routes/]" "$critical_routes"
+    replace_literal "$rendered_path" "[src/services/]" "$critical_services"
+    replace_literal "$rendered_path" "[src/types/]" "$critical_types"
 
+    replace_literal "$rendered_path" "{{STANDARDS_GUIDE_ROWS}}" "$standards_rows"
+    replace_literal "$rendered_path" "{{DEVIATION_POLICY}}" "$DEVIATION_POLICY"
     replace_literal "$rendered_path" "{{STANDARDS_PATH}}" "$standards_path"
     replace_literal "$rendered_path" "~/agentic-best-practices" "$standards_path"
 }
@@ -254,6 +651,23 @@ write_claude_file() {
     fi
 }
 
+ARGS=("$@")
+for ((i = 0; i < ${#ARGS[@]}; i++)); do
+    if [[ "${ARGS[$i]}" == "--config-file" ]]; then
+        if ((i + 1 >= ${#ARGS[@]})); then
+            echo "Error: --config-file requires a value." >&2
+            exit 1
+        fi
+        CONFIG_FILE="${ARGS[$((i + 1))]}"
+        break
+    fi
+done
+
+if [[ -n "$CONFIG_FILE" ]]; then
+    CONFIG_FILE="$(expand_home_path "$CONFIG_FILE")"
+    load_adoption_config "$CONFIG_FILE"
+fi
+
 while [[ $# -gt 0 ]]; do
     case "$1" in
     --project-dir)
@@ -266,6 +680,10 @@ while [[ $# -gt 0 ]]; do
         ;;
     --template-path)
         TEMPLATE_PATH="${2:-}"
+        shift 2
+        ;;
+    --config-file)
+        CONFIG_FILE="${2:-}"
         shift 2
         ;;
     --project-name)
@@ -411,7 +829,15 @@ if [[ -e "$AGENTS_PATH" ]]; then
             echo "Error: merge script not found: $MERGE_SCRIPT" >&2
             exit 1
         fi
-        bash "$MERGE_SCRIPT" --project-dir "$PROJECT_DIR" --standards-path "$EFFECTIVE_STANDARDS_PATH"
+        merge_cmd=(
+            bash "$MERGE_SCRIPT"
+            --project-dir "$PROJECT_DIR"
+            --standards-path "$EFFECTIVE_STANDARDS_PATH"
+        )
+        if [[ -n "$CONFIG_FILE" ]]; then
+            merge_cmd+=(--config-file "$CONFIG_FILE")
+        fi
+        "${merge_cmd[@]}"
         operation="merged-standards-reference"
     else
         if [[ ! -f "$TEMPLATE_PATH" ]]; then
@@ -474,5 +900,8 @@ if [[ "$ADOPTION_MODE" == "pinned" ]]; then
 fi
 echo "  Standards source: $STANDARDS_PATH"
 echo "  Standards path:   $EFFECTIVE_STANDARDS_PATH"
+if [[ -n "$CONFIG_FILE" ]]; then
+    echo "  Config file:      $CONFIG_FILE"
+fi
 echo ""
 echo "Next step: bash \"$REPO_ROOT/scripts/validate-adoption.sh\" --project-dir \"$PROJECT_DIR\" --expect-standards-path \"$EFFECTIVE_STANDARDS_PATH\""

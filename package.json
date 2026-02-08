@@ -10,6 +10,8 @@
     "validate:adoption:sim": "bash ./scripts/simulate-adoption-check.sh",
     "adopt:help": "bash ./scripts/adopt-into-project.sh --help",
     "pilot:prepare:help": "bash ./scripts/prepare-pilot-project.sh --help",
+    "pilot:readiness:help": "bash ./scripts/check-pilot-readiness.sh --help",
+    "pilot:summary:help": "bash ./scripts/summarize-pilot-findings.sh --help",
     "pin:help": "bash ./scripts/pin-standards-version.sh --help",
     "merge:help": "bash ./scripts/merge-standards-reference.sh --help",
     "validate:adoption:help": "bash ./scripts/validate-adoption.sh --help",

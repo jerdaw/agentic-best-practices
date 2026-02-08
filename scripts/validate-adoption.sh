@@ -196,8 +196,8 @@ else
     if [[ "${#guide_refs[@]}" -eq 0 ]]; then
         err "No guide references found in AGENTS.md"
     else
-        if [[ "${#guide_refs[@]}" -lt 5 ]]; then
-            warn "Only ${#guide_refs[@]} guide references found; expected at least 5 core references"
+        if [[ "${#guide_refs[@]}" -lt 3 ]]; then
+            warn "Only ${#guide_refs[@]} guide references found; expected at least 3 references for effective guidance"
         fi
         for ref in "${guide_refs[@]}"; do
             expanded_ref="$(resolve_path_for_project "$ref" "$PROJECT_DIR_ABS")"

@@ -3,7 +3,7 @@
 <!--
   SETUP INSTRUCTIONS (delete this block after setup):
   1. Recommended: run scripts/adopt-into-project.sh from agentic-best-practices to render this template
-  2. If editing manually: replace [Project Name], [bracketed placeholders], and {{STANDARDS_PATH}}
+  2. If editing manually: replace [Project Name], [bracketed placeholders], and all {{TOKENS}}
   3. Customize the Tech Stack, Commands, and Boundaries sections
   4. Delete this comment block
   5. Commit: git add AGENTS.md && ln -s AGENTS.md CLAUDE.md && git add CLAUDE.md
@@ -43,16 +43,13 @@ This project follows organizational standards defined in `{{STANDARDS_PATH}}/`.
 
 | Topic | Guide |
 | --- | --- |
-| Error handling | `{{STANDARDS_PATH}}/guides/error-handling/error-handling.md` |
-| Logging | `{{STANDARDS_PATH}}/guides/logging-practices/logging-practices.md` |
-| API design | `{{STANDARDS_PATH}}/guides/api-design/api-design.md` |
-| Documentation | `{{STANDARDS_PATH}}/guides/documentation-guidelines/documentation-guidelines.md` |
-| Code style | `{{STANDARDS_PATH}}/guides/coding-guidelines/coding-guidelines.md` |
-| Comments | `{{STANDARDS_PATH}}/guides/commenting-guidelines/commenting-guidelines.md` |
+<!-- markdownlint-disable MD055 MD056 -->
+{{STANDARDS_GUIDE_ROWS}}
+<!-- markdownlint-enable MD055 MD056 -->
 
 For other topics, check `{{STANDARDS_PATH}}/README.md` for the full guide index (all guides are in `{{STANDARDS_PATH}}/guides/`).
 
-**Deviation policy**: Do not deviate from these standards without explicit approval. If deviation is necessary, document it in the Project-Specific Overrides section below with rationale.
+**Deviation policy**: {{DEVIATION_POLICY}}
 
 ---
 
