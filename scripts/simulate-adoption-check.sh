@@ -6,8 +6,10 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 ADOPT_SCRIPT="$REPO_ROOT/scripts/adopt-into-project.sh"
 VALIDATE_SCRIPT="$REPO_ROOT/scripts/validate-adoption.sh"
 PREPARE_PILOT_SCRIPT="$REPO_ROOT/scripts/prepare-pilot-project.sh"
+READINESS_SCRIPT="$REPO_ROOT/scripts/check-pilot-readiness.sh"
+SUMMARY_SCRIPT="$REPO_ROOT/scripts/summarize-pilot-findings.sh"
 
-if [[ ! -f "$ADOPT_SCRIPT" || ! -f "$VALIDATE_SCRIPT" || ! -f "$PREPARE_PILOT_SCRIPT" ]]; then
+if [[ ! -f "$ADOPT_SCRIPT" || ! -f "$VALIDATE_SCRIPT" || ! -f "$PREPARE_PILOT_SCRIPT" || ! -f "$READINESS_SCRIPT" || ! -f "$SUMMARY_SCRIPT" ]]; then
     echo "Error: required scripts not found." >&2
     exit 1
 fi
@@ -262,5 +264,171 @@ bash "$PREPARE_PILOT_SCRIPT" \
     --project-name "pilot-project" \
     --pilot-owner "pilot-owner" \
     >/dev/null
+
+bash "$READINESS_SCRIPT" \
+    --project-dir "$PILOT_PROJECT" \
+    --min-weekly-checkins 0 \
+    --strict \
+    >/dev/null
+
+cat >"$PILOT_PROJECT/.agentic-best-practices/pilot/weekly-01.md" <<'EOF'
+# Pilot Weekly Check-In
+
+| Field | Value |
+| --- | --- |
+| Project | pilot-project |
+| Week Number | Week 1 |
+| Pilot Owner | pilot-owner |
+| Reporting Period | 2026-02-01 to 2026-02-07 |
+| Adoption Mode | latest |
+| Standards Path | /tmp/standards |
+
+## Delivery Signals
+
+| Metric | Value | Notes |
+| --- | --- | --- |
+| AI-assisted commits this week | 4 | Stable |
+| PRs merged with AI assistance | 2 | No blockers |
+| Blockers encountered | 1 | Guide mismatch |
+| Critical defects linked to guidance | 0 | None |
+EOF
+
+cat >"$PILOT_PROJECT/.agentic-best-practices/pilot/retrospective-01.md" <<'EOF'
+# Pilot Retrospective Template
+
+| Field | Value |
+| --- | --- |
+| Project | pilot-project |
+| Pilot Owner | pilot-owner |
+| Pilot Start Date | 2026-02-01 |
+| Pilot End Date | 2026-02-08 |
+| Adoption Mode | latest |
+| Standards Path | /tmp/standards |
+
+## Decision Record
+
+| Decision | Rationale |
+| --- | --- |
+| Continue rollout / pause / iterate | Continue rollout |
+| Preferred adoption mode (latest or pinned) | latest |
+| Follow-up owners and deadlines | maintainer by 2026-02-15 |
+EOF
+
+bash "$SUMMARY_SCRIPT" \
+    --project-dir "$PILOT_PROJECT" \
+    --pilot-dir ".agentic-best-practices/pilot" \
+    --require-retrospective \
+    --strict \
+    >/dev/null
+
+if [[ ! -f "$PILOT_PROJECT/.agentic-best-practices/pilot/pilot-summary.md" ]]; then
+    echo "Error: expected pilot summary output file." >&2
+    exit 1
+fi
+
+if ! grep -Fq "Backlog Intake Checklist" "$PILOT_PROJECT/.agentic-best-practices/pilot/pilot-summary.md"; then
+    echo "Error: expected backlog checklist section in pilot summary." >&2
+    exit 1
+fi
+
+# Scenario 6: config-driven adoption should render custom standards rows and policy.
+CONFIG_PROJECT="$WORK_DIR/config-project"
+mkdir -p "$CONFIG_PROJECT/.agentic-best-practices"
+cat >"$CONFIG_PROJECT/package.json" <<'EOF'
+{
+  "name": "config-project",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo dev",
+    "test": "echo test",
+    "test:coverage": "echo test:coverage",
+    "lint": "echo lint",
+    "typecheck": "echo typecheck",
+    "build": "echo build"
+  }
+}
+EOF
+
+cat >"$CONFIG_PROJECT/.agentic-best-practices/adoption.env" <<'EOF'
+AGENT_ROLE=platform reliability engineer
+PROJECT_DESCRIPTION=service with strict SLO targets
+PRIORITY_ONE=Reliability over speed
+PRIORITY_TWO=Security over convenience
+PRIORITY_THREE=Readability over cleverness
+STANDARDS_TOPICS=Resilience|guides/resilience-patterns/resilience-patterns.md;Observability|guides/observability-patterns/observability-patterns.md;Testing|guides/testing-strategy/testing-strategy.md
+DEVIATION_POLICY=Only deviate with explicit maintainer approval and documented rollback path.
+LINT_CMD=npm run lint -- --max-warnings=0
+EOF
+
+bash "$ADOPT_SCRIPT" \
+    --project-dir "$CONFIG_PROJECT" \
+    --standards-path "$REPO_ROOT" \
+    --config-file "$CONFIG_PROJECT/.agentic-best-practices/adoption.env" \
+    --claude-mode auto \
+    >/dev/null
+
+bash "$VALIDATE_SCRIPT" \
+    --project-dir "$CONFIG_PROJECT" \
+    --expect-standards-path "$REPO_ROOT" \
+    --strict \
+    >/dev/null
+
+if ! grep -Fq "| Resilience | \`$REPO_ROOT/guides/resilience-patterns/resilience-patterns.md\` |" "$CONFIG_PROJECT/AGENTS.md"; then
+    echo "Error: expected custom standards topic row in config-driven AGENTS.md." >&2
+    exit 1
+fi
+
+if ! grep -Fq "**Deviation policy**: Only deviate with explicit maintainer approval and documented rollback path." "$CONFIG_PROJECT/AGENTS.md"; then
+    echo "Error: expected custom deviation policy in config-driven AGENTS.md." >&2
+    exit 1
+fi
+
+if ! grep -Fq "npm run lint -- --max-warnings=0" "$CONFIG_PROJECT/AGENTS.md"; then
+    echo "Error: expected command override in config-driven AGENTS.md." >&2
+    exit 1
+fi
+
+# Scenario 7: non-Node stack defaults should render usable commands and metadata.
+RUST_PROJECT="$WORK_DIR/rust-project"
+mkdir -p "$RUST_PROJECT/src"
+cat >"$RUST_PROJECT/Cargo.toml" <<'EOF'
+[package]
+name = "rust-project"
+version = "0.1.0"
+edition = "2021"
+EOF
+cat >"$RUST_PROJECT/src/main.rs" <<'EOF'
+fn main() {
+    println!("hello");
+}
+EOF
+
+bash "$ADOPT_SCRIPT" \
+    --project-dir "$RUST_PROJECT" \
+    --standards-path "$REPO_ROOT" \
+    --claude-mode auto \
+    >/dev/null
+
+bash "$VALIDATE_SCRIPT" \
+    --project-dir "$RUST_PROJECT" \
+    --expect-standards-path "$REPO_ROOT" \
+    --strict \
+    >/dev/null
+
+if ! grep -Fq "| Language | Rust | TBD |" "$RUST_PROJECT/AGENTS.md"; then
+    echo "Error: expected Rust language detection in AGENTS.md." >&2
+    exit 1
+fi
+
+if ! grep -Fq "cargo clippy --all-targets --all-features -- -D warnings" "$RUST_PROJECT/AGENTS.md"; then
+    echo "Error: expected Rust lint command defaults in AGENTS.md." >&2
+    exit 1
+fi
+
+if grep -Fq "TODO: set command for" "$RUST_PROJECT/AGENTS.md"; then
+    echo "Error: non-Node defaults should avoid TODO command placeholders." >&2
+    exit 1
+fi
 
 echo "Adoption smoke simulation passed."

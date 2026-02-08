@@ -12,6 +12,7 @@ RETRO_TEMPLATE="$REPO_ROOT/docs/templates/pilot-retrospective-template.md"
 
 PROJECT_DIR=""
 STANDARDS_PATH="${AGENTIC_BEST_PRACTICES_HOME:-$HOME/agentic-best-practices}"
+CONFIG_FILE=""
 ADOPTION_MODE="latest" # latest | pinned
 PINNED_REF=""
 PINNED_DIR=".agentic-best-practices/pinned"
@@ -35,6 +36,7 @@ Required:
 
 Adoption options:
   --standards-path <path>       Location of agentic-best-practices (default: $AGENTIC_BEST_PRACTICES_HOME or ~/agentic-best-practices)
+  --config-file <path>          Optional adoption config file (KEY=VALUE lines)
   --adoption-mode <mode>        latest | pinned (default: latest)
   --pinned-ref <git-ref>        Required when --adoption-mode pinned
   --pinned-dir <path>           Project-relative pinned snapshots dir (default: .agentic-best-practices/pinned)
@@ -124,6 +126,10 @@ while [[ $# -gt 0 ]]; do
         ;;
     --standards-path)
         STANDARDS_PATH="${2:-}"
+        shift 2
+        ;;
+    --config-file)
+        CONFIG_FILE="${2:-}"
         shift 2
         ;;
     --adoption-mode)
@@ -231,6 +237,10 @@ adopt_cmd=(
     --claude-mode "$CLAUDE_MODE"
 )
 
+if [[ -n "$CONFIG_FILE" ]]; then
+    adopt_cmd+=(--config-file "$CONFIG_FILE")
+fi
+
 if [[ "$ADOPTION_MODE" == "pinned" ]]; then
     adopt_cmd+=(--pinned-ref "$PINNED_REF" --pinned-dir "$PINNED_DIR")
 fi
@@ -294,6 +304,9 @@ echo "Pilot preparation complete."
 echo "  Project:           $PROJECT_DIR_ABS"
 echo "  Adoption mode:     $ADOPTION_MODE"
 echo "  Standards path:    $EFFECTIVE_STANDARDS_PATH"
+if [[ -n "$CONFIG_FILE" ]]; then
+    echo "  Config file:       $CONFIG_FILE"
+fi
 echo "  Pilot artifacts:   $PILOT_DIR_ABS"
 echo ""
 echo "Next: fill kickoff.md and start weekly check-ins."

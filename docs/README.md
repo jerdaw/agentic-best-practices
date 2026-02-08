@@ -12,12 +12,14 @@ Internal documentation for maintaining `agentic-best-practices` (process, plans,
 | `docs/process/roadmap-process.md` | Process | Active | How we maintain the `README.md` roadmap. |
 | `docs/process/maintenance-cadence-decision.md` | Decision | Active | Why quarterly + event-driven maintenance. |
 | `docs/planning/archive/2026-02-08-adoption-integration-hardening-plan-v0.2.0.md` | Plan | Archived | Completed adoption hardening implementation record (Phase 1-4). |
+| `docs/planning/archive/2026-02-08-adoption-customization-hardening-plan-v0.3.0.md` | Plan | Archived | Completed implementation record for customization hardening and pilot evidence automation (Phase 1-4). |
 | `docs/templates/feedback-template.md` | Template | Active | How adopters report gaps/conflicts quickly and consistently. |
 | `docs/templates/pilot-kickoff-template.md` | Template | Active | Kickoff checklist and baseline for pilot repositories. |
 | `docs/templates/pilot-weekly-checkin-template.md` | Template | Active | Weekly pilot status template for friction and outcomes. |
 | `docs/templates/pilot-retrospective-template.md` | Template | Active | End-of-pilot summary and rollout decision template. |
 | `docs/adr/adr-001-validation-and-ci.md` | ADR | Active | Why validation + CI are treated as the primary "test suite". |
 | `docs/adr/adr-002-adoption-hardening-and-authorship-policy.md` | ADR | Active | Why adoption hardening baseline is fixed and commit authorship remains human-only. |
+| `docs/adr/adr-003-pilot-evidence-handoff-and-human-validation.md` | ADR | Active | Why pilot evidence summary and human-owned external validation gates are standardized. |
 | `docs/reference/references.md` | Reference | Active | External sources (human readers only). |
 
 ## Directories

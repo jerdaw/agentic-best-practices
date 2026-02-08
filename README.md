@@ -60,6 +60,12 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
   --project-dir . \
   --standards-path "$AGENTIC_BEST_PRACTICES_HOME"
 
+# Optional: apply reusable customization settings from a config file
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
+  --project-dir . \
+  --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
+  --config-file .agentic-best-practices/adoption.env
+
 # Existing project with AGENTS.md: merge standards section in-place
 bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
   --project-dir . \
@@ -86,6 +92,12 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/prepare-pilot-project.sh" \
   --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
   --existing-mode merge \
   --pilot-owner "Team Name"
+
+# Optional: check pilot readiness status (setup/cadence/retrospective)
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/check-pilot-readiness.sh" \
+  --project-dir . \
+  --min-weekly-checkins 0 \
+  --strict
 ```
 
 ### How It Works
@@ -95,6 +107,8 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/prepare-pilot-project.sh" \
 | **This repo** (`$AGENTIC_BEST_PRACTICES_HOME/`) | Single source of truth for all standards |
 | **Project AGENTS.md** | Points AI to consult agentic-best-practices for guidance |
 | **Bootstrap script** | Renders template with project defaults and standards path |
+| **Stack-aware defaults** | Auto-detects Node/Python/Go/Rust/JVM projects to pre-fill language/runtime/testing and key command defaults |
+| **Adoption config file** | Lets projects customize role, priorities, standards topics, and commands with one reusable file |
 | **Merge workflow** | Updates existing `AGENTS.md` with a managed Standards Reference block |
 | **Pinned mode** | Creates project-local standards snapshot at a specific git ref |
 | **Pilot prep script** | Bootstraps adoption + strict validation + pilot artifacts in one command |
@@ -138,7 +152,11 @@ See the full [Adoption Guide](adoption/adoption.md) for detailed setup instructi
 | Execute pilot validation cycle (6-8 weeks) | 🟡 Planned | Use [pilot execution playbook](docs/process/pilot-execution-playbook.md). |
 | Feed pilot outcomes into next release backlog | 🟡 Planned | File actionable updates via [feedback template](docs/templates/feedback-template.md). |
 
-Completed implementation details are archived in `docs/planning/archive/2026-02-08-adoption-integration-hardening-plan-v0.2.0.md`.
+Completed implementation details are archived in:
+
+- `docs/planning/archive/2026-02-08-adoption-integration-hardening-plan-v0.2.0.md`
+- `docs/planning/archive/2026-02-08-adoption-customization-hardening-plan-v0.3.0.md`
+
 See [health dashboard](docs/process/health-dashboard.md) for readiness metrics.
 
 ---
@@ -184,6 +202,7 @@ Best practices specific to working with AI coding assistants.
 | --- | --- |
 | [Adoption Guide](adoption/adoption.md) | **Start Here.** Integrate agentic-best-practices into your projects. |
 | [AGENTS.md Template](adoption/template-agents.md) | Copy into a project as a starting point. |
+| [Adoption Config Template](adoption/template-adoption-config.env) | Reusable configuration for script-driven AGENTS customization. |
 | [AGENTS.md Guidelines](guides/agents-md/agents-md-guidelines.md) | Creating effective AGENTS.md files. |
 | [Agentic Workflow](guides/agentic-workflow/agentic-workflow.md) | MAP-FIRST workflow for safe coding. |
 | [Prompting Patterns](guides/prompting-patterns/prompting-patterns.md) | Crafting effective prompts for AI tools. |

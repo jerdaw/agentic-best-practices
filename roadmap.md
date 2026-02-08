@@ -13,6 +13,7 @@ Execution roadmap for current implementation work. Canonical product roadmap rem
 | Section |
 | --- |
 | [Current Workstream](#current-workstream) |
+| [Human-Led Track](#human-led-track) |
 | [Active Milestones](#active-milestones) |
 | [Next Action](#next-action) |
 
@@ -22,7 +23,28 @@ Execution roadmap for current implementation work. Canonical product roadmap rem
 
 | Workstream | Goal | Status |
 | --- | --- | --- |
+| Adoption customization hardening | Make downstream incorporation easier to customize with repeatable config-driven flow, stack-aware defaults, human-led pilot execution gates, and evidence handoff automation | ✅ Phase 4 complete |
 | External validation | Validate standards and workflows in 1-2 real repositories | Blocked on pilot repo selection |
+
+Completed implementation details are archived in:
+
+- `docs/planning/archive/2026-02-08-adoption-integration-hardening-plan-v0.2.0.md`
+- `docs/planning/archive/2026-02-08-adoption-customization-hardening-plan-v0.3.0.md`
+
+---
+
+## Human-Led Track
+
+These actions require human owners and cannot be completed autonomously from this repository.
+
+| Item | Owner | Status | How to Execute |
+| --- | --- | --- | --- |
+| Select 1-2 pilot repositories with explicit owner commitment | Human maintainer | 🔴 Pending | Apply `docs/planning/pilot-repo-selection.md` and record selected repos/owners in pilot kickoff files. |
+| Kick off pilot repositories with generated artifacts | Human maintainer + pilot owners | 🔴 Pending | Run `scripts/prepare-pilot-project.sh`, then run `scripts/check-pilot-readiness.sh --min-weekly-checkins 0 --strict`. |
+| Run weekly pilot cadence for 6-8 weeks | Pilot owners | 🔴 Pending | Create `weekly-01.md`, `weekly-02.md`, ... from template and keep readiness check passing. |
+| Generate consolidated pilot findings summaries before close-out | Human maintainer + pilot owners | 🔴 Pending | Run `scripts/summarize-pilot-findings.sh` and attach `pilot-summary.md` to rollout decision review. |
+| Close pilot with retrospective and decision record | Human maintainer + pilot owners | 🔴 Pending | Complete retrospective and run readiness check with `--require-retrospective`. |
+| Convert pilot findings into prioritized implementation backlog | Human maintainer + contributors | 🔴 Pending | File issues using `docs/templates/feedback-template.md` and map to release milestones. |
 
 ---
 

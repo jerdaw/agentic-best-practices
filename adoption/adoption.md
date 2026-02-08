@@ -12,6 +12,7 @@ A guide for integrating this repository into your projects so AI coding assistan
 | [One-Time Setup](#one-time-setup) |
 | [Adoption Modes](#adoption-modes) |
 | [Per-Project Adoption](#per-project-adoption) |
+| [Config-Driven Customization](#config-driven-customization) |
 | [Existing Projects](#existing-projects) |
 | [Migration Workflows](#migration-workflows) |
 | [Pilot Enablement](#pilot-enablement) |
@@ -36,6 +37,12 @@ export AGENTIC_BEST_PRACTICES_HOME="${AGENTIC_BEST_PRACTICES_HOME:-$HOME/agentic
 bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
   --project-dir . \
   --standards-path "$AGENTIC_BEST_PRACTICES_HOME"
+
+# Optional: apply reusable project customizations from config file
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
+  --project-dir . \
+  --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
+  --config-file .agentic-best-practices/adoption.env
 
 # Optional: pin standards to a release tag or commit SHA
 bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
@@ -132,10 +139,54 @@ For each project (new or existing):
 | --- | --- |
 | `AGENTS.md` missing | Creates and renders from template |
 | `CLAUDE.md` missing | Creates symlink by default; falls back to copy if needed |
+| Project stack detected (`package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, `pom.xml`) | Pre-fills language/runtime/testing metadata and default command set for that stack |
 | `--adoption-mode pinned` | Creates/uses pinned snapshot and writes relative standards paths |
 | Existing files + `--existing-mode fail` (default) | Fails safely (no overwrite) |
 | Existing files + `--existing-mode overwrite` | Overwrites and creates timestamped backups |
 | Existing files + `--existing-mode merge` | Merges managed Standards Reference block into existing file |
+
+---
+
+## Config-Driven Customization
+
+Use a project-local config file when you want reproducible customization without long command flags.
+
+### Recommended setup
+
+```bash
+mkdir -p .agentic-best-practices
+cp "$AGENTIC_BEST_PRACTICES_HOME/adoption/template-adoption-config.env" .agentic-best-practices/adoption.env
+```
+
+### Run bootstrap with config
+
+```bash
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
+  --project-dir . \
+  --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
+  --config-file .agentic-best-practices/adoption.env
+```
+
+### Supported config keys
+
+| Key | Purpose |
+| --- | --- |
+| `PROJECT_NAME` | Override rendered project name in AGENTS |
+| `AGENT_ROLE` | Set the default agent role text |
+| `PROJECT_DESCRIPTION` | Set short project description in Agent Role section |
+| `PRIORITY_ONE`, `PRIORITY_TWO`, `PRIORITY_THREE` | Set ordered decision priorities |
+| `STANDARDS_TOPICS` | Customize Standards Reference rows (`Topic\|path;Topic\|path`) |
+| `DEVIATION_POLICY` | Override default deviation policy sentence |
+| `DEV_CMD`, `TEST_CMD`, `COVERAGE_CMD`, `LINT_CMD`, `TYPECHECK_CMD`, `BUILD_CMD` | Override generated command entries |
+
+### Notes
+
+| Rule | Behavior |
+| --- | --- |
+| CLI wins over config | If both are set, explicit CLI arguments take precedence |
+| Config path reuse | `--config-file` also applies to merge mode and pilot prep workflow |
+| Guide path formats | `STANDARDS_TOPICS` supports absolute paths, repo-relative paths, or `{{STANDARDS_PATH}}` token |
+| Command override defaults | Optional command override keys are commented out in template config; enable only when needed |
 
 ---
 
@@ -242,8 +293,10 @@ Use this workflow when validating adoption in a real external repository.
 | --- | --- | --- |
 | 1. Select pilot repo | Apply `docs/planning/pilot-repo-selection.md` | Candidate repo and owner |
 | 2. Prepare repo | Run `prepare-pilot-project.sh` | Validated adoption files + pilot templates |
-| 3. Track weekly outcomes | Copy weekly template each week | Measurable friction and impact data |
-| 4. Close with retrospective | Fill retrospective template | Rollout/iterate decision |
+| 3. Run readiness check | Run `check-pilot-readiness.sh` | Early warning for missing artifacts/cadence |
+| 4. Track weekly outcomes | Copy weekly template each week | Measurable friction and impact data |
+| 5. Generate findings summary | Run `summarize-pilot-findings.sh` | Consolidated pilot evidence and backlog checklist |
+| 6. Close with retrospective | Fill retrospective template | Rollout/iterate decision |
 
 ### One-command pilot setup
 
@@ -251,8 +304,27 @@ Use this workflow when validating adoption in a real external repository.
 bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/prepare-pilot-project.sh" \
   --project-dir /path/to/project \
   --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
+  --config-file /path/to/project/.agentic-best-practices/adoption.env \
   --existing-mode merge \
   --pilot-owner "Team Name"
+```
+
+### Pilot readiness check
+
+```bash
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/check-pilot-readiness.sh" \
+  --project-dir /path/to/project \
+  --min-weekly-checkins 0 \
+  --strict
+```
+
+### Pilot findings summary
+
+```bash
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/summarize-pilot-findings.sh" \
+  --project-dir /path/to/project \
+  --pilot-dir ".agentic-best-practices/pilot" \
+  --require-retrospective
 ```
 
 Generated artifacts (default path: `.agentic-best-practices/pilot/`):
@@ -413,6 +485,7 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
 | Strict validation fails on structure | Missing recommended sections or TODO commands | Add missing sections (`Agent Role`, `Tech Stack`, `Key Commands`, `Boundaries`) and replace TODO commands |
 | Pinned mode fails to create snapshot | Ref does not exist or standards path is not a git repo | Verify `--pinned-ref` and run `git -C "$AGENTIC_BEST_PRACTICES_HOME" fetch --tags` |
 | Pilot prep script skips files | Pilot artifact files already exist | Re-run with `--overwrite` to refresh generated pilot files |
+| Pilot readiness check reports missing artifacts | Pilot files or cadence docs not created yet | Run `prepare-pilot-project.sh`, then add weekly/retrospective files and re-run readiness check |
 | Standards seem outdated | Haven't pulled recently | Run `git -C "$AGENTIC_BEST_PRACTICES_HOME" pull` |
 
 ### Verifying setup

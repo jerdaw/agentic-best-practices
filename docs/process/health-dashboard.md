@@ -44,14 +44,14 @@ Real-time metrics tracking the health and readiness of agentic-best-practices.
 | Lint violations | 0 | 0 | ✅ Zero |
 | Navigation drift | 0 | 0 | ✅ Zero |
 | CLAUDE.md compliance | 100% | 100% | ✅ Complete |
-| Adoption smoke simulation (new/merge/overwrite/pinned/pilot-prep) | Pass | Pass | ✅ Complete |
+| Adoption smoke simulation (new/merge/overwrite/pinned/pilot-prep/readiness/summary) | Pass | Pass | ✅ Complete |
 
 **Notes**:
 
 - Internal links validated on every commit via pre-commit hook
 - External link checking added via CI workflow
 - Markdown linting enforced automatically
-- Downstream adoption simulation validates new project setup, merge workflow, overwrite workflow, pinned workflow, pilot-prep workflow, and references
+- Downstream adoption simulation validates new project setup, merge workflow, overwrite workflow, pinned workflow, pilot-prep workflow, readiness checks, findings summary generation, and references
 
 ---
 

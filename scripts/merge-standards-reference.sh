@@ -6,6 +6,9 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 PROJECT_DIR=""
 STANDARDS_PATH="${AGENTIC_BEST_PRACTICES_HOME:-$HOME/agentic-best-practices}"
+CONFIG_FILE=""
+STANDARDS_TOPICS=""
+DEVIATION_POLICY="Do not deviate from these standards without explicit approval. If deviation is necessary, document it in the Project-Specific Overrides section with rationale."
 
 MANAGED_BEGIN="<!-- BEGIN MANAGED: STANDARDS_REFERENCE -->"
 MANAGED_END="<!-- END MANAGED: STANDARDS_REFERENCE -->"
@@ -20,6 +23,7 @@ Required:
 
 Options:
   --standards-path <path>       Location of agentic-best-practices (default: $AGENTIC_BEST_PRACTICES_HOME or ~/agentic-best-practices)
+  --config-file <path>          Optional adoption config file (KEY=VALUE lines)
   --help                        Show help
 
 Behavior:
@@ -44,6 +48,122 @@ normalize_path() {
         path="${path%/}"
     fi
     printf '%s\n' "$path"
+}
+
+trim_whitespace() {
+    local value="$1"
+    value="${value#"${value%%[![:space:]]*}"}"
+    value="${value%"${value##*[![:space:]]}"}"
+    printf '%s\n' "$value"
+}
+
+strip_wrapping_quotes() {
+    local value="$1"
+    if [[ "$value" == \"*\" && "$value" == *\" ]]; then
+        value="${value:1:-1}"
+    elif [[ "$value" == \'*\' && "$value" == *\' ]]; then
+        value="${value:1:-1}"
+    fi
+    printf '%s\n' "$value"
+}
+
+load_adoption_config() {
+    local config_path="$1"
+    local line
+    local key
+    local value
+    local line_no=0
+
+    if [[ ! -f "$config_path" ]]; then
+        echo "Error: config file not found: $config_path" >&2
+        exit 1
+    fi
+
+    while IFS= read -r line || [[ -n "$line" ]]; do
+        line_no=$((line_no + 1))
+        line="$(trim_whitespace "$line")"
+        [[ -z "$line" || "$line" == \#* ]] && continue
+
+        if [[ "$line" != *=* ]]; then
+            echo "Error: invalid config entry at $config_path:$line_no (expected KEY=VALUE)." >&2
+            exit 1
+        fi
+
+        key="$(trim_whitespace "${line%%=*}")"
+        value="$(trim_whitespace "${line#*=}")"
+        value="$(strip_wrapping_quotes "$value")"
+
+        case "$key" in
+        STANDARDS_TOPICS) STANDARDS_TOPICS="$value" ;;
+        DEVIATION_POLICY) DEVIATION_POLICY="$value" ;;
+        "")
+            ;;
+        *)
+            ;;
+        esac
+    done <"$config_path"
+}
+
+resolve_guide_doc_path() {
+    local standards_path="$1"
+    local guide_value="$2"
+    local guide_path
+
+    guide_path="$(expand_home_path "$guide_value")"
+    if [[ "$guide_path" == *"{{STANDARDS_PATH}}"* ]]; then
+        guide_path="${guide_path//\{\{STANDARDS_PATH\}\}/$standards_path}"
+    elif [[ "$guide_path" == /* ]]; then
+        :
+    else
+        guide_path="$standards_path/${guide_path#./}"
+    fi
+    printf '%s\n' "$guide_path"
+}
+
+build_standards_rows() {
+    local standards_path="$1"
+    local topics_config="$2"
+    local default_topics
+    local topics_source
+    local rows=""
+    local entry
+    local topic
+    local guide_value
+    local guide_path
+
+    default_topics="Error handling|guides/error-handling/error-handling.md;Logging|guides/logging-practices/logging-practices.md;API design|guides/api-design/api-design.md;Documentation|guides/documentation-guidelines/documentation-guidelines.md;Code style|guides/coding-guidelines/coding-guidelines.md;Comments|guides/commenting-guidelines/commenting-guidelines.md"
+    topics_source="$topics_config"
+    if [[ -z "$topics_source" ]]; then
+        topics_source="$default_topics"
+    fi
+
+    IFS=';' read -r -a topics_array <<<"$topics_source"
+    for entry in "${topics_array[@]}"; do
+        entry="$(trim_whitespace "$entry")"
+        [[ -z "$entry" ]] && continue
+        if [[ "$entry" != *"|"* ]]; then
+            echo "Error: invalid STANDARDS_TOPICS entry '$entry' (expected 'Topic|path')." >&2
+            exit 1
+        fi
+
+        topic="$(trim_whitespace "${entry%%|*}")"
+        guide_value="$(trim_whitespace "${entry#*|}")"
+        guide_path="$(resolve_guide_doc_path "$standards_path" "$guide_value")"
+
+        if [[ -z "$topic" || -z "$guide_path" ]]; then
+            echo "Error: invalid STANDARDS_TOPICS entry '$entry' (topic/path cannot be empty)." >&2
+            exit 1
+        fi
+
+        rows+=$'| '"$topic"$' | `'"$guide_path"$'` |\n'
+    done
+
+    if [[ -z "$rows" ]]; then
+        echo "Error: standards topics list is empty after parsing." >&2
+        exit 1
+    fi
+
+    printf '%s' "${rows%$'\n'}"
 }
 
 backup_if_exists() {
@@ -141,6 +261,10 @@ while [[ $# -gt 0 ]]; do
         STANDARDS_PATH="${2:-}"
         shift 2
         ;;
+    --config-file)
+        CONFIG_FILE="${2:-}"
+        shift 2
+        ;;
     --help)
         print_usage
         exit 0
@@ -180,12 +304,18 @@ if [[ ! -d "$STANDARDS_PATH_RESOLVED" ]]; then
     exit 1
 fi
 
+if [[ -n "$CONFIG_FILE" ]]; then
+    CONFIG_FILE="$(expand_home_path "$CONFIG_FILE")"
+    load_adoption_config "$CONFIG_FILE"
+fi
+
 AGENTS_PATH="$PROJECT_DIR/AGENTS.md"
 if [[ ! -f "$AGENTS_PATH" ]]; then
     echo "Error: AGENTS.md not found in project. Use adopt-into-project.sh for first-time setup." >&2
     exit 1
 fi
 
+standards_rows="$(build_standards_rows "$STANDARDS_PATH_FOR_DOC" "$STANDARDS_TOPICS")"
 block_file="$(mktemp)"
 cat >"$block_file" <<EOF
 $MANAGED_BEGIN
@@ -197,16 +327,11 @@ This project follows organizational standards defined in \`$STANDARDS_PATH_FOR_D
 
 | Topic | Guide |
 | --- | --- |
-| Error handling | \`$STANDARDS_PATH_FOR_DOC/guides/error-handling/error-handling.md\` |
-| Logging | \`$STANDARDS_PATH_FOR_DOC/guides/logging-practices/logging-practices.md\` |
-| API design | \`$STANDARDS_PATH_FOR_DOC/guides/api-design/api-design.md\` |
-| Documentation | \`$STANDARDS_PATH_FOR_DOC/guides/documentation-guidelines/documentation-guidelines.md\` |
-| Code style | \`$STANDARDS_PATH_FOR_DOC/guides/coding-guidelines/coding-guidelines.md\` |
-| Comments | \`$STANDARDS_PATH_FOR_DOC/guides/commenting-guidelines/commenting-guidelines.md\` |
+$standards_rows
 
 For other topics, check \`$STANDARDS_PATH_FOR_DOC/README.md\` for the full guide index (all guides are in \`$STANDARDS_PATH_FOR_DOC/guides/\`).
 
-**Deviation policy**: Do not deviate from these standards without explicit approval. If deviation is necessary, document it in the Project-Specific Overrides section with rationale.
+**Deviation policy**: $DEVIATION_POLICY
 $MANAGED_END
 EOF
 
@@ -231,5 +356,8 @@ echo "  Project:   $PROJECT_DIR"
 echo "  AGENTS.md: $AGENTS_PATH"
 echo "  Backup:    $backup_path"
 echo "  Standards: $STANDARDS_PATH_FOR_DOC"
+if [[ -n "$CONFIG_FILE" ]]; then
+    echo "  Config:    $CONFIG_FILE"
+fi
 echo ""
 echo "Next step: bash \"$REPO_ROOT/scripts/validate-adoption.sh\" --project-dir \"$PROJECT_DIR\" --expect-standards-path \"$STANDARDS_PATH_FOR_DOC\""
