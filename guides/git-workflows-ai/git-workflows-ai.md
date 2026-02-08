@@ -118,22 +118,22 @@ git commit -m "feat: add user validation"
 ### What NOT to Do
 
 ```bash
-# WRONG: AI as author
-git commit --author="Claude <claude@anthropic.com>" -m "..."
+# WRONG: setting author to someone else who did not approve the commit
+git commit --author="Jane Developer <jane@example.com>" -m "..."
 
-# WRONG: AI as co-author in commit
+# WRONG: adding co-author metadata without explicit contribution approval
 git commit -m "feat: add feature
 
-Co-Authored-By: AI Assistant <ai@example.com>"
+Co-Authored-By: Jane Developer <jane@example.com>"
 ```
 
-### Transparency Without Co-Authorship
+### Transparency Without Metadata Attribution
 
 | Location | Visibility | Usage | Rationale |
 | --- | --- | --- | --- |
-| **PR Desc** | **High** | "AI drafted initial logic" | Best for reviewers context & risk assessment. |
-| **Msg Body** | **Medium** | "Refactoring aided by AI" | Permanent record in git log for future auditors. |
-| **Msg Footer** | **Low** | `AI-Tools: Claude-3.5` | Machine-readable metadata for analysis. |
+| **PR Desc** | **High** | "Initial draft revised after review" | Best for reviewer context and risk assessment. |
+| **Msg Body** | **Medium** | "Refactoring completed after manual verification" | Permanent record in git log for future auditors. |
+| **Msg Footer** | **Low** | `Review-Notes: manual validation complete` | Machine-readable metadata for process checks. |
 
 ```markdown
 ## PR Description
@@ -141,7 +141,7 @@ Co-Authored-By: AI Assistant <ai@example.com>"
 Adds retry logic to API client.
 
 ### Notes
-- Initial implementation drafted with AI assistance
+- Initial implementation revised through review
 - Manually verified retry behavior with integration tests
 - Added edge case handling for timeout scenarios
 ```

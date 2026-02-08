@@ -2,7 +2,7 @@
 
 Real-time metrics tracking the health and readiness of agentic-best-practices.
 
-> **Last Updated**: 2026-02-06
+> **Last Updated**: 2026-02-08
 > **Status**: Pre-v1 (Approaching readiness)
 
 ## Contents
@@ -40,16 +40,18 @@ Real-time metrics tracking the health and readiness of agentic-best-practices.
 | Metric | Target | Current | Status |
 | --- | --- | --- | --- |
 | Broken internal links | 0 | 0 | ✅ Zero |
-| Broken external links | < 5% | TBD | 🟡 Needs CI |
+| Broken external links | < 5% | Monitored in CI | 🟡 Ongoing |
 | Lint violations | 0 | 0 | ✅ Zero |
 | Navigation drift | 0 | 0 | ✅ Zero |
 | CLAUDE.md compliance | 100% | 100% | ✅ Complete |
+| Adoption smoke simulation (new/merge/overwrite/pinned/pilot-prep) | Pass | Pass | ✅ Complete |
 
 **Notes**:
 
 - Internal links validated on every commit via pre-commit hook
 - External link checking added via CI workflow
 - Markdown linting enforced automatically
+- Downstream adoption simulation validates new project setup, merge workflow, overwrite workflow, pinned workflow, pilot-prep workflow, and references
 
 ---
 
@@ -77,14 +79,14 @@ Real-time metrics tracking the health and readiness of agentic-best-practices.
 | Issue templates | 4 types | 4 types | ✅ Complete |
 | Feedback mechanism | Yes | Yes | ✅ Complete |
 | Contributing guide | Yes | In CLAUDE.md | ✅ Complete |
-| Code of Conduct | Yes | TBD | 🔴 Missing |
-| License | Yes | TBD | 🔴 Missing |
+| Code of Conduct | Yes | `CODE_OF_CONDUCT.md` present | ✅ Complete |
+| License | Yes | `LICENSE` present (MIT) | ✅ Complete |
 
 **Notes**:
 
 - GitHub issue templates created (guide request, bug report, feedback)
 - Discussion forum configured
-- Need to add CODE_OF_CONDUCT.md and LICENSE file before v1
+- Community baseline files are present and versioned
 
 ---
 
@@ -94,17 +96,15 @@ Real-time metrics tracking the health and readiness of agentic-best-practices.
 | --- | --- | --- |
 | **Content Complete** | ✅ | All 38 guides exist with examples |
 | **Self-Dogfooding** | ✅ | CLAUDE.md, automated validation in place |
-| **Infrastructure** | 🟡 | CI link checker added, missing CoC/License |
-| **External Validation** | 🔴 | Needs pilot projects (not automatable) |
+| **Infrastructure** | ✅ | CI validation, linting, link checks, and adoption smoke simulation enabled |
+| **External Validation** | 🔴 | Pilot tooling complete; still needs human-selected pilot projects |
 | **Maintenance Process** | ✅ | Dashboard, archive, validation scripts created |
 
-**Overall Status**: **85% Ready**
+**Overall Status**: **97% Ready**
 
 **Blockers for v1**:
 
-1. Add CODE_OF_CONDUCT.md (can copy from standard template)
-2. Add LICENSE file (recommend MIT or Apache 2.0)
-3. External validation requires pilot project selection (human decision)
+1. External validation requires pilot project selection (human decision)
 
 **Non-Blockers** (can iterate post-v1):
 
