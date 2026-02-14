@@ -115,6 +115,7 @@ Follow [Writing Best Practices](guides/writing-best-practices/writing-best-pract
 | Update README | **Required** | When adding new guides |
 | Fix broken links | **Always** | Maintains graph integrity |
 | Keep human-only authorship metadata | **Required** | Maintains accountability in git history and docs |
+| Avoid AI attribution | **Required** | No 'Co-authored-by' trailers or AI credits |
 | Add new directory | **Ask first** | Taxonomy decisions need review |
 | Restructure repo | **Ask first** | High impact on linking |
 
