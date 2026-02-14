@@ -24,6 +24,7 @@ Execution roadmap for current implementation work. Canonical product roadmap rem
 | Workstream | Goal | Status |
 | --- | --- | --- |
 | Adoption customization hardening | Make downstream incorporation easier to customize with repeatable config-driven flow, stack-aware defaults, human-led pilot execution gates, and evidence handoff automation | ✅ Phase 4 complete |
+| Agent concepts taxonomy | Define and document the 8 core agent concepts (Prompt Files, Memory, Custom Agents, etc.) with new guides and ADR 004 | ✅ Complete |
 | External validation | Validate standards and workflows in 1-2 real repositories | Blocked on pilot repo selection |
 
 Completed implementation details are archived in:
