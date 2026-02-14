@@ -129,6 +129,17 @@ Safety mechanisms to prevent bad deployments.
 | **Skipping CI** | Untested code reaches prod | Enforce branch protection rules |
 | **Implicit state** | Flaky, non-reproducible builds | Use containers for build environments |
 
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Skipping tests to ship faster | Restore the test stage — speed without safety is recklessness | Untested code in production causes outages |
+| Hardcoded secrets in CI workflow files | Move to encrypted secrets / vault | Secrets in code are visible to everyone with repo access |
+| No rollback plan for the deployment | Define rollback before deploying | Every deployment needs an undo strategy |
+| Manual deployment steps mixed with automation | Automate fully or document the manual steps explicitly | Partially automated deploys are the most dangerous kind |
+| CI pipeline takes > 30 minutes | Parallelize stages and cache dependencies | Slow pipelines get bypassed |
+
 ---
 
 ## See Also

@@ -218,6 +218,18 @@ ruff check . --diff-against-baseline=.ruff-baseline.json
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| `/* eslint-disable */` at the top of a file | Remove — fix or disable specific rules with comments | Blanket disables hide real bugs alongside false positives |
+| SAST security finding suppressed without explanation | Add a comment explaining why it's safe, or fix it | Suppressed security findings accumulate into real vulnerabilities |
+| Linter warnings count growing sprint over sprint | Schedule a warning-reduction sprint | Warnings become normalized and eventually hide critical issues |
+| Pre-commit hooks disabled "because they're slow" | Optimize the hooks, don't disable them | No pre-commit = lint errors caught only in CI, slowing everyone |
+| Formatter and linter disagree on style | Align configuration so formatter output passes lint | Conflicting tools frustrate developers and waste CI cycles |
+
+---
+
 ## See Also
 
 - [CI/CD Pipelines](../cicd-pipelines/cicd-pipelines.md) – Pipeline design patterns

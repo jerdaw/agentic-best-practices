@@ -322,6 +322,26 @@ npm test         # Run tests
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| AGENTS.md exceeds 500 lines | Split into sub-docs and link | Oversized files waste context tokens and dilute focus |
+| No boundaries section (Always / Ask First / Never) | Add one immediately | Without boundaries, agents make risky changes unchecked |
+| Commands listed without flags or full syntax | Add complete, copy-paste-ready commands | Incomplete commands force agents to guess options |
+| Agent role says "helpful assistant" with no priorities | Define a specialist role with ordered priorities | Vague personas produce generic, low-quality output |
+| AGENTS.md not updated after major architecture change | Update to match current reality | Stale AGENTS.md causes agents to follow outdated patterns |
+
+---
+
+## See Also
+
+- [Architecture for AI](../architecture-for-ai/architecture-for-ai.md) – System docs that agents consume
+- [Documentation Guidelines](../documentation-guidelines/documentation-guidelines.md) – General writing standards
+- [Tool Configuration](../tool-configuration/tool-configuration.md) – Configuring AI tools per-project
+
+---
+
 ## References
 
 - [GitHub Blog](https://github.blog/ai-and-ml/github-copilot/how-to-write-a-great-agents-md-lessons-from-over-2500-repositories/)

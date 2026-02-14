@@ -255,6 +255,17 @@ def recover_sagas():
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Saga step has no compensating action defined | Define a compensation for every step before deploying | Missing compensations leave the system in an inconsistent state on failure |
+| Compensating action is not idempotent | Make it idempotent — it may be called multiple times | Non-idempotent compensations can double-refund, double-cancel, etc. |
+| Saga orchestrator is a single point of failure with no persistence | Add durable state storage for the saga coordinator | If the orchestrator crashes mid-saga, recovery is impossible |
+| Using distributed transactions (2PC) instead of sagas | Switch to saga pattern for cross-service operations | 2PC doesn't scale and creates tight coupling between services |
+
+---
+
 ## See Also
 
 - [Idempotency Patterns](../idempotency-patterns/idempotency-patterns.md) – Safe retry strategies

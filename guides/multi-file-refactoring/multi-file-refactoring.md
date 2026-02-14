@@ -555,6 +555,17 @@ After completing multi-file refactor:
 | **Skipping cleanup** | Tech debt remains | Finish refactor fully |
 | **No rollback plan** | Stuck if things break | Plan rollback before starting |
 
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Changing more than 10 files without a checkpoint | Stop, commit, verify, then continue | Large unreverified batches accumulate errors silently |
+| No tests exist for the code being refactored | Write tests first, then refactor | Refactoring without tests is blind surgery |
+| Mixing refactoring with new feature work | Separate into distinct PRs | Mixed PRs are impossible to review and risky to rollback |
+| Build is broken and you continue editing | Fix the build first | Building on top of broken code compounds failures |
+| "I'll clean up the old code later" | Delete it now or don't refactor | Abandoned cleanup becomes permanent tech debt |
+
 ---
 
 ## See Also

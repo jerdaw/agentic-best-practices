@@ -220,6 +220,18 @@ def delete_user(user_id: str) -> None:
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| PII (email, name, IP) appearing in application logs | Add redaction filters before logging | Logged PII violates GDPR/CCPA and exposes data to anyone with log access |
+| User data collected with no documented purpose | Remove the collection or document the purpose | Data without purpose violates data minimization — a core GDPR principle |
+| No data retention policy — data kept indefinitely | Define and enforce retention periods | Unbounded retention increases breach impact and regulatory liability |
+| Production database used for development/testing | Use anonymized or synthetic data for dev/test | Dev environments have weaker controls — real PII in dev is a breach risk |
+| No mechanism for users to request data deletion | Implement a data subject rights endpoint | "Right to be forgotten" is a legal requirement in GDPR and CCPA |
+
+---
+
 ## See Also
 
 - [Secure Coding](../secure-coding/secure-coding.md) – Security implementation patterns

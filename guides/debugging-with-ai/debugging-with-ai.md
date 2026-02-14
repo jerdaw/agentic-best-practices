@@ -41,6 +41,34 @@ Best practices for collaborating with AI coding agents to diagnose, reproduce, a
 
 ---
 
+## The Iron Law
+
+```text
+NO FIXES WITHOUT ROOT CAUSE INVESTIGATION FIRST
+```
+
+If you haven't completed the Observe → Reproduce → Isolate → Diagnose steps, you cannot propose fixes. Symptom fixes mask underlying issues and waste time.
+
+### When This Matters Most
+
+| Situation | Why You Must Follow the Process |
+| :--- | :--- |
+| Under time pressure | Rushing guarantees rework — systematic is faster than thrashing |
+| "Just one quick fix" seems obvious | Obvious fixes are often wrong; verify before applying |
+| Multiple fixes already attempted | You're guessing — go back to isolation |
+| Issue seems simple | Simple bugs have root causes too |
+
+### Red Flags — Stop and Reassess
+
+| Signal | Action |
+| :--- | :--- |
+| Tempted to "just try something" | Return to Observe step |
+| Fix didn't work | You don't have root cause — return to Diagnose |
+| Multiple fixes attempted | You're guessing — return to Isolate |
+| Can't explain why the fix works | You haven't found root cause |
+
+---
+
 ## The Debugging Lifecycle
 
 1. **Observe** – Collect error messages, logs, and user reports.

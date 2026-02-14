@@ -514,6 +514,17 @@ AI has limited context. Large conversations degrade response quality.
 - Share entire codebase "for context"
 - Mix multiple unrelated topics
 
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Third attempt at the same prompt with no progress | Switch to manual or completely reframe the task | Repeating failed prompts wastes time; the approach is wrong |
+| Prompt is longer than the expected output | Simplify — you're over-constraining | Over-specified prompts confuse the model |
+| Response requires heavy editing to use | Break the task into smaller prompts | Large prompts produce low-quality output |
+| AI confidently produces wrong code | Verify assumptions — provide tests or examples | Confident errors are the most dangerous kind |
+| "Make it better" without criteria | Define what "better" means — faster, cleaner, safer | Vague requests get vague results |
+
 ---
 
 ## See Also

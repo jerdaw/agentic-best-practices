@@ -138,6 +138,17 @@ As conversations grow, the "attention" of the AI diminishes.
 | **Infinite Chat** | AI loses track of the goal | Refresh session after 10-15 turns |
 | **Implicit Rules** | AI violates project norms | Use `AGENTS.md` for persistent rules |
 
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Sharing the entire `src/` folder as context | Share only the 2-3 relevant files | Context dumps dilute signal and waste tokens |
+| Continuing a stale session past 15+ turns | Start a fresh session with a summary | AI attention degrades as context grows |
+| Mixing unrelated tasks in one session | Start separate sessions per task | Cross-task context causes hallucinations and contradictions |
+| Not re-sharing files after significant edits | Refresh context with current versions | AI is working with outdated code |
+| Ignoring context window limits | Prune and prioritize — include types and tests first | Exceeding limits causes silent information loss |
+
 ---
 
 ## See Also

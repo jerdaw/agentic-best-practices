@@ -153,6 +153,17 @@ Regularly run maintenance commands:
 | **Micro-packages** | "left-pad" style risk | Use built-in language features |
 | **Blind updates** | Breaking changes reach prod | Use CI to verify dependency updates |
 
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Adding a dependency for a trivial task (< 10 lines of code) | Write it yourself | Micro-packages introduce supply chain risk for minimal value |
+| Multiple libraries serving the same purpose | Pick one and remove the others | Duplicate deps bloat the bundle and create version conflicts |
+| Ignoring `npm audit` / `pip audit` warnings | Fix or document as accepted risk | Known vulnerabilities in your deps are your vulnerabilities |
+| No lockfile committed to version control | Commit it immediately | Without a lockfile, builds are non-reproducible |
+| Dependency has no recent commits (> 12 months) | Evaluate alternatives or fork | Abandoned deps won't get security patches |
+
 ---
 
 ## See Also

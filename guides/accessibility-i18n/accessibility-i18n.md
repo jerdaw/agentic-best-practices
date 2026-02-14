@@ -256,6 +256,18 @@ test('form is accessible', async () => {
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Images with no `alt` attribute or `alt=""` on informational images | Add descriptive alt text | Screen reader users get no information from untagged images |
+| `outline: none` on focusable elements with no replacement | Provide a visible focus indicator | Keyboard users can't navigate without visible focus state |
+| UI strings hardcoded directly in component code | Externalize to translation files | Hardcoded strings make localization impossible without code changes |
+| Color used as the only indicator of state (e.g., red = error) | Add icons, text, or patterns alongside color | Colorblind users miss color-only indicators entirely |
+| Date or currency formatted with string concatenation | Use `Intl.DateTimeFormat` / `Intl.NumberFormat` | Manual formatting breaks for non-US locales |
+
+---
+
 ## See Also
 
 - [Coding Guidelines](../coding-guidelines/coding-guidelines.md) – General code standards

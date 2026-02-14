@@ -722,6 +722,18 @@ For each function that can fail:
 | **handled?** | Did the caller actually check the return value? |
 | **Safe?** | Did you accidentally show a stack trace to the user? |
 
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Empty `catch {}` block | Add logging or re-throw | Silent failures are invisible bugs |
+| Catching `Error` base class | Catch specific error types | Generic catches swallow programming errors |
+| Error message is just "Error" or "Something went wrong" | Add what, why, and context | Vague messages make debugging impossible |
+| Logging errors AND re-throwing them | Pick one — log at the boundary, throw internally | Double logging creates noise and confusion |
+| Retry without exponential backoff | Add backoff — `delay * 2` per attempt | Unbounded retries can DDoS your own services |
+| No timeout on external calls | Add explicit timeouts | External services will hang eventually |
+
 ---
 
 ## See Also

@@ -20,7 +20,10 @@ agents and humans.
 | [Common Pitfalls](#common-pitfalls) |
 | [Anti-Patterns](#anti-patterns) |
 | [References and Citations](#references-and-citations) |
+| [Writing for Skills vs Guides](#writing-for-skills-vs-guides) |
 | [Self-Assessment Checklist](#self-assessment-checklist) |
+| [Red Flags](#red-flags) |
+| [See Also](#see-also) |
 
 ---
 
@@ -55,7 +58,7 @@ agents and humans.
 | :--- | :--- | :--- |
 | **Principles over rules** | Guide judgment, not just actions | Readers can adapt to edge cases |
 | **Scannable over readable** | Prioritize tables and lists | Faster retrieval for humans and AI |
-| **Concise over comprehensive** | focus on essential guidance | Reduces noise and token usage |
+| **Concise over comprehensive** | Focus on essential guidance | Reduces noise and token usage |
 | **Current over historical** | Delete outdated rather than archive | Prevents confusion and drift |
 | **Flexible over rigid** | Guide decisions, don't mandate | Accommodates varied tech stacks |
 | **Tested over theoretical** | Document proven patterns only | Ensures guidance actually works |
@@ -119,6 +122,7 @@ Every best practices document should include:
 | **Core Principles** | 5-7 foundational ideas | Yes | Establishes the mental model |
 | **Detailed sections** | Deep guidance with examples | Yes | Provides actionable implementation |
 | **Anti-Patterns** | What to avoid and why | Yes | Prevents common recurring errors |
+| **Red Flags** | Signal → Action → Rationale table | Yes | Quick-scan checklist for code review and self-audit |
 | **See Also** | Related guides | Recommended | Promotes deeper exploration |
 
 ### Optimize for AI Context Windows
@@ -385,6 +389,36 @@ Standardize how you link to resources to maintain clean, readable documentation.
 
 ---
 
+## Writing for Skills vs Guides
+
+This repo uses two complementary formats. Use the right one for the content:
+
+| Dimension | Guides | Skills |
+| :--- | :--- | :--- |
+| **Voice** | Advisory — "Here's the principle" | Imperative — "Do this now" |
+| **Format** | Tables + examples + rationale | Numbered steps + checklists |
+| **Depth** | Deep — principles, anti-patterns, reasoning | Shallow — actionable procedures only |
+| **Scope** | Universal / cross-project | Task-specific, often project-scoped |
+| **Activation** | Agent consults when it decides to | Agent auto-activates on trigger condition |
+
+### When to Write a Guide
+
+- The topic has nuance, trade-offs, or multiple valid approaches
+- You need to explain *why* something should be done, not just *what*
+- The content applies across projects and tech stacks
+
+### When to Write a Skill
+
+- The task is procedural with clear start/end conditions
+- An agent needs step-by-step instructions it can follow mechanically
+- The skill should reference a backing guide for rationale
+
+### Connecting Them
+
+Every skill should link to its backing guide. Every guide that has a corresponding skill should be listed in the skills navigation tables (`README.md`, `AGENTS.md`, `skills/README.md`).
+
+---
+
 ## Self-Assessment Checklist
 
 When reviewing a best practices document:
@@ -396,11 +430,26 @@ When reviewing a best practices document:
 - [ ] Is guidance prescriptive where it matters, permissive elsewhere?
 - [ ] Does this reflect current actual practice?
 - [ ] Can this be maintained without heroic effort?
+- [ ] Does it have a Red Flags section?
+
+---
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Guide exceeds 800 lines without subsections | Split into focused sections or link to sub-guides | Long monoliths overwhelm both humans and AI agents |
+| Advice given with no concrete example | Add a code snippet, config sample, or before/after comparison | Abstract advice without examples is ignored in practice |
+| Guide contradicts another guide in the repo | Reconcile — one source of truth per topic | Contradictory guidance creates confusion and inconsistent behavior |
+| Table of contents missing or out of sync with headings | Add or regenerate the contents table | Without a TOC, readers and AI can't navigate or verify coverage |
+| No Quick Reference table at the top | Add one — front-load key information | Important content must survive context window truncation |
+| Guidance tables have no "Rationale" column | Add a "Why" or "Rationale" column | Rules without reasoning are followed blindly or ignored entirely |
 
 ---
 
 ## See Also
 
 - [Documentation Guidelines](../documentation-guidelines/documentation-guidelines.md) – General documentation practices
+- [Documentation Maintenance](../doc-maintenance/doc-maintenance.md) – Keeping docs in sync with code
 - [Context Management](../context-management/context-management.md) – Managing AI context effectively
 - [AGENTS.md Guidelines](../agents-md/agents-md-guidelines.md) – Creating effective AI agent configuration

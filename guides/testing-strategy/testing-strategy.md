@@ -271,8 +271,21 @@ pytest
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Feature shipped with zero tests | Write tests before or immediately after deployment | Untested features break silently and compound risk over time |
+| Tests break on every refactor without behavior change | Rewrite to test behavior, not implementation | Brittle tests slow development and erode trust in the suite |
+| Integration tests skipped "because they're slow" | Optimize or run in CI, but don't skip | Unit tests alone miss boundary and wiring bugs |
+| Test suite takes 30+ minutes to run | Parallelize, split, or identify bottlenecks | Slow suites get skipped, reducing their value to zero |
+| Flaky test ignored with `skip` annotation | Fix the root cause or delete the test | Skipped tests accumulate and hide real failures |
+
+---
+
 ## See Also
 
 - [Testing AI-Generated Code](../testing-ai-code/testing-ai-code.md) – Testing AI output
+- [E2E Testing](../e2e-testing/e2e-testing.md) – End-to-end testing patterns
 - [Coding Guidelines](../coding-guidelines/coding-guidelines.md) – Code structure patterns
 - [Error Handling](../error-handling/error-handling.md) – Testing error paths

@@ -723,6 +723,19 @@ Before accepting AI-generated code:
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Test asserts `result === process(input)` (tautological) | Assert against a known expected value | Tautological tests always pass — they verify nothing |
+| All tests pass but code visibly does the wrong thing | Add a test for the actual expected behavior | Passing tests with wrong behavior means tests are broken |
+| Every external dependency is mocked | Add at least one integration test with real dependencies | Over-mocking tests the mocks, not the code |
+| AI-generated tests have no edge case coverage | Add null, empty, boundary, and error tests manually | AI tests share the same blind spots as AI code |
+| Test names are `test1`, `test2`, `test3` | Rename to describe expected behavior | Unnamed tests give no signal when they fail |
+| 100% coverage but mutations survive | Run mutation testing to find weak assertions | Coverage measures execution, not verification |
+
+---
+
 ## See Also
 
 - [Code Review for AI Output](../code-review-ai/code-review-ai.md) – Overall review workflow

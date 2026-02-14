@@ -108,6 +108,14 @@ A reference for version control practices when using AI coding assistants—comm
 
 The human who reviews and accepts responsibility is the author.
 
+> [!IMPORTANT]
+> **Hard Rules for AI Agents:**
+>
+> - Never set yourself (the AI) as author or co-author of any commit
+> - Never include "Generated with [AI Tool]" or similar tool attribution in PR descriptions unless the PR directly relates to that tool
+> - Never add `Co-Authored-By` headers for AI tools
+> - The human who reviews, tests, and pushes the code is the sole author
+
 ```bash
 # The human is always the author
 git commit -m "feat: add user validation"
@@ -566,6 +574,19 @@ Add to your AGENTS.md or CONTRIBUTING.md:
 - Note AI assistance in PR description if significant
 - Human takes full responsibility for committed code
 ```
+
+---
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| `git push --force` on a shared branch | Use `--force-with-lease` or rebase locally | Force push overwrites teammates' work silently |
+| Commit touching 20+ files with message "updates" | Split into logical commits with descriptive messages | Giant vague commits are impossible to review or revert |
+| Committing directly to `main` without PR | Create a branch and open a PR | Bypasses review, CI, and audit trail |
+| Merge conflicts resolved by accepting "ours" blindly | Read both sides and merge intentionally | Blind resolution deletes others' work |
+| Secrets or credentials appearing in a commit | Rotate the secret immediately, rewrite history | Secrets in git history persist forever, even after deletion |
+| Rebasing a branch that others have checked out | Coordinate or use merge instead | Rebase rewrites history and breaks others' local copies |
 
 ---
 

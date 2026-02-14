@@ -113,6 +113,17 @@ Always include owner and context.
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Comment restates what the code already says (`// increment i`) | Delete the comment | Redundant comments add noise and go stale |
+| Comment explains "what" instead of "why" | Rewrite to explain intent or business reason | Code shows what — only comments explain why |
+| TODO comment with no owner or issue link | Add a tracker link or delete | Ownerless TODOs never get resolved |
+| Large block of commented-out code checked in | Delete it — use git history instead | Dead code confuses readers and AI agents |
+
+---
+
 ## See Also
 
 - [Coding Guidelines](../coding-guidelines/coding-guidelines.md) – Clean code practices

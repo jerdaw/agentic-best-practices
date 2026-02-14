@@ -174,6 +174,53 @@ while IFS= read -r -d '' guide; do
     done <<<"$anchors_used"
 done < <(find guides adoption -name "*.md" -print0 2>/dev/null)
 
+# --- 5. Validate skills directory ---
+echo ""
+echo "=== Checking skills ===="
+
+if [[ -d "skills" ]]; then
+    # Check each skill subdirectory has a SKILL.md
+    while IFS= read -r -d '' skill_dir; do
+        [[ -d "$skill_dir" ]] || continue
+        skill_name="$(basename "$skill_dir")"
+        skill_file="$skill_dir/SKILL.md"
+
+        if [[ ! -f "$skill_file" ]]; then
+            echo -e "${RED}ERROR${NC}: Skills directory '$skill_name' missing SKILL.md"
+            inc_error
+            continue
+        fi
+
+        # Check frontmatter has name and description
+        if ! head -10 "$skill_file" | grep -q "^name:"; then
+            echo -e "${RED}ERROR${NC}: $skill_file missing 'name:' in frontmatter"
+            inc_error
+        fi
+        if ! head -10 "$skill_file" | grep -q "^description:"; then
+            echo -e "${RED}ERROR${NC}: $skill_file missing 'description:' in frontmatter"
+            inc_error
+        fi
+
+        # Check deep guide references resolve
+        while IFS= read -r guide_ref; do
+            [[ -n "$guide_ref" ]] || continue
+            if [[ ! -f "$guide_ref" ]]; then
+                echo -e "${RED}ERROR${NC}: $skill_file references non-existent guide: $guide_ref"
+                inc_error
+            fi
+        done < <(grep -oE 'guides/[a-z0-9_-]+/[a-z0-9_-]+\.md' "$skill_file" 2>/dev/null || true)
+    done < <(find skills -mindepth 1 -maxdepth 1 -type d -print0 2>/dev/null)
+
+    # Check skills/README.md exists
+    if [[ ! -f "skills/README.md" ]]; then
+        echo -e "${RED}ERROR${NC}: skills/README.md not found"
+        inc_error
+    fi
+else
+    echo -e "${YELLOW}WARN${NC}: No skills/ directory found"
+    inc_warning
+fi
+
 # --- Summary ---
 echo ""
 echo "=== Summary ==="

@@ -130,6 +130,17 @@ Treat errors as first-class citizens, not an afterthought.
 - [ ] Errors handled explicitly?
 - [ ] No magic numbers or strings?
 
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Function exceeds 40 lines | Split into smaller functions | Long functions are untestable and hard to reason about |
+| Variable named `data`, `temp`, `result` | Rename to describe content | Vague names force readers to trace assignments |
+| More than 3 levels of nesting | Refactor with early returns or extraction | Deep nesting hides bugs and increases cognitive load |
+| Ignoring compiler/linter warnings | Fix them — they exist for a reason | Warnings become errors in production |
+| "This is just a quick hack" | Write it properly — hacks become permanent | Technical debt compounds exponentially |
+
 ---
 
 ## See Also

@@ -36,7 +36,9 @@ Directives for AI agents working within this repository.
 | [Secure Coding](guides/secure-coding/secure-coding.md) | OWASP patterns, injection prevention |
 | [Deployment Strategies](guides/deployment-strategies/deployment-strategies.md) | Blue-green, canary, feature flags |
 | [Observability Patterns](guides/observability-patterns/observability-patterns.md) | Metrics, tracing, health checks |
-| [Testing Strategy](guides/testing-strategy/testing-strategy.md) | Test pyramid, coverage |  
+| [Testing Strategy](guides/testing-strategy/testing-strategy.md) | Test pyramid, coverage |
+| [E2E Testing](guides/e2e-testing/e2e-testing.md) | Selectors, flaky tests, Page Object Model |
+| [Documentation Maintenance](guides/doc-maintenance/doc-maintenance.md) | Code-to-docs sync, freshness tracking |
 | [CI/CD Pipelines](guides/cicd-pipelines/cicd-pipelines.md) | Build, test, deploy automation |
 | [Codebase Organization](guides/codebase-organization/codebase-organization.md) | Directory structure, layering |
 | [Static Analysis](guides/static-analysis/static-analysis.md) | Linters, formatters, SAST |
@@ -67,6 +69,27 @@ Directives for AI agents working within this repository.
 | [Tool Configuration](guides/tool-configuration/tool-configuration.md) | |
 | [PRD for Agents](guides/prd-for-agents/prd-for-agents.md) | Specs AI can consume |
 | [Architecture for AI](guides/architecture-for-ai/architecture-for-ai.md) | System docs that prevent hallucination |
+
+### Skills
+
+Procedural, auto-discoverable workflow skills. Each wraps one or more deep guides above. See [skills/README.md](skills/README.md).
+
+| Skill | Trigger |
+| --- | --- |
+| [debugging](skills/debugging/SKILL.md) | Diagnosing bugs, test failures, unexpected behavior |
+| [code-review](skills/code-review/SKILL.md) | Reviewing code, preparing PRs |
+| [testing](skills/testing/SKILL.md) | Writing tests, designing test strategy |
+| [planning](skills/planning/SKILL.md) | Planning multi-step tasks, implementation plans |
+| [pr-writing](skills/pr-writing/SKILL.md) | Creating PRs, writing commits |
+| [secure-coding](skills/secure-coding/SKILL.md) | Security-sensitive code, auth, user input |
+| [prompting](skills/prompting/SKILL.md) | Crafting prompts, managing AI context |
+| [refactoring](skills/refactoring/SKILL.md) | Large changes across multiple files |
+| [e2e-testing](skills/e2e-testing/SKILL.md) | Writing or fixing end-to-end tests |
+| [doc-maintenance](skills/doc-maintenance/SKILL.md) | Keeping docs in sync with code changes |
+| [issue-writing](skills/issue-writing/SKILL.md) | Filing bug reports, feature requests, task tickets |
+| [git-workflow](skills/git-workflow/SKILL.md) | Branching, committing, conflict resolution, PRs |
+| [logging](skills/logging/SKILL.md) | Structured logging, log levels, redaction |
+| [deployment](skills/deployment/SKILL.md) | Production deploys, rollback, verification |
 
 ---
 
