@@ -101,6 +101,14 @@ For other topics, check `{{STANDARDS_PATH}}/README.md` for the full guide index 
 
 ---
 
+## Skills (Optional)
+
+If skills are installed (via `--install-skills`), agents can auto-discover procedural workflow skills in the skills directory. Each skill provides step-by-step instructions for common workflows backed by the deep guides referenced in Standards Reference above.
+
+See `{{STANDARDS_PATH}}/skills/README.md` for the full skills index.
+
+---
+
 ## Project-Specific Overrides
 
 <!--

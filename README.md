@@ -30,15 +30,38 @@ AI coding tools offer "skills" (scripts, commands, specialized tasks) that exten
 
 | Aspect | Skills | agentic-best-practices |
 | --- | --- | --- |
-| **Focus** | Capabilities (deploy, test, build) | Standards (error handling, logging, API design) |
+| **Focus** | Capabilities (deploy, test, build) | Standards AND procedural skills backed by deep guides |
 | **Scope** | Task-specific | Cross-cutting principles |
-| **Usage** | On-demand invocation | Continuous reference |
+| **Usage** | On-demand invocation | Continuous reference + auto-discoverable skills |
 | **Ownership** | Often tool-specific | Tool-agnostic (Claude, Gemini, ChatGPT) |
 | **Update model** | Per-project embedding | Central repo, one `git pull` updates all |
 
-**In short**: Skills = "What to do." This project = "How to do things well."
+**In short**: Skills = "What to do." This project = "How to do things well — and teaches agents how, step by step."
 
 The result is consistent engineering judgment across all AI work—AI consults these standards before making decisions rather than reinventing patterns or making arbitrary choices.
+
+---
+
+## Skills
+
+Procedural workflow skills that agents can auto-discover and follow. Each skill is a concise, step-by-step wrapper backed by a deep guide in `guides/`. See [skills/README.md](skills/README.md) for details.
+
+| Skill | Trigger | Deep Guide(s) |
+| --- | --- | --- |
+| [debugging](skills/debugging/SKILL.md) | Diagnosing bugs, test failures, unexpected behavior | [Debugging with AI](guides/debugging-with-ai/debugging-with-ai.md) |
+| [code-review](skills/code-review/SKILL.md) | Reviewing code, preparing PRs for review | [Code Review for AI Output](guides/code-review-ai/code-review-ai.md) |
+| [testing](skills/testing/SKILL.md) | Writing tests, designing test strategy | [Testing Strategy](guides/testing-strategy/testing-strategy.md), [Testing AI Code](guides/testing-ai-code/testing-ai-code.md) |
+| [planning](skills/planning/SKILL.md) | Planning multi-step tasks, implementation plans | [Planning Documentation](guides/planning-documentation/planning-documentation.md), [Agentic Workflow](guides/agentic-workflow/agentic-workflow.md) |
+| [pr-writing](skills/pr-writing/SKILL.md) | Creating PRs, writing commits | [Git Workflows with AI](guides/git-workflows-ai/git-workflows-ai.md) |
+| [secure-coding](skills/secure-coding/SKILL.md) | Security-sensitive code, auth, user input | [Secure Coding](guides/secure-coding/secure-coding.md), [Security Boundaries](guides/security-boundaries/security-boundaries.md) |
+| [prompting](skills/prompting/SKILL.md) | Crafting prompts, managing AI context | [Prompting Patterns](guides/prompting-patterns/prompting-patterns.md), [Context Management](guides/context-management/context-management.md) |
+| [refactoring](skills/refactoring/SKILL.md) | Large changes across multiple files | [Multi-File Refactoring](guides/multi-file-refactoring/multi-file-refactoring.md) |
+| [e2e-testing](skills/e2e-testing/SKILL.md) | Writing or fixing end-to-end tests | [E2E Testing](guides/e2e-testing/e2e-testing.md) |
+| [doc-maintenance](skills/doc-maintenance/SKILL.md) | Keeping docs in sync with code changes | [Documentation Maintenance](guides/doc-maintenance/doc-maintenance.md) |
+| [issue-writing](skills/issue-writing/SKILL.md) | Filing bug reports, feature requests, task tickets | Standalone |
+| [git-workflow](skills/git-workflow/SKILL.md) | Branching, committing, conflict resolution, PRs | [Git Workflows with AI](guides/git-workflows-ai/git-workflows-ai.md) |
+| [logging](skills/logging/SKILL.md) | Structured logging, log levels, redaction | [Logging Practices](guides/logging-practices/logging-practices.md) |
+| [deployment](skills/deployment/SKILL.md) | Production deploys, rollback, verification | [Deployment Strategies](guides/deployment-strategies/deployment-strategies.md) |
 
 ---
 
@@ -185,6 +208,8 @@ Core software development patterns applicable to any project.
 | [Deployment Strategies](guides/deployment-strategies/deployment-strategies.md) | Blue-green, canary, and feature flags. |
 | [Observability Patterns](guides/observability-patterns/observability-patterns.md) | Metrics, tracing, and health checks. |
 | [Testing Strategy](guides/testing-strategy/testing-strategy.md) | Test pyramid and coverage goals. |
+| [E2E Testing](guides/e2e-testing/e2e-testing.md) | End-to-end testing patterns and flaky test prevention. |
+| [Documentation Maintenance](guides/doc-maintenance/doc-maintenance.md) | Keeping docs in sync with code changes. |
 | [CI/CD Pipelines](guides/cicd-pipelines/cicd-pipelines.md) | Build, test, deploy automation. |
 | [Codebase Organization](guides/codebase-organization/codebase-organization.md) | Directory structure and layering. |
 | [Static Analysis](guides/static-analysis/static-analysis.md) | Linters, formatters, and SAST. |

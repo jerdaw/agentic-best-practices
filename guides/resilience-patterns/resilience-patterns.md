@@ -725,6 +725,18 @@ For resilient code:
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| External HTTP call with no timeout set | Add a timeout immediately | Calls without timeouts hang forever and exhaust connection pools |
+| Retrying 4xx client errors (400, 404, 422) | Only retry transient errors (5xx, 429, timeouts) | Client errors won't succeed on retry — you're wasting resources |
+| Retry loop with no backoff or jitter | Add exponential backoff with jitter | Immediate retries create thundering herds that overwhelm recovering services |
+| No circuit breaker on a frequently-failing dependency | Add a circuit breaker to fail fast | Continuous retries to a dead service cascade failures to your callers |
+| Fallback silently returning stale data with no logging | Log when fallbacks activate with context | Silent degradation hides problems until they become critical |
+
+---
+
 ## See Also
 
 - [Error Handling](../error-handling/error-handling.md) – Handling errors in code

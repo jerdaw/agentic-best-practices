@@ -265,6 +265,17 @@ def test_idempotency():
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Payment endpoint can be called twice and charge twice | Add an idempotency key check before processing | Double-charging is a critical bug with legal and trust consequences |
+| Idempotency key stored only in memory | Use durable storage (database/Redis) for key tracking | In-memory keys are lost on restart, defeating the purpose |
+| Retry logic on a non-idempotent endpoint | Make the endpoint idempotent first, then add retries | Retrying non-idempotent operations causes duplicate side effects |
+| No expiration on idempotency keys | Add TTL-based expiration | Unbounded key storage grows forever and wastes resources |
+
+---
+
 ## See Also
 
 - [Resilience Patterns](../resilience-patterns/resilience-patterns.md) – Circuit breakers and fallbacks

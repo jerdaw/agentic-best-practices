@@ -17,7 +17,7 @@ effectively.
 | [Data Flow Documentation](#data-flow-documentation) |
 | [Component Descriptions](#component-descriptions) |
 | [Architecture Anti-Patterns](#architecture-anti-patterns) |
-| [See Also](#see-also-1) |
+| [See Also](#see-also) |
 
 ---
 
@@ -150,7 +150,18 @@ For each major component, provide a brief summary of its responsibility.
 
 ---
 
-## See Also 1
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Architecture diagrams are image files (PNG/JPG) not text | Convert to Mermaid.js text-based diagrams | AI agents can't read image diagrams — they need text |
+| Architecture docs describe a system that no longer exists | Update or delete — stale docs are worse than none | Outdated architecture docs cause agents to build on wrong assumptions |
+| No link between component descriptions and source files | Add file paths for each component | Without code links, architecture is abstract and ungrounded |
+| Architecture decisions made with no ADR documenting "why" | Write an ADR for each significant decision | Undocumented decisions get reversed by future contributors and agents |
+
+---
+
+## See Also
 
 - [ADRs in Documentation](../documentation-guidelines/documentation-guidelines.md#architectural-decision-records-adrs)
 - [PRD for Agents](../prd-for-agents/prd-for-agents.md) – Requirement specs

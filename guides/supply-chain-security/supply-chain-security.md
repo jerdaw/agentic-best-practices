@@ -502,6 +502,18 @@ For every project:
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| CI actions pinned to tags (`@v4`) instead of SHA | Pin to commit SHA | Tags can be moved — a compromised action tag affects every consumer |
+| `npm audit` reports critical vulnerabilities ignored for weeks | Fix or document a risk-acceptance decision | Known unfixed vulnerabilities are breaches waiting to happen |
+| New dependency added with zero GitHub stars and one maintainer | Evaluate alternatives or vendoring | Low-trust packages are prime supply chain attack vectors |
+| No lock file committed to version control | Commit lock files and use `npm ci` in CI | Without lock files, builds are non-reproducible and vulnerable to version drift |
+| `GITHUB_TOKEN` has `write-all` permissions | Scope to minimal required permissions | Over-permissioned tokens, if leaked, give attackers full repository access |
+
+---
+
 ## See Also
 
 - [Dependency Management](../dependency-management/dependency-management.md) – Evaluating and updating dependencies

@@ -238,6 +238,17 @@ Before giving a spec to an AI agent:
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| PRD has no acceptance criteria or "done when" definition | Add measurable criteria before implementation starts | Vague PRDs produce vague implementations and endless scope debates |
+| PRD references features that don't exist in the codebase | Verify all references against current code | Phantom references cause agents to hallucinate non-existent APIs |
+| PRD written as prose paragraphs instead of structured sections | Restructure into scannable sections with tables and lists | AI agents parse structured content far more reliably than prose |
+| No technical constraints or non-functional requirements listed | Add performance, security, and compatibility constraints | Missing constraints lead to architecturally unsound implementations |
+
+---
+
 ## See Also
 
 - [Prompting Patterns](../prompting-patterns/prompting-patterns.md) – Crafting effective prompts

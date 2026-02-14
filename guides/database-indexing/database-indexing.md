@@ -153,6 +153,17 @@ CREATE INDEX idx_users_email ON users(email);
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Query doing a full table scan on a million+ row table | Add an index on the filter/join columns | Full scans on large tables cause timeouts and lock contention |
+| Index on every column "just in case" | Remove unused indexes — they slow writes | Each index costs write performance and storage |
+| Composite index with columns in wrong order | Put highest-selectivity columns first | Wrong column order makes the index useless for the query |
+| No `EXPLAIN` analysis before adding an index | Run `EXPLAIN` to verify the index is actually used | Unused indexes waste resources without improving query speed |
+
+---
+
 ## See Also
 
 - [Observability Patterns](../observability-patterns/observability-patterns.md) – Tracking query performance

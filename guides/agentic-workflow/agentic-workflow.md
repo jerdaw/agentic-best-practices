@@ -461,6 +461,17 @@ B. [Option and tradeoffs]
 | **Infinite retry** | Resource waste | Bounded retries |
 | **Assume approval** | Unauthorized actions | Explicit gates |
 
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Editing code before reading the codebase | Stop and go back to the MAP phase | Changes without understanding create more bugs than they fix |
+| "This is too simple to need a plan" | It's not — write a plan anyway | Simple-seeming tasks hide complexity; skipping planning causes rework |
+| Batching more than 3 tasks before a checkpoint | Break into smaller batches and report | Large batches without feedback accumulate errors silently |
+| Guessing when blocked on requirements | Stop and ask the human | Assumptions create wasted work when they're wrong |
+| No rollback strategy defined | Define how to undo before starting | Every change needs a way to reverse it |
+
 ---
 
 ## See Also

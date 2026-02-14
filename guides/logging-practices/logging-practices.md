@@ -614,6 +614,19 @@ When adding logging:
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Passwords, tokens, or API keys appearing in log output | Add redaction immediately | Log aggregators are often broadly accessible — leaked secrets get exploited |
+| `console.log` used instead of structured logger | Replace with proper logging library | Console output isn't aggregated, filtered, or searchable in production |
+| Debug-level logging enabled in production | Set production log level to `info` or `warn` | Debug logs in prod create noise, performance drag, and potential data exposure |
+| Every function logs entry and exit | Remove — log meaningful events only | Excessive logging drowns actionable signals in noise |
+| Error logged AND re-thrown without deduplication | Choose one: log or throw, not both | Duplicate log entries waste time during incident response |
+| No correlation/request ID in log entries | Add request ID propagation | Without correlation IDs, tracing requests across services is impossible |
+
+---
+
 ## See Also
 
 - [Error Handling](../error-handling/error-handling.md) – When and what to log on errors

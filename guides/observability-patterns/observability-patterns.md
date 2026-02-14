@@ -286,6 +286,18 @@ spec:
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Alert firing every day that nobody investigates | Tune threshold or delete the alert | Alert fatigue causes real incidents to be ignored |
+| Metrics dashboard with all green but users reporting errors | Add user-facing symptom metrics (Golden Signals) | Internal metrics can mask user-visible failures |
+| No trace context propagated between services | Add OpenTelemetry context propagation | Without traces, debugging distributed issues requires log correlation by hand |
+| `user_id` used as a metric label | Move to traces/logs — use bounded labels for metrics | High-cardinality labels cause metric storage explosion |
+| Health check always returns 200 even when database is down | Check actual dependencies in the health endpoint | A useless health check prevents orchestrators from routing around failures |
+
+---
+
 ## See Also
 
 - [Logging Practices](../logging-practices/logging-practices.md) – Structured logging patterns

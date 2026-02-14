@@ -142,6 +142,37 @@ Don't just take the AI's word; ask it to prove the suggestion.
 
 ---
 
+## Automated Review Dispatch
+
+For systematic reviews, provide diff-based context to ensure comprehensive coverage.
+
+### Setup
+
+```bash
+BASE_SHA=$(git merge-base HEAD origin/main)
+HEAD_SHA=$(git rev-parse HEAD)
+```
+
+### Review Request Format
+
+| Field | Content |
+| :--- | :--- |
+| **What was implemented** | Brief description of the change |
+| **Requirements/plan** | Link to plan, PRD, or issue |
+| **Base SHA** | `$BASE_SHA` |
+| **Head SHA** | `$HEAD_SHA` |
+| **Focus areas** | Specific concerns for review |
+
+### Severity-Based Triage
+
+| Severity | Action | Example |
+| :--- | :--- | :--- |
+| **Critical** | Fix immediately — blocks merge | Security vulnerability, data loss |
+| **Important** | Fix before proceeding | Missing error handling, race condition |
+| **Minor** | Note for later — doesn't block | Naming suggestion, style preference |
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
@@ -151,6 +182,18 @@ Don't just take the AI's word; ask it to prove the suggestion.
 | **Logic hallucinations** | Agent invents bugs | Ask for proof (tests/explorations) |
 | **Blindly applying** | Subtle regressions | Always review and test AI fixes |
 | **Context starvation** | "Code looks fine" (wrong) | Share dependencies and callers |
+
+---
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Approving a PR without running the code | Run it locally or verify CI passed | "Looks good" without execution misses runtime bugs |
+| AI-generated PR with no test changes | Request tests before approving | Untested AI code has unknown failure modes |
+| Review comment says "I don't understand this but LGTM" | Ask the author to explain or simplify | Approving code you don't understand transfers risk to production |
+| PR has 50+ changed files | Request splitting into smaller PRs | Large PRs get rubber-stamped — reviewers can't maintain focus |
+| No security review on auth/payment/data code | Flag for security-focused review | Security bugs in critical paths have outsized impact |
 
 ---
 

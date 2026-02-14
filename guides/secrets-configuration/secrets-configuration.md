@@ -282,6 +282,19 @@ def validate_config(config: dict) -> None:
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Hardcoded API key, password, or token in source code | Move to environment variable or secret manager immediately | Committed secrets persist in git history even after "deletion" |
+| `.env` file not in `.gitignore` | Add it to `.gitignore` before the next commit | A committed `.env` leaks every secret in the file |
+| Same database password used in dev, staging, and prod | Generate unique credentials per environment | One breach exposes all environments |
+| Secret value appearing in application logs | Add redaction — log "provided: true/false" instead | Logs are often stored in broadly accessible systems |
+| Secret rotation has never been performed | Schedule rotation and verify the rotation procedure works | Unrotated secrets have unlimited exposure windows |
+| Debug mode enabled in production config | Disable immediately | Debug mode exposes stack traces, config values, and internal state |
+
+---
+
 ## See Also
 
 - [Security Boundaries](../security-boundaries/security-boundaries.md) – Security requirements for AI development

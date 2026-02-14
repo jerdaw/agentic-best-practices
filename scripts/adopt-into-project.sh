@@ -17,6 +17,8 @@ EXISTING_MODE="fail" # fail | overwrite | merge
 ADOPTION_MODE="latest" # latest | pinned
 PINNED_REF=""
 PINNED_DIR=".agentic-best-practices/pinned"
+INSTALL_SKILLS=0
+SKILLS_AGENT="claude" # claude | gemini | generic
 
 PROJECT_NAME=""
 AGENT_ROLE="project-focused software engineer"
@@ -58,6 +60,8 @@ Options:
   --pinned-dir <path>           Project-relative pinned snapshots dir (default: .agentic-best-practices/pinned)
   --existing-mode <mode>        fail | overwrite | merge (default: fail)
   --claude-mode <mode>          auto | symlink | copy | skip (default: auto)
+  --install-skills              Copy skills/ into the target project for agent auto-discovery
+  --skills-agent <agent>        claude | gemini | generic (default: claude) — determines target directory
   --force                       Overwrite/sync existing AGENTS.md/CLAUDE.md where needed (backs up previous files)
   --help                        Show help
 
@@ -67,6 +71,7 @@ Examples:
   bash scripts/adopt-into-project.sh --project-dir . --adoption-mode pinned --pinned-ref v1.0.0
   bash scripts/adopt-into-project.sh --project-dir . --existing-mode merge --claude-mode skip
   bash scripts/adopt-into-project.sh --project-dir . --force --claude-mode copy
+  bash scripts/adopt-into-project.sh --project-dir . --install-skills --skills-agent claude
 EOF
 }
 
@@ -633,6 +638,45 @@ backup_if_exists() {
     fi
 }
 
+install_skills() {
+    local standards_path="$1"
+    local project_dir="$2"
+    local agent="$3"
+    local skills_source="$standards_path/skills"
+    local target_dir
+    local skill_count=0
+
+    if [[ ! -d "$skills_source" ]]; then
+        echo "Warning: skills directory not found at $skills_source — skipping skills installation." >&2
+        return 0
+    fi
+
+    case "$agent" in
+    claude) target_dir="$project_dir/.claude/skills" ;;
+    gemini) target_dir="$project_dir/.gemini/skills" ;;
+    generic) target_dir="$project_dir/skills" ;;
+    *)
+        echo "Error: --skills-agent must be one of: claude, gemini, generic" >&2
+        exit 1
+        ;;
+    esac
+
+    mkdir -p "$target_dir"
+
+    for skill_dir in "$skills_source"/*/; do
+        [[ ! -d "$skill_dir" ]] && continue
+        local skill_name
+        skill_name="$(basename "$skill_dir")"
+        if [[ -f "$skill_dir/SKILL.md" ]]; then
+            mkdir -p "$target_dir/$skill_name"
+            cp "$skill_dir/SKILL.md" "$target_dir/$skill_name/SKILL.md"
+            skill_count=$((skill_count + 1))
+        fi
+    done
+
+    printf '%d\n' "$skill_count"
+}
+
 write_claude_file() {
     local agents_path="$1"
     local claude_path="$2"
@@ -728,6 +772,14 @@ while [[ $# -gt 0 ]]; do
         ;;
     --claude-mode)
         CLAUDE_MODE="${2:-}"
+        shift 2
+        ;;
+    --install-skills)
+        INSTALL_SKILLS=1
+        shift
+        ;;
+    --skills-agent)
+        SKILLS_AGENT="${2:-}"
         shift 2
         ;;
     --force)
@@ -886,6 +938,12 @@ if [[ "$CLAUDE_MODE" != "skip" ]]; then
     fi
 fi
 
+skills_status="skipped"
+if [[ "$INSTALL_SKILLS" -eq 1 ]]; then
+    installed_count="$(install_skills "$STANDARDS_PATH" "$PROJECT_DIR" "$SKILLS_AGENT")"
+    skills_status="installed ($installed_count skills → $SKILLS_AGENT)"
+fi
+
 echo "Adoption bootstrap complete ($operation)."
 echo "  Project:   $PROJECT_DIR"
 echo "  AGENTS.md: $AGENTS_PATH"
@@ -894,6 +952,7 @@ if [[ "$CLAUDE_MODE" == "skip" ]]; then
 else
     echo "  CLAUDE.md: $CLAUDE_PATH ($claude_status)"
 fi
+echo "  Skills:    $skills_status"
 echo "  Mode:      $ADOPTION_MODE"
 if [[ "$ADOPTION_MODE" == "pinned" ]]; then
     echo "  Pinned ref: $PINNED_REF"

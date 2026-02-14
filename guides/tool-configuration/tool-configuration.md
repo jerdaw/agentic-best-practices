@@ -622,6 +622,17 @@ Keep consistent across tools:
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Tool config files not committed to version control | Commit them — consistency requires shared config | Uncommitted config means every dev has different behavior |
+| Tool rules override each other with conflicting settings | Audit and reconcile overlapping configurations | Conflicting rules cause inconsistent formatting and false lint errors |
+| AI tool has access to production secrets or credentials | Restrict tool permissions to development scope only | AI tools with prod access are a security breach waiting to happen |
+| No `.editorconfig` or formatter config in the repo | Add one — consistent formatting prevents diff noise | Without shared config, every developer introduces formatting churn |
+
+---
+
 ## See Also
 
 - [Security Boundaries](../security-boundaries/security-boundaries.md) – Security requirements for AI tools

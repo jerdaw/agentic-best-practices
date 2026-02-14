@@ -202,6 +202,18 @@ Manage infrastructure with the same rigor as application code.
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Deploying to production on a Friday afternoon | Postpone to Monday unless critical | Weekend deploys have no support staff if things break |
+| No rollback plan documented before deployment | Define rollback triggers and procedure first | Without a plan, rollback under incident pressure takes 10× longer |
+| Deploying to production without staging verification | Run in staging first, then promote | Skipping staging makes production the test environment |
+| All-at-once deployment to 100% of traffic | Use canary or blue/green to limit blast radius | Full rollout means 100% of users hit any bug simultaneously |
+| Manual SSH into servers to deploy | Automate with CI/CD pipeline | Manual deploys are unreproducible and error-prone |
+
+---
+
 ## See Also
 
 - [CI/CD Pipelines](../cicd-pipelines/cicd-pipelines.md) – Automated workflow

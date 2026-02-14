@@ -353,6 +353,18 @@ except Exception as e:
 - [ ] Error messages don't expose internals
 - [ ] HTTPS enforced, secure cookie flags set
 
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| User input used directly in SQL/shell/HTML | Add parameterization or escaping immediately | Direct interpolation = injection vulnerability |
+| Password stored in plaintext or with MD5/SHA1 | Switch to bcrypt or Argon2 | Weak hashing is equivalent to no hashing |
+| `eval()` or `exec()` called with external data | Remove it — there is no safe way to use this | Code injection is the most severe vulnerability class |
+| SSL certificate verification disabled | Re-enable it — fix the root certificate issue instead | Disabled verification enables man-in-the-middle attacks |
+| Sensitive data appearing in logs | Add redaction for passwords, tokens, PII | Log exposure is a common data breach vector |
+| Authorization check missing on a data endpoint | Add it before shipping | Missing authz = any authenticated user can access any data |
+
 ---
 
 ## See Also

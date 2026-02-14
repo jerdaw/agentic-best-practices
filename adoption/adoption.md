@@ -147,6 +147,44 @@ For each project (new or existing):
 
 ---
 
+## Skills Installation
+
+Optionally install procedural workflow skills alongside AGENTS.md. Skills are concise, step-by-step instructions that agents can auto-discover. Each skill wraps one or more deep guides.
+
+### What Skills Are
+
+| Concept | Purpose |
+| --- | --- |
+| **Guides** (in `guides/`) | Explain *why* — principles, rationale, anti-patterns |
+| **Skills** (in `skills/`) | Tell agents *what to do* — imperative, procedural steps |
+
+Skills reference guides for deeper understanding. Agents use both.
+
+### Installing Skills
+
+```bash
+# Install skills alongside AGENTS.md
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
+  --project-dir . \
+  --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
+  --install-skills \
+  --skills-agent claude
+```
+
+### Target Directory by Agent
+
+| `--skills-agent` | Target Directory |
+| --- | --- |
+| `claude` (default) | `.claude/skills/` |
+| `gemini` | `.gemini/skills/` |
+| `generic` | `skills/` |
+
+### Available Skills
+
+See `skills/README.md` for the full list of available skills.
+
+---
+
 ## Config-Driven Customization
 
 Use a project-local config file when you want reproducible customization without long command flags.

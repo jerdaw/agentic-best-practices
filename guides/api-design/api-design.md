@@ -762,6 +762,18 @@ When designing an API:
 | **Can evolve without breaking?** | Ensures longevity and backward compatibility. |
 | **Documented with examples?** | Accelerates integration and correctness. |
 
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Breaking change without version bump | Add versioning or deprecation headers | Silent breaks destroy client trust |
+| Endpoint returns different shapes for success/error | Standardize the response envelope | Inconsistent responses force defensive parsing |
+| No pagination on list endpoints | Add `limit`/`offset` or cursor pagination | Unbounded queries exhaust memory and bandwidth |
+| Internal database IDs exposed in API | Use opaque identifiers (UUIDs, slugs) | Leaking internal IDs creates security and coupling risks |
+| No input validation at API boundary | Add schema validation | Invalid data reaching business logic causes unpredictable behavior |
+| No rate limiting on public endpoints | Add rate limiting with `429` responses | Unprotected endpoints invite abuse |
+
 ---
 
 ## See Also

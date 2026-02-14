@@ -165,6 +165,20 @@ Planning documents move through defined stages, with clear locations and respons
 - [ ] [Measurable outcome]
 ```
 
+### Task Granularity
+
+Break plan tasks into bite-sized steps. Each step should be **one action that takes 2-5 minutes**. This ensures reversibility, clear progress tracking, and easier debugging when something goes wrong.
+
+| Granularity | Example | Verdict |
+| --- | --- | --- |
+| **Too large** | "Implement the feature and write tests" | Split it |
+| **Too large** | "Set up database and API layer" | Two separate tasks |
+| **Right size** | "Write the failing test for login validation" | ✓ |
+| **Right size** | "Run the test to verify it fails" | ✓ |
+| **Right size** | "Add null check to `validateUser()`" | ✓ |
+
+**Rule of thumb**: If a task contains "and," it's two tasks. If it touches more than one file, consider splitting it.
+
 ### Plan Lifecycle
 
 | Phase | Document State | Actions |
@@ -292,6 +306,18 @@ docs/
     └── archive/
         └── 000-rejected-idea.md
 ```
+
+---
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Starting implementation with no written plan or PRD | Write a brief plan document before coding | Unplanned work drifts in scope and misses requirements |
+| Plan document not updated after scope changes | Update the plan to match current reality | Stale plans mislead future readers and create false confidence |
+| Requirements expressed as vague goals without acceptance criteria | Add concrete "done when" criteria | Vague goals produce vague implementations and infinite rework |
+| Planning document lives in someone's head, not in the repo | Write it down in a persistent, shared location | Knowledge in heads is lost when people are unavailable |
+| Scope growing during implementation with no pushback | Identify scope creep and split into follow-up work | Unchecked scope growth delays delivery and increases risk |
 
 ---
 

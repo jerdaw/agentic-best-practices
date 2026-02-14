@@ -386,6 +386,17 @@ Set aside time for unassisted coding to maintain skills:
 | **Hidden AI** | Trust issues | Note in PR | Transparency builds confidence. |
 | **No Learning** | Unmaintainable | Understand | You can't maintain what you don't know. |
 
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Accepting AI output without reading it | Read every line before committing | Blind acceptance ships bugs and security holes |
+| Using AI for security-critical code without manual review | Add manual expert review | AI training data contains vulnerable patterns |
+| Spending 10+ minutes prompting for a 5-minute task | Do it manually | The tool is slowing you down, not helping |
+| Unable to explain AI-generated code in your PR | Understand it first or rewrite | You can't maintain what you don't understand |
+| Team member skills degrading from over-delegation | Schedule manual practice time | Skill atrophy makes the team dependent on AI |
+
 ---
 
 ## See Also

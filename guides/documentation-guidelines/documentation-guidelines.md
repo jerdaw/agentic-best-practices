@@ -521,10 +521,23 @@ For roadmaps, implementation plans, RFCs, and archiving practices, see [Planning
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| README setup instructions fail when followed | Fix immediately — test every command | Broken setup docs block every new contributor |
+| Same information documented in 3+ places | Consolidate to a single source and link to it | Multiple sources of truth always drift apart |
+| API docs describe endpoints that no longer exist | Delete stale entries, audit remaining docs | Stale docs are worse than no docs — they actively mislead |
+| "Coming soon" or TODO sections in published docs | Remove or write the content now | Placeholder content signals neglect and erodes trust |
+| Code changed but docs not updated in the same PR | Update docs in the same PR as the code change | Deferred doc updates become permanently deferred |
+
+---
+
 ## See Also
 
 * [Writing Best Practices](../writing-best-practices/writing-best-practices.md) – Guidelines for writing this documentation
 * [Commenting Guidelines](../commenting-guidelines/commenting-guidelines.md) – Inline code comments
+* [Documentation Maintenance](../doc-maintenance/doc-maintenance.md) – Keeping docs in sync with code changes
 * [API Design](../api-design/api-design.md) – Designing APIs worth documenting
 * [PRD for Agents](../prd-for-agents/prd-for-agents.md) – Writing specifications AI can consume
 * [Architecture for AI](../architecture-for-ai/architecture-for-ai.md) – System docs that prevent hallucination

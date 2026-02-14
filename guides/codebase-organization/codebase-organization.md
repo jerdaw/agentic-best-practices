@@ -124,6 +124,17 @@ Keep static configuration separate from executable logic.
 | **Circular deps** | Impossible to reason about | Extract shared logic to a base module |
 | **Shadowing** | Same name in different folders | Use prefix: `api-user` vs `db-user` |
 
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| Circular dependency detected | Extract shared logic to a base module | Circular deps make builds and reasoning impossible |
+| `utils/` or `helpers/` folder growing past 10 files | Break into domain-specific modules | Junk drawer folders destroy discoverability |
+| Importing from another module's internals | Import through the public barrel (`index.ts`) | Direct internal imports create tight coupling |
+| Directory nesting deeper than 4 levels | Flatten — reorganize by feature | Deep paths waste context window tokens |
+| Same concept named differently in different modules | Standardize terminology across the codebase | Inconsistent naming creates confusion and duplication |
+
 ---
 
 ## See Also
