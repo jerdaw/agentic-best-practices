@@ -232,6 +232,9 @@ Best practices specific to working with AI coding assistants.
 | [Agentic Workflow](guides/agentic-workflow/agentic-workflow.md) | MAP-FIRST workflow for safe coding. |
 | [Prompting Patterns](guides/prompting-patterns/prompting-patterns.md) | Crafting effective prompts for AI tools. |
 | [Context Management](guides/context-management/context-management.md) | Providing the right context to AI. |
+| [Prompt Files](guides/prompt-files/prompt-files.md) | Authoring reusable task templates for agents. |
+| [Memory Patterns](guides/memory-patterns/memory-patterns.md) | State management across agent sessions. |
+| [Custom Agents](guides/custom-agents/custom-agents.md) | Designing specialized agent worker profiles. |
 | [Code Review for AI Output](guides/code-review-ai/code-review-ai.md) | Reviewing AI-generated code effectively. |
 | [Security Boundaries](guides/security-boundaries/security-boundaries.md) | Security requirements for AI development. |
 | [Testing AI-Generated Code](guides/testing-ai-code/testing-ai-code.md) | Verification strategies for AI output. |

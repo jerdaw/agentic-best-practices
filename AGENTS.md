@@ -59,6 +59,9 @@ Directives for AI agents working within this repository.
 | [Agentic Workflow](guides/agentic-workflow/agentic-workflow.md) | MAP-FIRST workflow |
 | [Prompting Patterns](guides/prompting-patterns/prompting-patterns.md) | |
 | [Context Management](guides/context-management/context-management.md) | |
+| [Prompt Files](guides/prompt-files/prompt-files.md) | Reusable task templates |
+| [Memory Patterns](guides/memory-patterns/memory-patterns.md) | State across sessions |
+| [Custom Agents](guides/custom-agents/custom-agents.md) | Specialized worker profiles |
 | [Code Review for AI Output](guides/code-review-ai/code-review-ai.md) | |
 | [Security Boundaries](guides/security-boundaries/security-boundaries.md) | |
 | [Testing AI-Generated Code](guides/testing-ai-code/testing-ai-code.md) | |
