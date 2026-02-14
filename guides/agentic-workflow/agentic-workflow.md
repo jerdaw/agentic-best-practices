@@ -459,8 +459,10 @@ B. [Option and tradeoffs]
 | **Skip tests** | Unverified changes | Prove before PR |
 | **Ignore failures** | Silent breakage | Handle or escalate |
 | **Infinite retry** | Resource waste | Bounded retries |
-| **Assume approval** | Unauthorized actions | Explicit gates |
+| **Assume approval** | Unauth changes | Wait |
+| **Silent fail** | Hidden bugs | Log |
 
+---
 
 ## Red Flags
 

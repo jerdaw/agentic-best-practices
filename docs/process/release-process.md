@@ -125,6 +125,17 @@ Example structure:
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| **Red CI / Failed checks** | **STOP**. Fix the error. | The quality gate is absolute. Bypassing it destroys trust. |
+| **Breaking change in Patch** | Bump to MAJOR or revert the change | SemVer is the contract; breaking it breaks downstream updates. |
+| **"Just a quick fix"** | Follow the full process | Skipping steps is how bad releases happen. |
+| **No migration steps** | Write specific "how to upgrade" instructions | Users need to know *what to do*, not just *what changed*. |
+
+---
+
 ## Rollout and Rollback
 
 | Scenario | Rollout | Rollback |

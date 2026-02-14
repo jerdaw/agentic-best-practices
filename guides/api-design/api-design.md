@@ -762,6 +762,7 @@ When designing an API:
 | **Can evolve without breaking?** | Ensures longevity and backward compatibility. |
 | **Documented with examples?** | Accelerates integration and correctness. |
 
+---
 
 ## Red Flags
 

@@ -124,6 +124,7 @@ Keep static configuration separate from executable logic.
 | **Circular deps** | Impossible to reason about | Extract shared logic to a base module |
 | **Shadowing** | Same name in different folders | Use prefix: `api-user` vs `db-user` |
 
+---
 
 ## Red Flags
 

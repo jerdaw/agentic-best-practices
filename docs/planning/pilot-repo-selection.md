@@ -187,6 +187,17 @@ Before finalizing pilot selection, verify:
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| **"Voluntold" Team** | Disqualify or get explicit team commitment | Forced pilots fail; you need enthusiasm (or at least willingness). |
+| **Stagnant Repo** | Choose a different repository | You can't test "day-in-the-life" patterns on a repo with no active work. |
+| **Short Timeline** | Delay pilot until >4 weeks available | Patterns take time to learn; <4 weeks yields noise, not signal. |
+| **No Owner** | Pause selection until owner identified | A pilot without a driver goes nowhere. |
+
+---
+
 ## See Also
 
 - [v1 Success Criteria](v1-success-criteria.md) - What defines a successful pilot

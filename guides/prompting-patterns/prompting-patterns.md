@@ -514,6 +514,7 @@ AI has limited context. Large conversations degrade response quality.
 - Share entire codebase "for context"
 - Mix multiple unrelated topics
 
+---
 
 ## Red Flags
 

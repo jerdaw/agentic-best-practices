@@ -130,6 +130,7 @@ Treat errors as first-class citizens, not an afterthought.
 - [ ] Errors handled explicitly?
 - [ ] No magic numbers or strings?
 
+---
 
 ## Red Flags
 
