@@ -722,6 +722,7 @@ For each function that can fail:
 | **handled?** | Did the caller actually check the return value? |
 | **Safe?** | Did you accidentally show a stack trace to the user? |
 
+---
 
 ## Red Flags
 

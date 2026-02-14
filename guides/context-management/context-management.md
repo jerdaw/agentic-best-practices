@@ -138,6 +138,7 @@ As conversations grow, the "attention" of the AI diminishes.
 | **Infinite Chat** | AI loses track of the goal | Refresh session after 10-15 turns |
 | **Implicit Rules** | AI violates project norms | Use `AGENTS.md` for persistent rules |
 
+---
 
 ## Red Flags
 

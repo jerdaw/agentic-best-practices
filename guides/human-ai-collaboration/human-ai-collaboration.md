@@ -386,6 +386,7 @@ Set aside time for unassisted coding to maintain skills:
 | **Hidden AI** | Trust issues | Note in PR | Transparency builds confidence. |
 | **No Learning** | Unmaintainable | Understand | You can't maintain what you don't know. |
 
+---
 
 ## Red Flags
 

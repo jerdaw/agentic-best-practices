@@ -127,8 +127,9 @@ Safety mechanisms to prevent bad deployments.
 | **Broad permissions** | Agent could leak all secrets | Use scoped OIDC/Identity Federation |
 | **No version pinning** | Breaking changes from actions | Pin to exact commit SHAs |
 | **Skipping CI** | Untested code reaches prod | Enforce branch protection rules |
-| **Implicit state** | Flaky, non-reproducible builds | Use containers for build environments |
+| **Implicit state** | Flaky, hard to debug | Explicit inputs |
 
+---
 
 ## Red Flags
 

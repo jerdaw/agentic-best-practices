@@ -555,6 +555,7 @@ After completing multi-file refactor:
 | **Skipping cleanup** | Tech debt remains | Finish refactor fully |
 | **No rollback plan** | Stuck if things break | Plan rollback before starting |
 
+---
 
 ## Red Flags
 

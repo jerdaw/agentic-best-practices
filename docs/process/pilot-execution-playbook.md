@@ -113,6 +113,17 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/summarize-pilot-findings.sh" \
 
 ---
 
+## Red Flags
+
+| Signal | Action | Rationale |
+| --- | --- | --- |
+| **Silence (2+ missed check-ins)** | Call escalation meeting immediately | Silence usually means "we gave up"; intervene early to save the pilot. |
+| **Zero Feedback** | Embed with the team to observe usage | "Everything is fine" usually means "We aren't actually using it." |
+| **Manual Overrides** | Investigate why defaults failed | If defaults are wrong, fix the generator; don't just patch the output. |
+| **Shadow AI Usage** | Remind team to use `AGENTS.md` | Usage without the prompt file invalidates the test data. |
+
+---
+
 ## Escalation Paths
 
 | Issue Type | Escalation Path | SLA |

@@ -353,6 +353,7 @@ except Exception as e:
 - [ ] Error messages don't expose internals
 - [ ] HTTPS enforced, secure cookie flags set
 
+---
 
 ## Red Flags
 

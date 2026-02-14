@@ -153,6 +153,7 @@ Regularly run maintenance commands:
 | **Micro-packages** | "left-pad" style risk | Use built-in language features |
 | **Blind updates** | Breaking changes reach prod | Use CI to verify dependency updates |
 
+---
 
 ## Red Flags
 
