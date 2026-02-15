@@ -265,7 +265,9 @@ When documentation is no longer relevant:
 2. Point to replacement documentation if any exists
 3. Remove after one release cycle (or immediately if misleading)
 
-Do not archive — archived docs are never found. Delete or redirect.
+Do not archive product/operational docs by default — they become invisible and stale.
+Exception: planning artifacts follow the lifecycle in
+`guides/planning-documentation/planning-documentation.md` and may be archived after extracting enduring decisions.
 
 ---
 
