@@ -30,6 +30,7 @@ You are a [specific role, e.g., "security-conscious backend developer"] working 
 | [Key Commands](#key-commands) |
 | [Boundaries](#boundaries) |
 | [Project-Specific Overrides](#project-specific-overrides) |
+| [Documentation Map](#documentation-map) |
 | [Critical Files](#critical-files) |
 | [Maintenance](#maintenance) |
 
@@ -91,6 +92,7 @@ For other topics, check `{{STANDARDS_PATH}}/README.md` for the full guide index 
 | --- | --- | --- |
 | **Always** | Run lint before commit | Catches errors early |
 | **Always** | Write tests for new functions | Prevents regressions |
+| **Always** | Update docs/docstrings/comments in the same PR when behavior or API changes | Prevents documentation drift |
 | **Always** | [Add your own] | [Rationale] |
 | **Ask First** | Database schema changes | Requires migration review |
 | **Ask First** | Add new dependencies | Security and bundle impact |
@@ -124,6 +126,17 @@ See `{{STANDARDS_PATH}}/skills/README.md` for the full skills index.
 -->
 
 None. This project follows all organizational standards.
+
+---
+
+## Documentation Map
+
+| Documentation Type | Path | Notes |
+| --- | --- | --- |
+| Architecture decisions | `[docs/adr/]` | Record non-trivial design trade-offs |
+| Operational/process docs | `[docs/process/]` | Runbooks, release, and maintenance workflows |
+| API or reference docs | `[docs/reference/]` | Public/internal contracts and references |
+| Planning/spec docs | `[docs/planning/]` | Specs, roadmaps, and implementation plans |
 
 ---
 
