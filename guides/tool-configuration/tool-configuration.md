@@ -28,6 +28,8 @@
 **Essential configurations**:
 
 - Project-specific instructions (AGENTS.md, CLAUDE.md)
+- Verification gates (commands that must pass before completion)
+- Documentation map (where ADRs/runbooks/specs live)
 - File/folder exclusions (node_modules, build outputs)
 - Security boundaries (no secrets access)
 - Keybindings for common actions
@@ -87,12 +89,29 @@ npm run lint         # Lint code
 npm run build        # Production build
 ```
 
+## Verification Gates
+
+```bash
+npm run lint
+npm test
+npm run validate
+```
+
+## Documentation Map
+
+| Documentation Type | Path |
+| :--- | :--- |
+| ADRs | docs/adr/ |
+| Runbooks/process | docs/process/ |
+| Planning/specs | docs/planning/ |
+
 ## Boundaries
 
 ### Always
 
 - Run lint before committing
 - Write tests for new functionality
+- Update docs/docstrings/comments when behavior or API changes
 
 ### Ask First
 
@@ -105,7 +124,7 @@ npm run build        # Production build
 - Commit secrets
 - Force push to main
 
-```markdown
+```
 
 ### Settings Configuration
 

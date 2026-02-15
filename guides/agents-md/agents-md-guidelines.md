@@ -32,6 +32,8 @@ A reference for creating and maintaining effective AGENTS.md files for AI coding
 | **Agent Role** | Define who the agent is and their prioritized principles. |
 | **Tech Stack** | List technologies with explicit version numbers. |
 | **Key Commands** | Provide full executable commands with flags. |
+| **Verification Gates** | Define mandatory checks before completion claims. |
+| **Documentation Map** | Point agents to ADRs, runbooks, and API references. |
 | **Boundaries** | Define critical rules (Always / Ask First / Never). |
 
 **Common Mistakes**:
@@ -55,7 +57,7 @@ A reference for creating and maintaining effective AGENTS.md files for AI coding
 3. **Boundaries are critical** – Clear rules (Always/Ask First/Never) prevent regressions and errors.
 4. **Living document** – Update proactively as patterns evolve; tell the agent to update it.
 5. **Progressive disclosure** – Keep focus on essentials; link to deep-dive docs for subsystems.
-6. **Self-documenting focus** – Prioritize clear naming and structure over explanatory comments.
+6. **Clarity first** – Prefer clear naming/structure, but require comments for non-obvious invariants, constraints, and security boundaries.
 
 ---
 
@@ -96,7 +98,7 @@ Several naming conventions exist across different AI tools:
 [System design, data flow, key patterns with code examples]
 
 ## Code Style & Conventions
-[Real examples of good patterns; emphasize self-documenting code over comments]
+[Real examples of good patterns; prefer clear code and reserve comments for non-obvious "why"]
 
 ## Testing Strategy
 [Framework, coverage requirements, expectations]
@@ -356,12 +358,30 @@ npm run dev      # Start dev server
 npm test         # Run tests
 ```
 
+## Verification Gates
+
+```bash
+npm run lint
+npm run validate
+```
+
+## Documentation Map
+
+| Documentation Type | Path |
+| :--- | :--- |
+| ADRs | docs/adr/ |
+| Runbooks/process | docs/process/ |
+| Planning/specs | docs/planning/ |
+
 ## Boundaries
 
 | Level | Action | Why |
 | :--- | :--- | :--- |
 | **Always** | Run lint | Quality gate |
+| **Always** | Update docs/docstrings/comments when behavior or API changes | Prevents documentation drift |
 | **Never** | Commit secrets | Security |
+
+```
 
 ---
 
@@ -372,6 +392,8 @@ npm test         # Run tests
 | AGENTS.md exceeds 500 lines | Split into sub-docs and link | Oversized files waste context tokens and dilute focus |
 | No boundaries section (Always / Ask First / Never) | Add one immediately | Without boundaries, agents make risky changes unchecked |
 | Commands listed without flags or full syntax | Add complete, copy-paste-ready commands | Incomplete commands force agents to guess options |
+| No verification gates section | Add deterministic pass/fail checks | Agents should not claim completion without validation |
+| No documentation map section | Add paths to ADRs/runbooks/specs | Missing map increases context drift and wrong edits |
 | Agent role says "helpful assistant" with no priorities | Define a specialist role with ordered priorities | Vague personas produce generic, low-quality output |
 | AGENTS.md not updated after major architecture change | Update to match current reality | Stale AGENTS.md causes agents to follow outdated patterns |
 

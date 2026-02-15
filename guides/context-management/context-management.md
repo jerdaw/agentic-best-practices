@@ -69,7 +69,7 @@ Techniques to keep the context window focused.
 | :--- | :--- |
 | **Snippet selection** | Provide only the relevant function, not the whole file |
 | **Outline mode** | Provide only function signatures/headers |
-| **Doc stripping** | Remove verbose comments from shared code |
+| **Doc stripping** | Remove redundant "what" comments; keep required "why/invariant" comments |
 | **Focus area** | Explicitly tell the AI which 2-3 files are critical |
 
 ### Examples
