@@ -21,6 +21,15 @@ Internal documentation for maintaining `agentic-best-practices` (process, plans,
 | `docs/adr/adr-002-adoption-hardening-and-authorship-policy.md` | ADR | Active | Why adoption hardening baseline is fixed and commit authorship remains human-only. |
 | `docs/adr/adr-003-pilot-evidence-handoff-and-human-validation.md` | ADR | Active | Why pilot evidence summary and human-owned external validation gates are standardized. |
 | `docs/reference/references.md` | Reference | Active | External sources (human readers only). |
+| `docs/deep-research/chatgpt-agentic-documentation-and-comments-2026-02-15.md` | Research output | Active | ChatGPT deep-research report for docs/comments in agentic coding. |
+| `docs/deep-research/gemini-agentic-documentation-and-comments-2026-02-15.md` | Research output | Active | Gemini deep-research report for docs/comments in agentic coding. |
+| `docs/deep-research/2026-02-15-evaluation-rubric.md` | Evaluation | Active | Objective rubric used to score deep-research outputs. |
+| `docs/deep-research/2026-02-15-compliance-checklist.md` | Evaluation | Active | Prompt-level pass/fail compliance checklist per output. |
+| `docs/deep-research/2026-02-15-source-audit.md` | Evaluation | Active | Citation quality and source-tier audit summary. |
+| `docs/deep-research/2026-02-15-claim-verification.md` | Evaluation | Active | Verification sample of high-impact claims against primary sources. |
+| `docs/deep-research/2026-02-15-scorecard.md` | Evaluation | Active | Weighted scorecard and hard-gate outcome for each output. |
+| `docs/deep-research/2026-02-15-synthesized-recommendations.md` | Evaluation | Active | High-confidence recommendations after revalidation. |
+| `docs/deep-research/2026-02-15-repo-change-map.md` | Evaluation | Active | File-level plan mapping validated findings to repo updates. |
 
 ## Directories
 
@@ -32,6 +41,7 @@ Internal documentation for maintaining `agentic-best-practices` (process, plans,
 | `docs/reference/` | External references for human readers |
 | `docs/planning/` | Active planning documents (roadmaps, proposals) |
 | `docs/planning/archive/` | Historical planning docs and decisions |
+| `docs/deep-research/` | Research outputs plus evaluation artifacts and synthesis |
 
 ## Conventions
 

@@ -14,6 +14,8 @@ Guidelines for keeping documentation synchronized with code changes — preventi
 | [Change Propagation Workflow](#change-propagation-workflow) |
 | [Documentation Blast Radius](#documentation-blast-radius) |
 | [Automated Verification](#automated-verification) |
+| [PR Checklist for Documentation](#pr-checklist-for-documentation) |
+| [Minimum Documentation CI Gates](#minimum-documentation-ci-gates) |
 | [Scaffolding New Documentation](#scaffolding-new-documentation) |
 | [Documentation Debt](#documentation-debt) |
 | [Anti-Patterns](#anti-patterns) |
@@ -153,6 +155,49 @@ pytest --doctest-glob="docs/**/*.md"
 # Find docs not modified in 180+ days
 find docs/ -name "*.md" -mtime +180
 ```
+
+---
+
+## PR Checklist for Documentation
+
+Use this checklist in pull requests that change behavior, APIs, or workflows.
+
+| Checklist Item | Why |
+| --- | --- |
+| Documentation blast radius reviewed | Prevents silent drift |
+| README/guide updates included when behavior changed | Keeps entry points accurate |
+| Public API docstrings/docs updated | Preserves contract clarity |
+| Added/updated tests for documented behavior | Keeps docs verifiable |
+| Sensitive content review completed (no secrets/internal-only leak) | Reduces security exposure |
+
+### Template Snippet
+
+```markdown
+### Documentation
+- [ ] I reviewed documentation blast radius for this change
+- [ ] I updated docs/docstrings/comments where behavior or contracts changed
+- [ ] I added or updated tests/examples for documented behavior
+- [ ] I verified no secrets or sensitive operational details were added to broad-access docs
+```
+
+---
+
+## Minimum Documentation CI Gates
+
+Documentation quality should be enforced by CI, not memory.
+
+| Gate | Existing/Recommended Command | Failure Meaning |
+| --- | --- | --- |
+| Markdown lint | `npm run lint:md` | Formatting/structure drift |
+| Navigation and link integrity | `npm run validate` | Broken internal links or out-of-sync indexes |
+| External link check | GitHub `link-check` workflow | Stale external references |
+| Adoption/docs smoke checks | `npm run validate:adoption:sim` | Drift in generated onboarding artifacts |
+
+| Adoption Level | Required Gates |
+| --- | --- |
+| Minimum | Markdown lint + navigation validation |
+| Standard | Minimum + external link checks |
+| Strict | Standard + doc examples/tests where supported |
 
 ---
 

@@ -12,8 +12,10 @@ Best practices for writing code comments that clarify intent for both humans and
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
 | [When to Comment](#when-to-comment) |
+| [Mandatory Comments](#mandatory-comments) |
 | [Documentation Blocks](#documentation-blocks) |
 | [Inline Comments](#inline-comments) |
+| [Linking and Traceability](#linking-and-traceability) |
 | [TODOs and FIXMEs](#todos-and-fixmes) |
 | [Comment Anti-Patterns](#comment-anti-patterns) |
 
@@ -53,6 +55,26 @@ Best practices for writing code comments that clarify intent for both humans and
 
 ---
 
+## Mandatory Comments
+
+These cases require a comment even in otherwise clean/self-documenting code.
+
+| Situation | Required Comment Content | Example Anchor |
+| :--- | :--- | :--- |
+| Security boundary or hardening behavior | Threat/risk being mitigated and why this approach is required | "Rejects non-canonical path to prevent traversal" |
+| Non-obvious invariant | Invariant statement and consequence if violated | "`balance` must never be negative after reconciliation" |
+| Deliberate performance trade-off | Why slower/faster path was chosen and expected data envelope | "O(n^2) is acceptable because input is capped at 20" |
+| Business rule that looks arbitrary in code | External policy/product rule reference | "Tax exemption rule from policy 7.2" |
+| Temporary workaround or compatibility shim | Exit condition and tracker link | "Remove after provider bug #1234 is fixed" |
+
+| Situation | Prefer Comment | Prefer External Doc |
+| :--- | :---: | :---: |
+| File-local implementation invariant | ✅ | |
+| Multi-component decision rationale | | ✅ (ADR/design doc) |
+| Public API behavior | | ✅ (docstring/API docs) |
+
+---
+
 ## Documentation Blocks
 
 Use structured documentation for public APIs and complex internal functions.
@@ -86,6 +108,25 @@ if (retryCount > 3) {
 // Bad: Explaining obvious code
 const count = items.length // Get the length of items
 ```
+
+---
+
+## Linking and Traceability
+
+Comments should link to durable context when the rationale is external to the file.
+
+| Context Type | Link Target | Why |
+| :--- | :--- | :--- |
+| Architecture decision | ADR path (e.g., `docs/adr/adr-004-...md`) | Prevents repeated re-litigation of settled decisions |
+| Temporary workaround | Issue/PR ID | Creates a clear removal path |
+| Compliance/business rule | Policy/spec identifier | Supports audits and future maintenance |
+| Behavior expectation | Test file/case reference | Keeps comments tied to executable evidence |
+
+| Pattern | Good | Avoid |
+| :--- | :--- | :--- |
+| Issue reference | `// Workaround for #482: provider rejects chunked uploads` | `// TODO fix later` |
+| ADR reference | `// See ADR-006 for queue ordering guarantee` | `// Historical reason (forgot why)` |
+| Test reference | `// Behavior validated in tests/payments/refund.spec.ts` | `// Should be covered somewhere` |
 
 ---
 

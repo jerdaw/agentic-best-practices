@@ -4,8 +4,8 @@
   "description": "Best practices for building autonomous agents with AI",
   "private": true,
   "scripts": {
-    "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
-    "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\" \"#node_modules\"",
+    "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\" \"#docs/deep-research/*-agentic-documentation-and-comments-*.md\"",
+    "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\" \"#node_modules\" \"#docs/deep-research/*-agentic-documentation-and-comments-*.md\"",
     "validate": "bash ./scripts/validate-navigation.sh",
     "validate:adoption:sim": "bash ./scripts/simulate-adoption-check.sh",
     "adopt:help": "bash ./scripts/adopt-into-project.sh --help",

@@ -86,6 +86,12 @@ Several naming conventions exist across different AI tools:
 ## Key Commands
 [Executable commands with flags, grouped by category]
 
+## Verification Gates
+[Exactly which checks must pass before proposing completion]
+
+## Documentation Map
+[Where to find ADRs, runbooks, API docs, and specs]
+
 ## Architecture
 [System design, data flow, key patterns with code examples]
 
@@ -152,6 +158,43 @@ npm test                 # Run all unit tests
 npm test -- --watch      # Watch mode
 npm run test:coverage    # With coverage report (threshold: 80%)
 ```
+
+---
+
+### Verification Gates
+
+`AGENTS.md` should define a fixed completion gate so agents do not stop after code edits without verification.
+
+| Gate Type | Example | Why |
+| :--- | :--- | :--- |
+| Compile/type-check | `npm run typecheck` | Catches structural API mismatches quickly |
+| Unit/integration tests | `npm test` | Verifies behavior changes |
+| Lint/format | `npm run lint` | Prevents style and quality drift |
+| Repo-specific validation | `npm run validate` | Enforces project conventions and docs integrity |
+
+| Rule | Guidance |
+| :--- | :--- |
+| Command reliability | Only include commands already proven in CI or local docs |
+| Deterministic output | Prefer commands with stable pass/fail status |
+| Scope control | Separate fast checks from full checks to avoid skipped validation |
+
+---
+
+### Documentation Map
+
+Agent instructions should point to high-value docs, not just code locations.
+
+| Documentation Type | Suggested Location | Agent Behavior |
+| :--- | :--- | :--- |
+| ADRs | `docs/adr/` | Read when a change touches architecture, queues, data models, or API contracts |
+| Runbooks | `docs/process/` or `docs/runbooks/` | Read for operational changes and incident-sensitive logic |
+| API reference | `docs/api/` or generated docs | Validate public contract changes before editing handlers |
+| Standards guides | central standards path | Resolve policy/style decisions before implementation |
+
+| Anti-Pattern | Better Pattern |
+| :--- | :--- |
+| "See docs" with no path | Explicit path: `docs/adr/adr-004-...md` |
+| Duplicating long rules in multiple files | Keep canonical rule once and link to it |
 
 ---
 

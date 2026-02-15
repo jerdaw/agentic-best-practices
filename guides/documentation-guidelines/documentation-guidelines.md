@@ -10,6 +10,7 @@ Best practices for AI agents on when and how to write documentation—READMEs, A
 | --- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
+| [Decision Matrix: Where Knowledge Lives](#decision-matrix-where-knowledge-lives) |
 | [README Structure](#readme-structure) |
 | [API Documentation](#api-documentation) |
 | [Architectural Decision Records (ADRs)](#architectural-decision-records-adrs) |
@@ -18,6 +19,8 @@ Best practices for AI agents on when and how to write documentation—READMEs, A
 | [Changelogs](#changelogs) |
 | [Planning Documentation](#planning-documentation) |
 | [Documentation Maintenance](#documentation-maintenance) |
+| [Context Profiles](#context-profiles) |
+| [Sensitive Documentation Boundaries](#sensitive-documentation-boundaries) |
 | [What NOT to Document](#what-not-to-document) |
 | [Anti-Patterns](#anti-patterns) |
 | [Documentation Quality Checklist](#documentation-quality-checklist) |
@@ -58,6 +61,31 @@ Best practices for AI agents on when and how to write documentation—READMEs, A
 | **Recency Over Scope** | Keeping small docs updated is better than having large, stale ones. |
 | **Document "Why"** | Code shows *what* but documentation explains *why* choices were made. |
 | **Audience Target** | Tailoring detail level to the user (e.g., dev vs. end-user) improves utility. |
+
+---
+
+## Decision Matrix: Where Knowledge Lives
+
+Use this matrix to decide the correct documentation location before writing.
+
+| Knowledge Type | Preferred Location | Audience | Coupling to Code | Verification |
+| --- | --- | --- | --- | --- |
+| Public API contract | Docstring + API reference docs | Integrators, SDK users, agents | Medium | Contract tests, schema tests |
+| Usage quick-start | `README.md` | New contributors and adopters | Low | Smoke-test setup commands |
+| Architectural decision and trade-off | ADR (`docs/adr/`) | Maintainers, reviewers, agents | Low-Medium | Architecture review + tests for constraints |
+| Non-obvious invariant in implementation | Inline comment near code | Maintainers, agents editing that file | High | Unit/integration tests for invariant |
+| Business rule with policy source | Inline comment + reference doc | Maintainers, domain owners | High | Rule-based tests and fixtures |
+| Operational recovery steps | Runbook in `docs/` | On-call and operations | Low | Incident drills/tabletop checks |
+| Temporary migration caveat | Inline comment with issue/ADR link | Maintainers | High | Migration tests and issue closure |
+| Test behavior expectation | Test name + test docstring/comment | Maintainers, agents | High | CI execution |
+
+| Decision Signal | Place Closer to Code | Place in External Docs |
+| --- | --- | --- |
+| Changes weekly | Yes | No |
+| Broad audience | No | Yes |
+| Must survive refactors | No | Yes |
+| Needs architecture history | No | Yes (ADR/design doc) |
+| Cannot be tested directly | Usually yes (comment rationale) | Sometimes (design rationale) |
 
 ---
 
@@ -482,6 +510,45 @@ For roadmaps, implementation plans, RFCs, and archiving practices, see [Planning
 
 ---
 
+## Context Profiles
+
+Tune documentation depth by project context.
+
+| Context | Minimum Documentation Stack | Additional Requirements |
+| --- | --- | --- |
+| Prototype or short-lived spike | README quick-start, key commands, minimal comments on risky code | Defer full ADR/process docs unless prototype becomes persistent |
+| Long-lived internal service | README, docs folder, ADRs, API docs, doc maintenance workflow | CI doc checks and ownership required |
+| Public library or SDK | README, full API docs, examples, changelog, migration notes | Public contracts must be versioned and test-verified |
+| Regulated or safety-critical system | Full stack above plus traceability docs and controlled runbooks | Approval gates, audit trails, and explicit compliance mappings |
+
+| Team Shape | Guidance |
+| --- | --- |
+| Solo maintainer | Keep docs compact but explicit on setup, constraints, and decisions |
+| Multi-team ownership | Define doc owners and review expectations in PR workflow |
+
+---
+
+## Sensitive Documentation Boundaries
+
+Documentation is part of your attack surface. Keep sensitive details out of broadly accessible docs.
+
+| Sensitive Content | Risk | Safe Pattern |
+| --- | --- | --- |
+| Secrets, tokens, credentials | Account compromise | Use placeholders and secret-manager references |
+| Internal threat model details exploitable by attackers | Targeted abuse | Keep in restricted security docs with access controls |
+| Production hostnames and emergency break-glass steps with credentials | Operational compromise | Split public runbook from restricted credential procedure |
+| Customer PII examples | Data exposure | Use synthetic or redacted examples only |
+| Incident details containing private telemetry | Privacy/security leakage | Publish sanitized postmortem summaries |
+
+| Runbook Section | Public/Internal Version | Restricted Version |
+| --- | --- | --- |
+| Detection signals | Allowed | Allowed |
+| High-level mitigation steps | Allowed | Allowed |
+| Exact credentials/tokens/one-time links | Never | Allowed in secret store or controlled vault docs |
+| Internal-only investigative hypotheses | Optional summary only | Full detail allowed |
+
+---
+
 ## What NOT to Document
 
 ### Skip These
@@ -492,6 +559,8 @@ For roadmaps, implementation plans, RFCs, and archiving practices, see [Planning
 | **Self-Evident Code** | Obvious function names (e.g., `setUserId`) don't need prose. |
 | **Roadmap Features** | Only document what is currently deployable and testable. |
 | **Generated Assets** | Built files shouldn't be manually edited or documented here. |
+| **Secrets and credentials** | Security breach risk; use placeholders and secure references instead. |
+| **Sensitive operational internals in broad-access docs** | Exposes attack paths and response details unnecessarily. |
 
 ## Anti-Patterns
 
