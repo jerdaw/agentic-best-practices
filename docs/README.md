@@ -9,9 +9,9 @@ Internal documentation for maintaining `agentic-best-practices` (process, plans,
 | `docs/process/health-dashboard.md` | Dashboard | Active | Real-time repository health and v1 readiness metrics. |
 | `docs/process/pilot-execution-playbook.md` | Process | Active | Step-by-step workflow for running external adoption pilots. |
 | `docs/process/release-process.md` | Process | Active | How we ship changes safely (tagging, notes, rollback). |
-| `docs/process/roadmap-process.md` | Process | Active | How we maintain the `README.md` roadmap. |
+| `docs/process/roadmap-process.md` | Process | Active | How we maintain the product and execution roadmaps. |
 | `docs/process/maintenance-cadence-decision.md` | Decision | Active | Why quarterly + event-driven maintenance. |
-| `docs/planning/2026-02-16-guide-coverage-expansion-roadmap.md` | Plan | Active | Backlog and milestones for guide coverage expansion across architecture, governance, release, and operations topics. |
+| `docs/planning/archive/2026-02-16-guide-coverage-expansion-roadmap.md` | Plan | Archived | Completed LG-01 through LG-09 guide coverage expansion and harmonization roadmap. |
 | `docs/planning/archive/2026-02-08-adoption-integration-hardening-plan-v0.2.0.md` | Plan | Archived | Completed adoption hardening implementation record (Phase 1-4). |
 | `docs/planning/archive/2026-02-08-adoption-customization-hardening-plan-v0.3.0.md` | Plan | Archived | Completed implementation record for customization hardening and pilot evidence automation (Phase 1-4). |
 | `docs/templates/feedback-template.md` | Template | Active | How adopters report gaps/conflicts quickly and consistently. |

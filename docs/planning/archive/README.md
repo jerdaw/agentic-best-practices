@@ -74,3 +74,4 @@ archive/
 | --- | --- |
 | `2026-02-08-adoption-integration-hardening-plan-v0.2.0.md` | Completed implementation record for adoption hardening Phase 1-4. |
 | `2026-02-08-adoption-customization-hardening-plan-v0.3.0.md` | Completed implementation record for customization hardening and pilot evidence automation Phase 1-4. |
+| `2026-02-16-guide-coverage-expansion-roadmap.md` | Completed LG-01 through LG-09 guide coverage expansion and harmonization roadmap. |

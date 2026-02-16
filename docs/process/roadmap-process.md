@@ -1,12 +1,12 @@
-# Roadmap Process (v0.1.0)
+# Roadmap Process (v0.2.0)
 
 How we maintain the project roadmap with minimal drift and minimal human time.
 
 | Field | Value |
 | --- | --- |
-| **Version** | `0.1.0` |
-| **Last updated** | 2026-02-03 |
-| **Roadmap location** | `README.md` → “Roadmap” section |
+| **Version** | `0.2.0` |
+| **Last updated** | 2026-02-16 |
+| **Roadmap location** | `README.md` (product roadmap) + `roadmap.md` (execution roadmap) |
 | **Quality gate** | `npm run validate` verifies guide index completeness |
 
 ## Contents
@@ -61,7 +61,7 @@ Use the smallest set of statuses that stays accurate.
 
 | When | Update |
 | --- | --- |
-| After merging roadmap-relevant PRs | Update `README.md` Roadmap immediately |
+| After merging roadmap-relevant PRs | Update `README.md` Roadmap and `roadmap.md` execution status immediately |
 | At start of a new adoption pilot | Add/adjust pilot-related items |
 | Monthly (or quarterly) | Prune stale items; validate priorities |
 
@@ -73,5 +73,5 @@ Completed items should not remain in the roadmap table.
 
 | Action | Why | How |
 | --- | --- | --- |
-| Remove Done items from Roadmap | Keeps focus on active work | Edit `README.md` table |
+| Remove Done items from active roadmap tables | Keeps focus on active work | Edit `README.md` and `roadmap.md` active sections |
 | Preserve traceability | “Where did this go?” remains answerable | Link PRs/releases in Git history and `docs/process/release-process.md` |
