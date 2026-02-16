@@ -174,6 +174,7 @@ See the full [Adoption Guide](adoption/adoption.md) for detailed setup instructi
 | Choose 1-2 adoption pilot repos | 🔴 Blocked | Human decision needed. Use [selection criteria](docs/planning/pilot-repo-selection.md). |
 | Execute pilot validation cycle (6-8 weeks) | 🟡 Planned | Use [pilot execution playbook](docs/process/pilot-execution-playbook.md). |
 | Feed pilot outcomes into next release backlog | 🟡 Planned | File actionable updates via [feedback template](docs/templates/feedback-template.md). |
+| Execute guide coverage expansion backlog | ✅ Complete | Implementation plan: `docs/planning/2026-02-16-guide-coverage-expansion-roadmap.md`. |
 
 Completed implementation details are archived in:
 
@@ -199,23 +200,29 @@ Core software development patterns applicable to any project.
 | [Error Handling](guides/error-handling/error-handling.md) | Handling errors robustly/gracefully. |
 | [Logging Practices](guides/logging-practices/logging-practices.md) | Effective logging patterns for observability. |
 | [API Design](guides/api-design/api-design.md) | Designing clear, consistent interfaces. |
+| [API Contract Governance](guides/api-contract-governance/api-contract-governance.md) | OpenAPI governance, compatibility gates, and contract testing. |
 | [Dependency Management](guides/dependency-management/dependency-management.md) | Managing external packages safety. |
 | [Supply Chain Security](guides/supply-chain-security/supply-chain-security.md) | SLSA, provenance, and artifact integrity. |
 | [Resilience Patterns](guides/resilience-patterns/resilience-patterns.md) | Retries, circuit breakers, and fallbacks. |
+| [Backup, Restore & DR](guides/backup-restore-dr/backup-restore-dr.md) | Data recoverability, restore drills, and RPO/RTO operations. |
 | [Idempotency Patterns](guides/idempotency-patterns/idempotency-patterns.md) | Safe retry and deduplication strategies. |
 | [Secrets & Configuration](guides/secrets-configuration/secrets-configuration.md) | Config separation and secret management. |
 | [Secure Coding](guides/secure-coding/secure-coding.md) | OWASP patterns and injection prevention. |
 | [Deployment Strategies](guides/deployment-strategies/deployment-strategies.md) | Blue-green, canary, and feature flags. |
+| [Release Engineering & Versioning](guides/release-engineering-versioning/release-engineering-versioning.md) | SemVer policy, release orchestration, and changelog quality. |
 | [Observability Patterns](guides/observability-patterns/observability-patterns.md) | Metrics, tracing, and health checks. |
 | [Testing Strategy](guides/testing-strategy/testing-strategy.md) | Test pyramid and coverage goals. |
 | [E2E Testing](guides/e2e-testing/e2e-testing.md) | End-to-end testing patterns and flaky test prevention. |
 | [Documentation Maintenance](guides/doc-maintenance/doc-maintenance.md) | Keeping docs in sync with code changes. |
 | [CI/CD Pipelines](guides/cicd-pipelines/cicd-pipelines.md) | Build, test, deploy automation. |
 | [Codebase Organization](guides/codebase-organization/codebase-organization.md) | Directory structure and layering. |
+| [Monorepo Workspaces](guides/monorepo-workspaces/monorepo-workspaces.md) | Workspace boundaries, package ownership, and dependency direction. |
+| [Repository Governance](guides/repository-governance/repository-governance.md) | CODEOWNERS, branch protections, and policy-as-code controls. |
 | [Static Analysis](guides/static-analysis/static-analysis.md) | Linters, formatters, and SAST. |
 | [Privacy & Compliance](guides/privacy-compliance/privacy-compliance.md) | GDPR and data protection. |
 | [Accessibility & i18n](guides/accessibility-i18n/accessibility-i18n.md) | WCAG and localization. |
 | [Distributed Sagas](guides/distributed-sagas/distributed-sagas.md) | Multi-service transactions. |
+| [Database Migrations & Drift](guides/database-migrations-drift/database-migrations-drift.md) | Migration safety, schema drift detection, and rollback strategy. |
 | [Database Indexing](guides/database-indexing/database-indexing.md) | Query optimization. |
 | [Planning Documentation](guides/planning-documentation/planning-documentation.md) | Roadmaps, implementation plans, and RFCs. |
 
