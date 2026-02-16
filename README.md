@@ -174,12 +174,12 @@ See the full [Adoption Guide](adoption/adoption.md) for detailed setup instructi
 | Choose 1-2 adoption pilot repos | 🔴 Blocked | Human decision needed. Use [selection criteria](docs/planning/pilot-repo-selection.md). |
 | Execute pilot validation cycle (6-8 weeks) | 🟡 Planned | Use [pilot execution playbook](docs/process/pilot-execution-playbook.md). |
 | Feed pilot outcomes into next release backlog | 🟡 Planned | File actionable updates via [feedback template](docs/templates/feedback-template.md). |
-| Execute guide coverage expansion backlog | ✅ Complete | Implementation plan: `docs/planning/2026-02-16-guide-coverage-expansion-roadmap.md`. |
 
 Completed implementation details are archived in:
 
 - `docs/planning/archive/2026-02-08-adoption-integration-hardening-plan-v0.2.0.md`
 - `docs/planning/archive/2026-02-08-adoption-customization-hardening-plan-v0.3.0.md`
+- `docs/planning/archive/2026-02-16-guide-coverage-expansion-roadmap.md`
 
 See [health dashboard](docs/process/health-dashboard.md) for readiness metrics.
 
