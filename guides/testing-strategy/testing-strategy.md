@@ -13,6 +13,9 @@ Guidelines for building reliable test suites that catch bugs without slowing dev
 | [Core Principles](#core-principles) |
 | [Test Pyramid](#test-pyramid) |
 | [Test Types](#test-types) |
+| [Integration Environment Realism](#integration-environment-realism) |
+| [Contract Testing Placement](#contract-testing-placement) |
+| [Environment Matrix](#environment-matrix) |
 | [Coverage Guidelines](#coverage-guidelines) |
 | [Test Design](#test-design) |
 | [Test Organization](#test-organization) |
@@ -131,6 +134,80 @@ def test_checkout_flow_completes_purchase(browser):
     assert browser.contains("Order confirmed")
     assert Order.count() == 1
 ```
+
+---
+
+## Integration Environment Realism
+
+Integration tests should run against realistic dependencies (database, queue, cache) rather than mocked protocol stubs when validating wiring behavior.
+
+| Approach | Use when | Tradeoff |
+| --- | --- | --- |
+| In-memory fakes | Pure domain logic and fast feedback | Lowest realism |
+| Containerized dependencies (e.g., Testcontainers) | Repository, migration, and adapter behavior | Higher runtime cost, higher confidence |
+| Shared staging environment | Final pre-release confidence | Slowest and highest coordination cost |
+
+```ts
+// Good: integration test using ephemeral real dependency
+it('persists and retrieves user', async () => {
+  const db = await startEphemeralPostgres()
+  const repo = new UserRepository(db)
+
+  await repo.save({ email: 'test@example.com' })
+  const found = await repo.findByEmail('test@example.com')
+
+  expect(found?.email).toBe('test@example.com')
+})
+```
+
+```ts
+// Bad: integration test still mocking persistence
+it('persists and retrieves user', async () => {
+  const repo = new UserRepository({ save: vi.fn(), findByEmail: vi.fn() })
+  // This is effectively a unit test, not an integration test.
+})
+```
+
+| Realism rule | Guidance |
+| --- | --- |
+| Test migrations with real engine | Run schema setup and migration tests on same DB family used in prod |
+| Test critical adapters with real protocol | Avoid mocking HTTP/DB drivers for integration coverage |
+| Keep integration data isolated | Fresh schema/database per test or suite |
+
+---
+
+## Contract Testing Placement
+
+| Contract type | Recommended location | Why |
+| --- | --- | --- |
+| API producer contract tests | `tests/contract/` or service-level contract suite | Verifies implementation matches published spec |
+| Consumer contract tests | Consumer repo CI | Catches integration assumptions early |
+| Schema compatibility checks | CI pre-merge gate | Stops breaking changes before merge |
+
+| Contract test should verify | Example |
+| --- | --- |
+| Response shape and required fields | Endpoint returns required OpenAPI fields |
+| Status-code behavior | Error scenarios map to documented codes |
+| Backward compatibility | Existing request payloads remain valid |
+
+---
+
+## Environment Matrix
+
+Define expected environments so failures are diagnosable and intentional.
+
+| Test layer | Local default | CI default | Release gate |
+| --- | --- | --- | --- |
+| Unit | In-process only | Parallelized | Required |
+| Integration | Ephemeral local/container dependencies | Containerized services | Required for backend changes |
+| Contract | Local optional, CI mandatory | Compare against baseline contract | Required for API changes |
+| E2E | Selective smoke | Stable smoke subset | Required for critical user journeys |
+
+| Matrix rule | Policy |
+| --- | --- |
+| Any environment-specific skip | Must include issue reference and expiry date |
+| New dependency added | Update matrix and CI provisioning in same PR |
+| Flaky environment test | Triage immediately; do not silently quarantine indefinitely |
 
 ---
 

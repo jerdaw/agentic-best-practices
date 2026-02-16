@@ -18,6 +18,7 @@ Best practices for AI agents on when and how to write documentation—READMEs, A
 | [Configuration Documentation](#configuration-documentation) |
 | [Changelogs](#changelogs) |
 | [Planning Documentation](#planning-documentation) |
+| [Runbook Documentation](#runbook-documentation) |
 | [Documentation Maintenance](#documentation-maintenance) |
 | [Context Profiles](#context-profiles) |
 | [Sensitive Documentation Boundaries](#sensitive-documentation-boundaries) |
@@ -475,6 +476,63 @@ Format based on [Keep a Changelog](https://keepachangelog.com/).
 ## Planning Documentation
 
 For roadmaps, implementation plans, RFCs, and archiving practices, see [Planning Documentation](../planning-documentation/planning-documentation.md).
+
+## Runbook Documentation
+
+Runbooks are executable operational docs for on-call and incident response. They are not long-form architecture docs.
+
+### Runbook Template
+
+| Section | Required | Rationale |
+| --- | --- | --- |
+| **Purpose/Scope** | Yes | Clarifies what incident or operation this runbook handles. |
+| **Trigger Signals** | Yes | Helps responders recognize when to use the runbook. |
+| **Prerequisites** | Yes | Prevents unsafe execution without required access/context. |
+| **Step-by-step Procedure** | Yes | Enables consistent, low-ambiguity response. |
+| **Verification** | Yes | Confirms mitigation succeeded before closing incident. |
+| **Rollback/Fallback** | Yes | Defines safe recovery if a step fails. |
+| **Escalation Path** | Yes | Reduces delays when first-line response is insufficient. |
+
+```md
+# Runbook: Database Migration Failure
+
+## Trigger Signals
+- Deployment pipeline fails at migration step
+- Error code: `MIGRATION_LOCK_TIMEOUT`
+
+## Procedure
+1. Pause rollout in CI/CD.
+2. Run read-only schema health check.
+3. Execute rollback command from release artifact.
+
+## Verification
+- Application health checks are green.
+- No pending migration lock entries.
+```
+
+### Runbook Ownership
+
+| Ownership rule | Guidance | Rationale |
+| --- | --- | --- |
+| Primary owner | Team responsible for the subsystem | Response ownership must match system ownership |
+| Secondary owner | On-call platform/SRE fallback | Ensures coverage during team unavailability |
+| Review requirement | Owner approval required for runbook changes | Prevents unvetted operational changes |
+| Location | Keep in `docs/runbooks/` | Predictable discoverability during incidents |
+
+### Runbook Update Cadence
+
+| Trigger | Update action | Rationale |
+| --- | --- | --- |
+| Incident or near-miss | Update affected runbook within 1-3 business days | Captures fresh operational learning |
+| Breaking operational change | Update runbook in same PR | Prevents stale instructions |
+| Scheduled maintenance review | Quarterly runbook audit | Finds drift before incidents |
+| Tooling/command deprecation | Replace command and verify execution | Avoids dead response paths |
+
+```md
+<!-- Bad: stale and non-executable -->
+1. Restart the server somehow.
+2. If needed, call someone.
+```
 
 ---
 

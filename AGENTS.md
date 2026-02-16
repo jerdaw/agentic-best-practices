@@ -28,23 +28,29 @@ Directives for AI agents working within this repository.
 | [Error Handling](guides/error-handling/error-handling.md) | |
 | [Logging Practices](guides/logging-practices/logging-practices.md) | |
 | [API Design](guides/api-design/api-design.md) | |
+| [API Contract Governance](guides/api-contract-governance/api-contract-governance.md) | OpenAPI lifecycle, breaking-change gates, contract tests |
 | [Dependency Management](guides/dependency-management/dependency-management.md) | |
 | [Supply Chain Security](guides/supply-chain-security/supply-chain-security.md) | SLSA, provenance |
 | [Resilience Patterns](guides/resilience-patterns/resilience-patterns.md) | Retries, circuit breakers |
+| [Backup, Restore & DR](guides/backup-restore-dr/backup-restore-dr.md) | Backup verification, restore drills, RPO/RTO readiness |
 | [Idempotency Patterns](guides/idempotency-patterns/idempotency-patterns.md) | Safe retry, deduplication |
 | [Secrets & Configuration](guides/secrets-configuration/secrets-configuration.md) | Config separation, secret management |
 | [Secure Coding](guides/secure-coding/secure-coding.md) | OWASP patterns, injection prevention |
 | [Deployment Strategies](guides/deployment-strategies/deployment-strategies.md) | Blue-green, canary, feature flags |
+| [Release Engineering & Versioning](guides/release-engineering-versioning/release-engineering-versioning.md) | SemVer, release pipelines, changelog discipline |
 | [Observability Patterns](guides/observability-patterns/observability-patterns.md) | Metrics, tracing, health checks |
 | [Testing Strategy](guides/testing-strategy/testing-strategy.md) | Test pyramid, coverage |
 | [E2E Testing](guides/e2e-testing/e2e-testing.md) | Selectors, flaky tests, Page Object Model |
 | [Documentation Maintenance](guides/doc-maintenance/doc-maintenance.md) | Code-to-docs sync, freshness tracking |
 | [CI/CD Pipelines](guides/cicd-pipelines/cicd-pipelines.md) | Build, test, deploy automation |
 | [Codebase Organization](guides/codebase-organization/codebase-organization.md) | Directory structure, layering |
+| [Monorepo Workspaces](guides/monorepo-workspaces/monorepo-workspaces.md) | Workspace boundaries, package ownership, dependency direction |
+| [Repository Governance](guides/repository-governance/repository-governance.md) | CODEOWNERS, branch protection, policy-as-code |
 | [Static Analysis](guides/static-analysis/static-analysis.md) | Linters, formatters, SAST |
 | [Privacy & Compliance](guides/privacy-compliance/privacy-compliance.md) | GDPR, data protection |
 | [Accessibility & i18n](guides/accessibility-i18n/accessibility-i18n.md) | WCAG, localization |
 | [Distributed Sagas](guides/distributed-sagas/distributed-sagas.md) | Multi-service transactions |
+| [Database Migrations & Drift](guides/database-migrations-drift/database-migrations-drift.md) | Migration lifecycle, drift checks, rollback safety |
 | [Database Indexing](guides/database-indexing/database-indexing.md) | Query optimization |
 | [Planning Documentation](guides/planning-documentation/planning-documentation.md) | Roadmaps, RFCs, ADRs |
 

@@ -15,6 +15,7 @@ Guidelines for writing effective end-to-end tests that verify critical user jour
 | [Test Structure](#test-structure) |
 | [Selector Strategy](#selector-strategy) |
 | [Handling Asynchrony](#handling-asynchrony) |
+| [Environment Parity and Dependency Control](#environment-parity-and-dependency-control) |
 | [Common Patterns](#common-patterns) |
 | [Flaky Test Prevention](#flaky-test-prevention) |
 | [Anti-Patterns](#anti-patterns) |
@@ -190,6 +191,41 @@ Use auto-retrying assertions when available:
 | Playwright | `await expect(locator).toHaveText('...')` | Auto-retries until timeout |
 | Cypress | `cy.get(...).should('have.text', '...')` | Built-in retry |
 | Selenium | Custom wait utilities needed | Manual polling required |
+
+---
+
+## Environment Parity and Dependency Control
+
+E2E reliability depends on stable environment inputs (auth state, external dependencies, test data, and feature flags).
+
+| Dependency type | Recommended strategy | Avoid |
+| --- | --- | --- |
+| Authentication | Pre-generated storage/session state | UI login in every test |
+| External APIs | Stable sandbox or controlled mock service boundary | Calling unpredictable third-party production endpoints |
+| Data state | Seed deterministic fixtures before suite | Reusing mutable shared data across jobs |
+| Feature flags | Explicit test profile flags | Implicit defaults that vary by environment |
+
+| Environment tier | Purpose | Typical suite size |
+| --- | --- | --- |
+| Local | Fast smoke during development | 1-5 critical flows |
+| CI pull request | Merge gating confidence | Critical smoke subset |
+| Nightly | Broader regression confidence | Expanded non-blocking flows |
+
+```ts
+// Good: explicit dependency setup
+test.beforeAll(async ({ request }) => {
+  await request.post('/test-support/reset-fixtures')
+  await request.post('/test-support/seed-default-users')
+})
+```
+
+```ts
+// Bad: hidden dependency on unknown data and environment defaults
+test('checkout', async ({ page }) => {
+  await page.goto('/checkout')
+  // Fails if prior run left data in unexpected state.
+})
+```
 
 ---
 

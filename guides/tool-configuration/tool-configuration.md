@@ -9,6 +9,9 @@
 | :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
+| [Toolchain Reproducibility](#toolchain-reproducibility) |
+| [Runtime and Package Manager Pinning](#runtime-and-package-manager-pinning) |
+| [Pre-Commit Orchestration](#pre-commit-orchestration) |
 | [Claude Code](#claude-code) |
 | [Cursor](#cursor) |
 | [GitHub Copilot](#github-copilot) |
@@ -19,6 +22,7 @@
 | [Multi-Tool Workflows](#multi-tool-workflows) |
 | [Keybinding Recommendations](#keybinding-recommendations) |
 | [Troubleshooting](#troubleshooting) |
+| [Failure Modes and Recovery](#failure-modes-and-recovery) |
 | [Anti-Patterns](#anti-patterns) |
 
 ---
@@ -50,6 +54,79 @@
 3. **Exclude noise** – Keep irrelevant files out of context
 4. **Consistent patterns** – Similar config across tools when possible
 5. **Document decisions** – Future you will thank you
+
+---
+
+## Toolchain Reproducibility
+
+| Goal | Recommended artifact | Example files |
+| --- | --- | --- |
+| Runtime parity | Version pinning files committed | `.nvmrc`, `.tool-versions`, `.mise.toml` |
+| Package manager parity | Single package manager lock + config | `pnpm-lock.yaml`, `.npmrc` |
+| Formatting parity | Editor and formatter config in repo | `.editorconfig`, formatter config |
+| Local/CI parity | CI uses same runtime resolver as local | `actions/setup-node` + pinned version |
+
+| Good pattern | Bad pattern |
+| --- | --- |
+| `npm ci` or lockfile-strict install in CI | Floating install behavior across developers |
+| One canonical runtime pin file strategy | Different teams pinning conflicting versions |
+
+```yaml
+# Good: CI pin aligns with repo runtime pin
+- uses: actions/setup-node@v4
+  with:
+    node-version-file: '.nvmrc'
+```
+
+```yaml
+# Bad: floating runtime in CI
+- uses: actions/setup-node@v4
+  with:
+    node-version: 'latest'
+```
+
+---
+
+## Runtime and Package Manager Pinning
+
+| Component | Rule | Rationale |
+| --- | --- | --- |
+| Runtime | Pin major+minor where possible | Avoid silent runtime behavior changes |
+| Package manager | Pin package manager and lockfile format | Stable dependency resolution |
+| Lockfiles | Commit and treat as required | Reproducible dependency graph |
+| Overrides/resolutions | Document why and expiry plan | Prevent stale dependency hacks |
+
+| Pinning check | Verification |
+| --- | --- |
+| Runtime pin exists | CI step validates file present |
+| Lockfile in sync | CI fails on lockfile drift |
+| Tool install path documented | README/dev setup references exact commands |
+
+---
+
+## Pre-Commit Orchestration
+
+| Hook stage | Recommended checks | Why |
+| --- | --- | --- |
+| `pre-commit` | Format/lint staged files | Fast feedback before push |
+| `commit-msg` | Commit message policy | Consistent changelog and automation metadata |
+| CI required checks | Full test + security + validation | Prevent bypass from local environment differences |
+
+```bash
+# Good: staged-only checks for speed
+npx lint-staged
+```
+
+```bash
+# Bad: heavyweight full test suite in pre-commit for every commit
+npm test
+```
+
+| Design rule | Guidance |
+| --- | --- |
+| Keep hooks fast | Prefer staged-file checks under ~10-20s |
+| Keep CI authoritative | Hooks help; CI must still enforce full policy |
+| Keep failures actionable | Hook output should tell exactly what to run next |
 
 ---
 
@@ -625,6 +702,18 @@ Keep consistent across tools:
 - [ ] Dangerous commands blocked
 - [ ] Keybindings comfortable
 - [ ] No tool conflicts
+
+---
+
+## Failure Modes and Recovery
+
+| Failure mode | Symptom | Recovery |
+| --- | --- | --- |
+| Runtime mismatch | Works locally, fails in CI | Align runtime pins and setup commands |
+| Lockfile drift | Frequent dependency-only PR noise | Enforce frozen lockfile installs in CI |
+| Hook fatigue | Developers bypass hooks | Move slow checks to CI and keep local hooks lightweight |
+| Conflicting AI rules | Inconsistent output style | Consolidate canonical rules and reference from tool-specific files |
+| Stale instructions | AI follows outdated project context | Version and review tool instructions in PR workflow |
 
 ---
 
