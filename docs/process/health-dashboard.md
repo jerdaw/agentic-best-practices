@@ -2,8 +2,8 @@
 
 Real-time metrics tracking the health and readiness of agentic-best-practices.
 
-> **Last Updated**: 2026-02-08
-> **Status**: Pre-v1 (Approaching readiness)
+> **Last Updated**: 2026-02-17
+> **Status**: Pre-v1 (Self-audit refreshed)
 
 ## Contents
 
@@ -21,16 +21,16 @@ Real-time metrics tracking the health and readiness of agentic-best-practices.
 
 | Metric | Target | Current | Status |
 | --- | --- | --- | --- |
-| Total Guides | 38 | 38 | ✅ Complete |
-| Guides with Code Examples | 38 (100%) | 38 (100%) | ✅ Complete |
-| Examples per Guide | 2+ | 2-4 avg | ✅ Complete |
+| Total Guides | All published guides tracked | 49 | ✅ Complete |
+| Guides with Code Examples | 100% | 49/49 (100%) | ✅ Complete |
+| Examples per Guide | 2+ | 49/49 (100%) | ✅ Complete |
 | Cross-references | All guides linked | Yes | ✅ Complete |
 | Navigation accuracy | 100% | 100% | ✅ Complete |
 
 **Notes**:
 
-- All planned guides for v1 exist
-- All guides now have 2+ realistic code examples
+- All published guides are indexed and link-validated
+- All guides now meet the 2+ example target
 - Navigation validation automated via `scripts/validate-navigation.sh`
 
 ---
@@ -40,6 +40,7 @@ Real-time metrics tracking the health and readiness of agentic-best-practices.
 | Metric | Target | Current | Status |
 | --- | --- | --- | --- |
 | Broken internal links | 0 | 0 | ✅ Zero |
+| Non-portable `file://` markdown links | 0 | 0 | ✅ Zero |
 | Broken external links | < 5% | Monitored in CI | 🟡 Ongoing |
 | Lint violations | 0 | 0 | ✅ Zero |
 | Navigation drift | 0 | 0 | ✅ Zero |
@@ -48,7 +49,8 @@ Real-time metrics tracking the health and readiness of agentic-best-practices.
 
 **Notes**:
 
-- Internal links validated on every commit via pre-commit hook
+- Internal structure and guide indexes validated on every commit via pre-commit hook
+- `validate-navigation.sh` now fails on non-portable `file://` markdown links
 - External link checking added via CI workflow
 - Markdown linting enforced automatically
 - Downstream adoption simulation validates new project setup, merge workflow, overwrite workflow, pinned workflow, pilot-prep workflow, readiness checks, findings summary generation, and references
@@ -61,12 +63,12 @@ Real-time metrics tracking the health and readiness of agentic-best-practices.
 | --- | --- | --- | --- |
 | CLAUDE.md exists | Yes | Yes | ✅ Complete |
 | Follows writing-best-practices | Yes | Yes | ✅ Complete |
-| Uses tables > bullets | Yes | Yes | ✅ Complete |
+| Uses tables > bullets | Yes | Yes (table-first structure across guides) | ✅ Complete |
 | Automated validation | Yes | Yes | ✅ Complete |
 
 **Notes**:
 
-- Repository demonstrates all practices it recommends
+- Repository demonstrates the practices it recommends; remediation items from the 2026-02-17 self-audit are complete
 - CLAUDE.md actively used during development
 - Guide index, contents tables, and file structure follow documented patterns
 
@@ -94,7 +96,7 @@ Real-time metrics tracking the health and readiness of agentic-best-practices.
 
 | Requirement | Status | Notes |
 | --- | --- | --- |
-| **Content Complete** | ✅ | All 38 guides exist with examples |
+| **Content Complete** | ✅ | All 49 guides exist and meet the 2+ example target |
 | **Self-Dogfooding** | ✅ | CLAUDE.md, automated validation in place |
 | **Infrastructure** | ✅ | CI validation, linting, link checks, and adoption smoke simulation enabled |
 | **External Validation** | 🔴 | Pilot tooling complete; still needs human-selected pilot projects |

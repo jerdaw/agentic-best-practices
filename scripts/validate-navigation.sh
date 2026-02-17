@@ -221,6 +221,22 @@ else
     inc_warning
 fi
 
+# --- 6. Check for non-portable file:// links ---
+echo ""
+echo "=== Checking for non-portable file:// links ==="
+
+while IFS= read -r hit; do
+    [[ -n "$hit" ]] || continue
+    echo -e "${RED}ERROR${NC}: Non-portable file:// link found: $hit"
+    inc_error
+done < <(
+    rg -n '\]\(file://' \
+        --glob '*.md' \
+        --glob '!node_modules/**' \
+        --glob '!docs/deep-research/*-agentic-documentation-and-comments-*.md' \
+        . 2>/dev/null || true
+)
+
 # --- Summary ---
 echo ""
 echo "=== Summary ==="

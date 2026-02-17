@@ -7,6 +7,7 @@ Internal documentation for maintaining `agentic-best-practices` (process, plans,
 | Doc | Type | Status | Primary use |
 | --- | --- | --- | --- |
 | `docs/process/health-dashboard.md` | Dashboard | Active | Real-time repository health and v1 readiness metrics. |
+| `docs/process/self-audit-2026-02-17.md` | Audit | Active | Repo-wide self-audit verifying standards compliance and remediation status. |
 | `docs/process/pilot-execution-playbook.md` | Process | Active | Step-by-step workflow for running external adoption pilots. |
 | `docs/process/release-process.md` | Process | Active | How we ship changes safely (tagging, notes, rollback). |
 | `docs/process/roadmap-process.md` | Process | Active | How we maintain the product and execution roadmaps. |

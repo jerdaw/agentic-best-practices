@@ -28,7 +28,7 @@ Shows how the 8 concepts map to existing and proposed coverage:
 
 ## Proposed Changes
 
-### [NEW] [adr-004-agent-concepts-architecture.md](file:///home/jer/localsync/agentic-best-practices/docs/adr/adr-004-agent-concepts-architecture.md)
+### [NEW] [adr-004-agent-concepts-architecture.md](../../adr/adr-004-agent-concepts-architecture.md)
 
 **Context**: The emergence of distinct agent concepts (Prompt Files, Custom Agents, Memory, Context Rules, MCP) requires a unified architectural decision on how this repo supports them.
 
@@ -41,7 +41,7 @@ Shows how the 8 concepts map to existing and proposed coverage:
 
 ### Guide 1: Prompt Files
 
-#### [NEW] [prompt-files.md](file:///home/jer/localsync/agentic-best-practices/guides/prompt-files/prompt-files.md)
+#### [NEW] [prompt-files.md](../../../guides/prompt-files/prompt-files.md)
 
 **What it covers**: How to author, organize, and maintain reusable `.prompt.md` files (task templates) that agents consume on demand.
 
@@ -68,7 +68,7 @@ Shows how the 8 concepts map to existing and proposed coverage:
 
 ### Guide 2: Memory Patterns
 
-#### [NEW] [memory-patterns.md](file:///home/jer/localsync/agentic-best-practices/guides/memory-patterns/memory-patterns.md)
+#### [NEW] [memory-patterns.md](../../../guides/memory-patterns/memory-patterns.md)
 
 **What it covers**: Patterns for maintaining AI agent state across steps and sessions — scratchpads, project state files, decision logs, and what to persist vs discard.
 
@@ -94,7 +94,7 @@ Shows how the 8 concepts map to existing and proposed coverage:
 
 ### Guide 3: Expand Context Management (Context Rules)
 
-#### [MODIFY] [context-management.md](file:///home/jer/localsync/agentic-best-practices/guides/context-management/context-management.md)
+#### [MODIFY] [context-management.md](../../../guides/context-management/context-management.md)
 
 **Currently**: 160 lines covering basic context selection, pruning, and session management.
 
@@ -115,7 +115,7 @@ Shows how the 8 concepts map to existing and proposed coverage:
 
 ### Guide 4: Custom Agents
 
-#### [NEW] [custom-agents.md](file:///home/jer/localsync/agentic-best-practices/guides/custom-agents/custom-agents.md)
+#### [NEW] [custom-agents.md](../../../guides/custom-agents/custom-agents.md)
 
 **What it covers**: How to design, configure, and maintain specialized AI agent personas (worker profiles) that bundle instructions, tools, and permissions for specific roles.
 
@@ -141,15 +141,15 @@ Shows how the 8 concepts map to existing and proposed coverage:
 
 After creating guides, update these files:
 
-### [MODIFY] [guide-index.md](file:///home/jer/localsync/agentic-best-practices/guides/guide-index.md)
+### [MODIFY] `guide-index.md` (removed; use `AGENTS.md` + `README.md` guide tables)
 
 - Add entries for `prompt-files`, `memory-patterns`, `custom-agents`
 
-### [MODIFY] [README.md](file:///home/jer/localsync/agentic-best-practices/README.md)
+### [MODIFY] [README.md](../../../README.md)
 
 - Add entries to the guide table
 
-### [MODIFY] [AGENTS.md](file:///home/jer/localsync/agentic-best-practices/AGENTS.md)
+### [MODIFY] [AGENTS.md](../../../AGENTS.md)
 
 - Add entries to guide references
 
