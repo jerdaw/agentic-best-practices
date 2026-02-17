@@ -272,6 +272,15 @@ spec:
 
 ---
 
+### Good vs Bad Example
+
+| Pattern | Example | Why |
+| :--- | :--- | :--- |
+| **Good** | Logs include `trace_id`; metrics use bounded labels like `endpoint` and `status` | Correlates events without cardinality explosion |
+| **Bad** | Plain-text logs without correlation IDs and metrics labeled by `user_id` | Debugging is slow and telemetry cost spikes |
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |

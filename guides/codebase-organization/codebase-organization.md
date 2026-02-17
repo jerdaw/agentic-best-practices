@@ -114,6 +114,15 @@ Keep static configuration separate from executable logic.
 
 ---
 
+### Good vs Bad Example
+
+| Pattern | Example | Why |
+| :--- | :--- | :--- |
+| **Good** | `src/users/user.service.ts` and `src/users/user.repository.ts` colocated by feature | Related changes stay local and easy to find |
+| **Bad** | `src/utils/misc.ts` accumulating unrelated helpers | Creates a junk drawer that hurts discoverability |
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |

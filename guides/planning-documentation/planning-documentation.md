@@ -277,6 +277,15 @@ The archive directory exists for historical curiosity, not as a source of truth.
 
 ---
 
+### Good vs Bad Example
+
+| Pattern | Example | Why |
+| --- | --- | --- |
+| **Good** | Dated implementation plan with scope, acceptance criteria, owners, and archive path | Keeps planning actionable and traceable |
+| **Bad** | Roadmap bullet: "Improve system quality" with no owner or success criteria | Too vague to execute or validate |
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |

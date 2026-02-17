@@ -544,6 +544,15 @@ After completing multi-file refactor:
 
 ---
 
+### Good vs Bad Example
+
+| Pattern | Example | Why |
+| :--- | :--- | :--- |
+| **Good** | Refactor 3 files, run tests, then commit before next batch | Limits blast radius and preserves rollback points |
+| **Bad** | Refactor 40 files plus new feature work in one commit | Hard to review, verify, and safely undo |
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |

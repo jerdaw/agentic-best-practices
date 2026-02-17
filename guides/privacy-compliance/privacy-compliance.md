@@ -206,6 +206,15 @@ def delete_user(user_id: str) -> None:
 
 ---
 
+### Good vs Bad Example
+
+| Pattern | Example | Why |
+| :--- | :--- | :--- |
+| **Good** | Collect email with stated purpose, retention period, and redacted logs | Meets minimization and auditability requirements |
+| **Bad** | Collect birth date "just in case" and log raw PII in app logs | Violates purpose limitation and increases breach impact |
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |

@@ -138,6 +138,15 @@ For each major component, provide a brief summary of its responsibility.
 
 ---
 
+### Good vs Bad Example
+
+| Pattern | Example | Why |
+| :--- | :--- | :--- |
+| **Good** | Mermaid component diagram links directly to `src/api/router.ts` and `src/core/engine.ts` | Agent can connect architecture intent to executable code |
+| **Bad** | Screenshot-only diagram with no file references | Agent cannot parse or verify architecture boundaries |
+
+---
+
 ## Architecture Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |

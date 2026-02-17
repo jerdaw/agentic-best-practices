@@ -99,6 +99,23 @@ Treat errors as first-class citizens, not an afterthought.
 2. **No silent failures** – Never catch and ignore errors.
 3. **Contextualize** – Include clean messages and relevant data (no secrets).
 
+```typescript
+class ValidationError extends Error {
+  constructor(message: string, readonly field: string) {
+    super(message)
+    this.name = "ValidationError"
+  }
+}
+
+function parseQuantity(input: string): number {
+  const quantity = Number(input)
+  if (!Number.isFinite(quantity) || quantity <= 0) {
+    throw new ValidationError("Quantity must be a positive number", "quantity")
+  }
+  return quantity
+}
+```
+
 ---
 
 ## Classes and Objects
