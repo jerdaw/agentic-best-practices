@@ -251,6 +251,15 @@ If your tool doesn't natively support custom agents, simulate them:
 
 ---
 
+### Good vs Bad Example
+
+| Pattern | Example | Why |
+| :--- | :--- | :--- |
+| **Good** | `security-auditor` agent with read/search tools only and fixed findings format | Enforces least privilege and consistent review output |
+| **Bad** | `agent-2` with full read/write/exec and vague "be helpful" instructions | Overprivileged and unpredictable behavior |
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |

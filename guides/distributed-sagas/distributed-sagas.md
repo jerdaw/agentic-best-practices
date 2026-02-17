@@ -242,6 +242,15 @@ def recover_sagas():
 
 ---
 
+### Good vs Bad Example
+
+| Pattern | Example | Why |
+| --- | --- | --- |
+| **Good** | Each saga step has an idempotency key and compensating action (`charge` -> `refund`) | Recoverable flow under retries and partial failures |
+| **Bad** | Charge payment before inventory reservation with no compensation path | Creates inconsistent state and manual cleanup work |
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |

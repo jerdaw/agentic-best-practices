@@ -476,6 +476,7 @@ Write tests for this function, focusing on edge cases:
 - empty arrays/strings
 - boundary values
 - error conditions
+```
 
 ```typescript
 function parseDate(input: string): Date | null {
@@ -483,7 +484,6 @@ function parseDate(input: string): Date | null {
 }
 ```
 
-```markdown
 **Generate failure tests**:
 
 ```markdown
@@ -493,6 +493,7 @@ Write tests that verify error handling for this API call:
 - 5xx responses
 - Invalid response body
 - Timeout
+```
 
 ```typescript
 async function fetchUser(id: string): Promise<User> {
@@ -500,7 +501,6 @@ async function fetchUser(id: string): Promise<User> {
 }
 ```
 
-```markdown
 **Generate property tests**:
 
 ```markdown
@@ -508,6 +508,7 @@ Write property-based tests using fast-check for:
 - Round-trip (serialize/deserialize)
 - Invariants (length preservation, order)
 - Idempotence where applicable
+```
 
 ```typescript
 function sortUsers(users: User[]): User[]

@@ -299,6 +299,15 @@ on-call rotation. Do not suggest changing this.
 
 ---
 
+### Good vs Bad Example
+
+| Pattern | Example | Why |
+| :--- | :--- | :--- |
+| **Good** | `Verification Gates` lists exact commands: `npm run lint:md && npm run validate` | Agent behavior is deterministic and auditable |
+| **Bad** | "Run checks before you finish" with no concrete commands | Agent must guess commands and may skip required gates |
+
+---
+
 ## Anti-Patterns to Avoid
 
 | Anti-Pattern | Problem | Fix |

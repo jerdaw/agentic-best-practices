@@ -236,6 +236,15 @@ Some tools offer built-in memory:
 
 ---
 
+### Good vs Bad Example
+
+| Pattern | Example | Why |
+| :--- | :--- | :--- |
+| **Good** | `docs/state/current-task.md` has updated checklist, decisions, and next-session handoff | Work can resume without re-discovery |
+| **Bad** | Decisions exist only in chat transcripts | State is invisible to future sessions and teammates |
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |

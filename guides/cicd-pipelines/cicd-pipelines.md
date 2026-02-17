@@ -117,6 +117,42 @@ Safety mechanisms to prevent bad deployments.
 | **Rollback** | Automated rollback on health check failure |
 | **Smoke Test** | Post-deployment validation in staging |
 
+### Production Gate Example
+
+```yaml
+name: Deploy Production
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://app.example.com
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build once
+        run: npm run build
+      - name: Deploy
+        run: npm run deploy:prod
+      - name: Smoke test
+        run: npm run smoke:prod
+```
+
+---
+
+### Good vs Bad Example
+
+| Pattern | Example | Why |
+| :--- | :--- | :--- |
+| **Good** | Separate `validate`, `test`, and `deploy` jobs with production environment approvals | Isolates failures and prevents unsafe automatic releases |
+| **Bad** | One script does build + deploy with broad credentials and no approval gate | Hard to debug and high risk if anything fails or is compromised |
+
 ---
 
 ## Anti-Patterns

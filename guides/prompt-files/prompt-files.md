@@ -311,6 +311,15 @@ Prompt files are never "done" — they improve through use.
 
 ---
 
+### Good vs Bad Example
+
+| Pattern | Example | Why |
+| :--- | :--- | :--- |
+| **Good** | `review-pr.prompt.md` defines constraints, output format, and repo file references | Reusable and predictable across sessions |
+| **Bad** | One 400-line mega-prompt with vague "improve this code" instructions | Hard to maintain and produces inconsistent results |
+
+---
+
 ## Anti-Patterns
 
 | Anti-Pattern | Problem | Fix |
