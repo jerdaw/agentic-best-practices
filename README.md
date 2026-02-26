@@ -167,10 +167,22 @@ See the full [Adoption Guide](adoption/adoption.md) for detailed setup instructi
 
 ## Roadmap
 
-### Pre-v1 Launch (Active Items)
+### Guide Coverage Expansion — Phase 2
+
+Gaps identified through comprehensive audit (2026-02-26). Full backlog in [roadmap.md](roadmap.md#guide-coverage-expansion--phase-2).
+
+| Tier | Items | Topics |
+| --- | --- | --- |
+| **Tier 1 — Critical** | GE-01 through GE-06 | Incident Response, Performance Engineering, Technical Debt Management, Cost & Token Management, Multi-Agent Orchestration, Concurrency & Async Patterns |
+| **Tier 2 — Important** | GE-07 through GE-10 | AI Agent Evaluation & Metrics, Event-Driven Architecture, Data Modeling & Schema Design, Team AI Coordination |
+| **Tier 3 — Audit Debt** | GE-11 through GE-14 | llms.txt & RAG-Optimized Docs, Agentic Decision Logs, Spec-Driven Development, Documentation as Attack Surface |
+| **Tier 4 — Specialized** | GE-15 through GE-18 | MCP & Tool Integration, Queue & Background Jobs, Feature Flag Lifecycle, Infrastructure as Code |
+
+### Pre-v1 Launch
 
 | Work Item | Status | Notes |
 | --- | --- | --- |
+| Guide Coverage Expansion Phase 2 — Tier 1 | ✅ Complete | 6 new guides. See [roadmap](roadmap.md#tier-1--critical-no-existing-coverage). |
 | Choose 1-2 adoption pilot repos | 🔴 Blocked | Human decision needed. Use [selection criteria](docs/planning/pilot-repo-selection.md). |
 | Execute pilot validation cycle (6-8 weeks) | 🟡 Planned | Use [pilot execution playbook](docs/process/pilot-execution-playbook.md). |
 | Feed pilot outcomes into next release backlog | 🟡 Planned | File actionable updates via [feedback template](docs/templates/feedback-template.md). |
@@ -196,6 +208,7 @@ Core software development patterns applicable to any project.
 | [Writing Best Practices](guides/writing-best-practices/writing-best-practices.md) | **Start Here**. Meta-guide for writing best practices documentation. |
 | [Coding Guidelines](guides/coding-guidelines/coding-guidelines.md) | Writing clear, maintainable code. |
 | [Commenting Guidelines](guides/commenting-guidelines/commenting-guidelines.md) | When and how to write comments. |
+| [Concurrency & Async Patterns](guides/concurrency-async/concurrency-async.md) | Threading, async/await, and race condition prevention. |
 | [Documentation Guidelines](guides/documentation-guidelines/documentation-guidelines.md) | READMEs, API docs, and ADRs. |
 | [Error Handling](guides/error-handling/error-handling.md) | Handling errors robustly/gracefully. |
 | [Logging Practices](guides/logging-practices/logging-practices.md) | Effective logging patterns for observability. |
@@ -211,6 +224,7 @@ Core software development patterns applicable to any project.
 | [Deployment Strategies](guides/deployment-strategies/deployment-strategies.md) | Blue-green, canary, and feature flags. |
 | [Release Engineering & Versioning](guides/release-engineering-versioning/release-engineering-versioning.md) | SemVer policy, release orchestration, and changelog quality. |
 | [Observability Patterns](guides/observability-patterns/observability-patterns.md) | Metrics, tracing, and health checks. |
+| [Incident Response](guides/incident-response/incident-response.md) | Severity classification, escalation chains, and blameless postmortems. |
 | [Testing Strategy](guides/testing-strategy/testing-strategy.md) | Test pyramid and coverage goals. |
 | [E2E Testing](guides/e2e-testing/e2e-testing.md) | End-to-end testing patterns and flaky test prevention. |
 | [Documentation Maintenance](guides/doc-maintenance/doc-maintenance.md) | Keeping docs in sync with code changes. |
@@ -219,11 +233,13 @@ Core software development patterns applicable to any project.
 | [Monorepo Workspaces](guides/monorepo-workspaces/monorepo-workspaces.md) | Workspace boundaries, package ownership, and dependency direction. |
 | [Repository Governance](guides/repository-governance/repository-governance.md) | CODEOWNERS, branch protections, and policy-as-code controls. |
 | [Static Analysis](guides/static-analysis/static-analysis.md) | Linters, formatters, and SAST. |
+| [Technical Debt Management](guides/technical-debt-management/technical-debt-management.md) | Debt identification, tracking, and paydown strategies. |
 | [Privacy & Compliance](guides/privacy-compliance/privacy-compliance.md) | GDPR and data protection. |
 | [Accessibility & i18n](guides/accessibility-i18n/accessibility-i18n.md) | WCAG and localization. |
 | [Distributed Sagas](guides/distributed-sagas/distributed-sagas.md) | Multi-service transactions. |
 | [Database Migrations & Drift](guides/database-migrations-drift/database-migrations-drift.md) | Migration safety, schema drift detection, and rollback strategy. |
 | [Database Indexing](guides/database-indexing/database-indexing.md) | Query optimization. |
+| [Performance Engineering](guides/performance-engineering/performance-engineering.md) | Profiling, load testing, benchmarking, and capacity planning. |
 | [Planning Documentation](guides/planning-documentation/planning-documentation.md) | Roadmaps, implementation plans, and RFCs. |
 
 ### AI-Assisted Development
@@ -243,12 +259,14 @@ Best practices specific to working with AI coding assistants.
 | [Memory Patterns](guides/memory-patterns/memory-patterns.md) | State management across agent sessions. |
 | [Custom Agents](guides/custom-agents/custom-agents.md) | Designing specialized agent worker profiles. |
 | [Code Review for AI Output](guides/code-review-ai/code-review-ai.md) | Reviewing AI-generated code effectively. |
+| [Cost & Token Management](guides/cost-token-management/cost-token-management.md) | Token budgets, model selection, and spend governance. |
 | [Security Boundaries](guides/security-boundaries/security-boundaries.md) | Security requirements for AI development. |
 | [Testing AI-Generated Code](guides/testing-ai-code/testing-ai-code.md) | Verification strategies for AI output. |
 | [Git Workflows with AI](guides/git-workflows-ai/git-workflows-ai.md) | Version control practices for AI. |
 | [Debugging with AI](guides/debugging-with-ai/debugging-with-ai.md) | Effective debugging with AI assistance. |
 | [Multi-File Refactoring](guides/multi-file-refactoring/multi-file-refactoring.md) | Coordinating large changes with AI. |
 | [Human-AI Collaboration](guides/human-ai-collaboration/human-ai-collaboration.md) | Deciding when and how to use AI. |
+| [Multi-Agent Orchestration](guides/multi-agent-orchestration/multi-agent-orchestration.md) | Coordinating multiple agents on shared tasks. |
 | [Tool Configuration](guides/tool-configuration/tool-configuration.md) | Configuring AI coding tools effectively. |
 | [PRD for Agents](guides/prd-for-agents/prd-for-agents.md) | Writing specs that AI agents can consume. |
 | [Architecture for AI](guides/architecture-for-ai/architecture-for-ai.md) | System docs that prevent hallucination. |

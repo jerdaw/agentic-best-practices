@@ -24,6 +24,7 @@ Directives for AI agents working within this repository.
 | [Writing Best Practices](guides/writing-best-practices/writing-best-practices.md) | **Start here.** Meta-guide for writing this documentation. |
 | [Coding Guidelines](guides/coding-guidelines/coding-guidelines.md) | |
 | [Commenting Guidelines](guides/commenting-guidelines/commenting-guidelines.md) | |
+| [Concurrency & Async Patterns](guides/concurrency-async/concurrency-async.md) | Threading, async/await, race conditions |
 | [Documentation Guidelines](guides/documentation-guidelines/documentation-guidelines.md) | READMEs, API docs, ADRs |
 | [Error Handling](guides/error-handling/error-handling.md) | |
 | [Logging Practices](guides/logging-practices/logging-practices.md) | |
@@ -39,6 +40,8 @@ Directives for AI agents working within this repository.
 | [Deployment Strategies](guides/deployment-strategies/deployment-strategies.md) | Blue-green, canary, feature flags |
 | [Release Engineering & Versioning](guides/release-engineering-versioning/release-engineering-versioning.md) | SemVer, release pipelines, changelog discipline |
 | [Observability Patterns](guides/observability-patterns/observability-patterns.md) | Metrics, tracing, health checks |
+| [Incident Response](guides/incident-response/incident-response.md) | Severity classification, escalation, postmortems |
+| [Performance Engineering](guides/performance-engineering/performance-engineering.md) | Profiling, load testing, benchmarking |
 | [Testing Strategy](guides/testing-strategy/testing-strategy.md) | Test pyramid, coverage |
 | [E2E Testing](guides/e2e-testing/e2e-testing.md) | Selectors, flaky tests, Page Object Model |
 | [Documentation Maintenance](guides/doc-maintenance/doc-maintenance.md) | Code-to-docs sync, freshness tracking |
@@ -47,6 +50,7 @@ Directives for AI agents working within this repository.
 | [Monorepo Workspaces](guides/monorepo-workspaces/monorepo-workspaces.md) | Workspace boundaries, package ownership, dependency direction |
 | [Repository Governance](guides/repository-governance/repository-governance.md) | CODEOWNERS, branch protection, policy-as-code |
 | [Static Analysis](guides/static-analysis/static-analysis.md) | Linters, formatters, SAST |
+| [Technical Debt Management](guides/technical-debt-management/technical-debt-management.md) | Identification, tracking, paydown |
 | [Privacy & Compliance](guides/privacy-compliance/privacy-compliance.md) | GDPR, data protection |
 | [Accessibility & i18n](guides/accessibility-i18n/accessibility-i18n.md) | WCAG, localization |
 | [Distributed Sagas](guides/distributed-sagas/distributed-sagas.md) | Multi-service transactions |
@@ -69,12 +73,14 @@ Directives for AI agents working within this repository.
 | [Memory Patterns](guides/memory-patterns/memory-patterns.md) | State across sessions |
 | [Custom Agents](guides/custom-agents/custom-agents.md) | Specialized worker profiles |
 | [Code Review for AI Output](guides/code-review-ai/code-review-ai.md) | |
+| [Cost & Token Management](guides/cost-token-management/cost-token-management.md) | API costs, token budgets, model selection |
 | [Security Boundaries](guides/security-boundaries/security-boundaries.md) | |
 | [Testing AI-Generated Code](guides/testing-ai-code/testing-ai-code.md) | |
 | [Git Workflows with AI](guides/git-workflows-ai/git-workflows-ai.md) | |
 | [Debugging with AI](guides/debugging-with-ai/debugging-with-ai.md) | |
 | [Multi-File Refactoring](guides/multi-file-refactoring/multi-file-refactoring.md) | |
 | [Human-AI Collaboration](guides/human-ai-collaboration/human-ai-collaboration.md) | |
+| [Multi-Agent Orchestration](guides/multi-agent-orchestration/multi-agent-orchestration.md) | Agent coordination, delegation, handoff |
 | [Tool Configuration](guides/tool-configuration/tool-configuration.md) | |
 | [PRD for Agents](guides/prd-for-agents/prd-for-agents.md) | Specs AI can consume |
 | [Architecture for AI](guides/architecture-for-ai/architecture-for-ai.md) | System docs that prevent hallucination |

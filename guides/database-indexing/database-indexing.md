@@ -171,3 +171,4 @@ CREATE INDEX idx_users_email ON users(email);
 - [Observability Patterns](../observability-patterns/observability-patterns.md) – Tracking query performance
 - [Architecture for AI](../architecture-for-ai/architecture-for-ai.md) – Data modeling
 - [Resilience Patterns](../resilience-patterns/resilience-patterns.md) – Handling slow queries
+- [Performance Engineering](../performance-engineering/performance-engineering.md) – Query optimization and profiling

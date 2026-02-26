@@ -299,3 +299,4 @@ Exception: planning artifacts follow the lifecycle in
 - [Documentation Guidelines](../documentation-guidelines/documentation-guidelines.md) – What to document and how
 - [Writing Best Practices](../writing-best-practices/writing-best-practices.md) – Documentation quality standards
 - [Planning Documentation](../planning-documentation/planning-documentation.md) – Roadmaps, RFCs, ADRs
+- [Technical Debt Management](../technical-debt-management/technical-debt-management.md) – Documentation debt tracking

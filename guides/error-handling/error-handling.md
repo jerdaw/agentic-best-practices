@@ -741,3 +741,4 @@ For each function that can fail:
 
 - [Logging Practices](../logging-practices/logging-practices.md) – How to log effectively
 - [Coding Guidelines](../coding-guidelines/coding-guidelines.md) – General code quality
+- [Concurrency & Async Patterns](../concurrency-async/concurrency-async.md) – Error handling in async code

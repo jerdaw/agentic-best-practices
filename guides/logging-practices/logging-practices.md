@@ -631,3 +631,4 @@ When adding logging:
 
 - [Error Handling](../error-handling/error-handling.md) – When and what to log on errors
 - [Security Boundaries](../security-boundaries/security-boundaries.md) – Protecting sensitive data
+- [Incident Response](../incident-response/incident-response.md) – Logging during incident response
