@@ -10,7 +10,7 @@ Guidelines for keeping documentation synchronized with code changes — preventi
 | Section |
 | --- |
 | [Quick Reference](#quick-reference) |
-| [Core Principle](#core-principle) |
+| [Core Principles](#core-principles) |
 | [Change Propagation Workflow](#change-propagation-workflow) |
 | [Documentation Blast Radius](#documentation-blast-radius) |
 | [Automated Verification](#automated-verification) |
@@ -37,18 +37,15 @@ Guidelines for keeping documentation synchronized with code changes — preventi
 
 ---
 
-## Core Principle
+## Core Principles
 
-**Every code change has a documentation blast radius.** Before committing any change, map which documents it affects and update them in the same PR.
-
-| Change Type | Typical Blast Radius |
-| --- | --- |
-| New API endpoint | API docs, README, CHANGELOG, integration guides |
-| Changed behavior | Inline comments, user-facing docs, CHANGELOG |
-| New configuration option | README, environment docs, config reference |
-| Removed feature | All references, migration guide, CHANGELOG |
-| Renamed entity | Every file that mentions the old name |
-| Dependency update | README (if minimum versions listed), CHANGELOG |
+| Principle | Guideline | Rationale |
+| --- | --- | --- |
+| **Blast radius awareness** | Map which documents every code change affects | Every code change has a documentation blast radius |
+| **Same-PR updates** | Update docs in the same PR as the code change | "Docs later" PRs have a 90%+ abandonment rate |
+| **Automated verification** | Use CI gates to catch broken links and stale examples | Human memory is unreliable for cross-file consistency |
+| **Minimum viable documentation** | Write the smallest doc that stays accurate over comprehensive docs that go stale | Accuracy matters more than completeness |
+| **Single source of truth** | Link to source rather than duplicating content | Two copies means one is inevitably wrong |
 
 ---
 

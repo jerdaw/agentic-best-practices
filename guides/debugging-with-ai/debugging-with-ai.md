@@ -11,11 +11,14 @@ Best practices for collaborating with AI coding agents to diagnose, reproduce, a
 | :--- |
 | [Quick Reference](#quick-reference) |
 | [Core Principles](#core-principles) |
+| [The Iron Law](#the-iron-law) |
 | [The Debugging Lifecycle](#the-debugging-lifecycle) |
 | [Effective Error Reporting](#effective-error-reporting) |
 | [Investigation Techniques](#investigation-techniques) |
 | [Verification of Fixes](#verification-of-fixes) |
 | [Anti-Patterns](#anti-patterns) |
+| [Red Flags](#red-flags) |
+| [See Also](#see-also) |
 
 ---
 
@@ -33,11 +36,13 @@ Best practices for collaborating with AI coding agents to diagnose, reproduce, a
 
 ## Core Principles
 
-1. **Reproduce first** – If you can't prove it's broken, you can't prove it's fixed.
-2. **Scientific Method** – Form a hypothesis, test it, observe, repeat.
-3. **Evidence-based** – Trust logs and traces over assumptions and guesses.
-4. **Fix the root cause** – Don't just patch the symptoms.
-5. **Regression safety** – Every fix must include a test to prevent recurrence.
+| Principle | Guideline | Rationale |
+| :--- | :--- | :--- |
+| **Reproduce first** | Create a failing test before investigating | If you can't prove it's broken, you can't prove it's fixed |
+| **Scientific Method** | Form a hypothesis, test it, observe, repeat | Systematic investigation is faster than guessing |
+| **Evidence-based** | Trust logs and traces over assumptions | Guesses compound errors; evidence narrows the search |
+| **Fix the root cause** | Don't just patch the symptoms | Symptom fixes mask underlying issues and guarantee rework |
+| **Regression safety** | Every fix must include a test to prevent recurrence | Without a test, the same bug returns in the next refactor |
 
 ---
 
@@ -57,15 +62,6 @@ If you haven't completed the Observe → Reproduce → Isolate → Diagnose step
 | "Just one quick fix" seems obvious | Obvious fixes are often wrong; verify before applying |
 | Multiple fixes already attempted | You're guessing — go back to isolation |
 | Issue seems simple | Simple bugs have root causes too |
-
-### Red Flags — Stop and Reassess
-
-| Signal | Action |
-| :--- | :--- |
-| Tempted to "just try something" | Return to Observe step |
-| Fix didn't work | You don't have root cause — return to Diagnose |
-| Multiple fixes attempted | You're guessing — return to Isolate |
-| Can't explain why the fix works | You haven't found root cause |
 
 ---
 
@@ -171,6 +167,19 @@ A fix is only complete when:
 | **Implicit reproduction**| "It works now" (unproven) | Always show a passing test |
 | **Context starvation** | Missing pieces of the trace | Share the full, raw error log |
 | **Over-fixing** | Refactoring while debugging | Keep the bug fix minimal |
+
+---
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| :--- | :--- | :--- |
+| Tempted to "just try something" | Return to the Observe step | Untested fixes compound the problem and waste tokens |
+| Fix didn't work | Return to Diagnose — you don't have root cause | Stacking guesses makes the real cause harder to find |
+| Multiple fixes already attempted | Return to Isolate — you're guessing | Systematic isolation is faster than trial-and-error |
+| Can't explain why the fix works | Investigate further before committing | Unexplained fixes mask the real bug and break later |
+| AI proposes a fix without seeing the stack trace | Provide the full error context first | Fixes without evidence are guesses with extra confidence |
+| Debugging session exceeds 30 minutes without progress | Step back; re-read logs; try binary search isolation | Long sessions indicate a wrong mental model of the failure |
 
 ---
 

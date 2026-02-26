@@ -34,11 +34,13 @@ agents.
 
 ## Core Principles
 
-1. **Discoverability** – An agent should find any file in 3 seconds via path/name alone.
-2. **Locality** – Code that changes together should live together.
-3. **Predictability** – Once a pattern is established, stick to it everywhere.
-4. **Encapsulation** – Modules should expose only what's necessary (clean interfaces).
-5. **Self-Documenting** – The folder structure should reflect the domain model.
+| Principle | Guideline | Rationale |
+| :--- | :--- | :--- |
+| **Discoverability** | An agent should find any file in 3 seconds via path/name alone | Reduces context window consumption and search time |
+| **Locality** | Code that changes together should live together | Co-located changes are easier to review and less prone to drift |
+| **Predictability** | Once a pattern is established, stick to it everywhere | Consistency enables navigation by convention |
+| **Encapsulation** | Modules should expose only what's necessary | Clean interfaces prevent global spaghetti dependencies |
+| **Self-Documenting** | The folder structure should reflect the domain model | Structure communicates architecture without extra docs |
 
 ---
 
