@@ -744,3 +744,4 @@ Keep consistent across tools:
 ## See Also
 
 - [Security Boundaries](../security-boundaries/security-boundaries.md) – Security requirements for AI tools
+- [Cost & Token Management](../cost-token-management/cost-token-management.md) – Configuring cost controls

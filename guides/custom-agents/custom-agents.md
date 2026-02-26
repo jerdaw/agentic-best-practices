@@ -305,3 +305,5 @@ Before creating a custom agent:
 - [Tool Configuration](../tool-configuration/tool-configuration.md) – Setting up AI coding tools
 - [Context Management](../context-management/context-management.md) – Managing what information agents can see
 - [Agent Skills](../../skills/README.md) – Repeatable procedures agents follow (distinct from agent identity)
+- [Cost & Token Management](../cost-token-management/cost-token-management.md) – Model selection and token budgets
+- [Multi-Agent Orchestration](../multi-agent-orchestration/multi-agent-orchestration.md) – Coordinating multiple agents

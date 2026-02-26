@@ -166,3 +166,4 @@ function parseQuantity(input: string): number {
 - [Commenting Guidelines](../commenting-guidelines/commenting-guidelines.md) – When to explain
 - [Error Handling Patterns](../error-handling/error-handling.md) – Advanced logic
 - [Secure Coding](../secure-coding/secure-coding.md) – Safety guidelines
+- [Technical Debt Management](../technical-debt-management/technical-debt-management.md) – Managing code quality debt

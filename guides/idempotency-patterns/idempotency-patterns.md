@@ -281,3 +281,4 @@ def test_idempotency():
 - [Resilience Patterns](../resilience-patterns/resilience-patterns.md) – Circuit breakers and fallbacks
 - [API Design](../api-design/api-design.md) – Designing consistent interfaces
 - [Error Handling](../error-handling/error-handling.md) – Handling failures gracefully
+- [Concurrency & Async Patterns](../concurrency-async/concurrency-async.md) – Safe retry under concurrency

@@ -171,3 +171,4 @@ jobs:
 - [Deployment Strategies](../deployment-strategies/deployment-strategies.md)
 - [Database Migrations & Drift](../database-migrations-drift/database-migrations-drift.md)
 - [Release Engineering & Versioning](../release-engineering-versioning/release-engineering-versioning.md)
+- [Incident Response](../incident-response/incident-response.md) – Incident workflows and escalation

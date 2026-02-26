@@ -741,3 +741,6 @@ For resilient code:
 
 - [Error Handling](../error-handling/error-handling.md) – Handling errors in code
 - [Logging Practices](../logging-practices/logging-practices.md) – Logging resilience events
+- [Concurrency & Async Patterns](../concurrency-async/concurrency-async.md) – Async retry and timeout patterns
+- [Incident Response](../incident-response/incident-response.md) – When resilience failures become incidents
+- [Performance Engineering](../performance-engineering/performance-engineering.md) – Load testing resilience under stress

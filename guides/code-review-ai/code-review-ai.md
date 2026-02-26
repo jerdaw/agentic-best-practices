@@ -202,3 +202,4 @@ HEAD_SHA=$(git rev-parse HEAD)
 - [Secure Coding](../secure-coding/secure-coding.md) – What to look for in security reviews
 - [Testing Strategy](../testing-strategy/testing-strategy.md) – Verifying fixes
 - [Prompting Patterns](../prompting-patterns/prompting-patterns.md) – Crafting review prompts
+- [Technical Debt Management](../technical-debt-management/technical-debt-management.md) – Catching AI-generated debt

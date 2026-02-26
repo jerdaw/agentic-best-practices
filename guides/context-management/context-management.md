@@ -295,3 +295,5 @@ Before starting a task, verify:
 - [AGENTS.md Guidelines](../agents-md/agents-md-guidelines.md) – Persistent repo-level context
 - [Tool Configuration](../tool-configuration/tool-configuration.md) – Tool-specific setup including exclusions
 - [Multi-File Refactoring](../multi-file-refactoring/multi-file-refactoring.md) – Large scale context
+- [Cost & Token Management](../cost-token-management/cost-token-management.md) – Context efficiency and token budgets
+- [Multi-Agent Orchestration](../multi-agent-orchestration/multi-agent-orchestration.md) – Context passing between agents

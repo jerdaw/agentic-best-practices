@@ -335,3 +335,4 @@ docs/
 - [Documentation Guidelines](../documentation-guidelines/documentation-guidelines.md) – READMEs, API docs, ADRs
 - [PRD for Agents](../prd-for-agents/prd-for-agents.md) – Feature specifications for AI
 - [Agentic Workflow](../agentic-workflow/agentic-workflow.md) – PLAN phase consumes these docs
+- [Technical Debt Management](../technical-debt-management/technical-debt-management.md) – Tracking and prioritizing debt

@@ -221,3 +221,4 @@ Manage infrastructure with the same rigor as application code.
 - [CI/CD Pipelines](../cicd-pipelines/cicd-pipelines.md) – Automated workflow
 - [Observability Patterns](../observability-patterns/observability-patterns.md) – Monitoring health
 - [Resilience Patterns](../resilience-patterns/resilience-patterns.md) – Handling failures
+- [Incident Response](../incident-response/incident-response.md) – When deployments cause incidents
