@@ -33,11 +33,13 @@ Best practices for AI agents on planning, executing, and monitoring safe deploym
 
 ## Core Principles
 
-1. **Automate everything** – Manual steps are errors waiting to happen.
-2. **Immutable infrastructure** – Replace, don't patch, existing servers.
-3. **Zero-downtime** – Users should not experience interruptions during rollout.
-4. **Visibility** – Deployments must be visible and trackable by the whole team.
-5. **Fail-safe** – If a deployment fails, the system should return to a known good state.
+| Principle | Guideline | Rationale |
+| :--- | :--- | :--- |
+| **Automate everything** | Eliminate manual steps from the deploy path | Manual steps are errors waiting to happen |
+| **Immutable infrastructure** | Replace, don't patch, existing servers | Prevents configuration drift and snowflake environments |
+| **Zero-downtime** | Users should not experience interruptions during rollout | Downtime erodes trust and costs revenue |
+| **Visibility** | Deployments must be visible and trackable by the whole team | Hidden deploys prevent diagnosis and coordination |
+| **Fail-safe** | If a deployment fails, the system returns to a known good state | Unrecoverable failures compound into outages |
 
 ---
 

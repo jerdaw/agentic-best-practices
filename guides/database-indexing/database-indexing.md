@@ -34,11 +34,13 @@ Best practices for AI agents on designing, implementing, and optimizing database
 
 ## Core Principles
 
-1. **Read-Write balance** – Every index speeds up reads but slows down writes.
-2. **Cardinality awareness** – Indexes work best on columns with many unique values.
-3. **Selectivity** – An index that filters 99% of rows is better than one filtering 5%.
-4. **Coverage** – Design indexes that cover the most frequent queries.
-5. **Cost of ownership** – Monitor index size and maintenance overhead (bloat).
+| Principle | Guideline | Rationale |
+| :--- | :--- | :--- |
+| **Read-Write balance** | Evaluate write cost before adding any index | Every index speeds up reads but slows down writes |
+| **Cardinality awareness** | Index columns with many unique values | Low-cardinality indexes waste space without benefit |
+| **Selectivity** | Prefer indexes that filter out most rows | An index filtering 99% of rows is far more useful than one filtering 5% |
+| **Coverage** | Design indexes for the most frequent queries | Unused indexes cost writes without improving reads |
+| **Cost of ownership** | Monitor index size and maintenance overhead | Index bloat degrades performance over time |
 
 ---
 

@@ -145,6 +145,32 @@ For each major component, provide a brief summary of its responsibility.
 | **Good** | Mermaid component diagram links directly to `src/api/router.ts` and `src/core/engine.ts` | Agent can connect architecture intent to executable code |
 | **Bad** | Screenshot-only diagram with no file references | Agent cannot parse or verify architecture boundaries |
 
+**Good: Documented module boundary**
+
+```typescript
+// src/billing/index.ts — Public API for the billing module
+// Boundary: Only these exports may be imported by other modules.
+// Internal implementation details are in ./internal/
+
+export { createInvoice } from './invoice.service'
+export { BillingConfig } from './billing.config'
+export type { Invoice, LineItem } from './types'
+
+// Constraint: No direct database access — uses src/infra/db via dependency injection.
+// Pattern: Repository pattern (see ADR-007).
+```
+
+**Bad: Undocumented module with no boundary**
+
+```typescript
+// src/billing/index.ts
+export * from './invoice.service'
+export * from './stripe'
+export * from './internal/calculations'
+export * from './types'
+// Agent has no idea what's public vs internal, or what constraints apply
+```
+
 ---
 
 ## Architecture Anti-Patterns

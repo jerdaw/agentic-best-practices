@@ -34,11 +34,13 @@ Best practices for managing CI/CD pipelines while working with AI coding agents.
 
 ## Core Principles
 
-1. **Security first** – CI/CD is the most sensitive part of the system; agents need strict boundaries.
-2. **Deterministic steps** – Avoid "magic" scripts; make every pipeline stage explicit.
-3. **Fail fast** – Run the fastest, most critical checks first (lint, types).
-4. **Immutable artifacts** – Build once, deploy across environments.
-5. **Auditable changes** – Every pipeline change must be human-reviewed.
+| Principle | Guideline | Rationale |
+| :--- | :--- | :--- |
+| **Security first** | Agents need strict boundaries in CI/CD | CI/CD is the most sensitive part of the system |
+| **Deterministic steps** | Make every pipeline stage explicit | "Magic" scripts hide failures and hinder debugging |
+| **Fail fast** | Run the fastest, most critical checks first (lint, types) | Early failures save time and compute |
+| **Immutable artifacts** | Build once, deploy across environments | Eliminates "works in staging" drift |
+| **Auditable changes** | Every pipeline change must be human-reviewed | Prevents unauthorized infrastructure modifications |
 
 ---
 
