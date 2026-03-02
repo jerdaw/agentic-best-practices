@@ -366,3 +366,5 @@ pytest
 - [E2E Testing](../e2e-testing/e2e-testing.md) – End-to-end testing patterns
 - [Coding Guidelines](../coding-guidelines/coding-guidelines.md) – Code structure patterns
 - [Error Handling](../error-handling/error-handling.md) – Testing error paths
+- [Concurrency & Async Patterns](../concurrency-async/concurrency-async.md) – Testing concurrent code
+- [Performance Engineering](../performance-engineering/performance-engineering.md) – Load testing and benchmarks

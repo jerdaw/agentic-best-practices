@@ -289,3 +289,4 @@ Before ending a work session:
 - [Planning Documentation](../planning-documentation/planning-documentation.md) – Structured specs for complex tasks
 - [Context Management](../context-management/context-management.md) – Managing the agent's active context window
 - [AGENTS.md Guidelines](../agents-md/agents-md-guidelines.md) – Where permanent constraints should live
+- [Multi-Agent Orchestration](../multi-agent-orchestration/multi-agent-orchestration.md) – Shared state in multi-agent systems

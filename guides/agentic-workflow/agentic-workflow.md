@@ -482,3 +482,4 @@ B. [Option and tradeoffs]
 - [Git Workflows with AI](../git-workflows-ai/git-workflows-ai.md) – Commit and PR practices
 - [Multi-File Refactoring](../multi-file-refactoring/multi-file-refactoring.md) – Large change coordination
 - [PRD for Agents](../prd-for-agents/prd-for-agents.md) – Writing specs that agents consume in PLAN phase
+- [Multi-Agent Orchestration](../multi-agent-orchestration/multi-agent-orchestration.md) – Coordinating multiple agents on tasks

@@ -533,3 +533,4 @@ AI has limited context. Large conversations degrade response quality.
 - [Context Management](../context-management/context-management.md) – Managing what context to provide
 - [Debugging with AI](../debugging-with-ai/debugging-with-ai.md) – Effective error reporting patterns
 - [PRD for Agents](../prd-for-agents/prd-for-agents.md) – Structured specs for complex prompts
+- [Cost & Token Management](../cost-token-management/cost-token-management.md) – Token-efficient prompting

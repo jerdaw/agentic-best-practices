@@ -312,3 +312,6 @@ spec:
 - [Logging Practices](../logging-practices/logging-practices.md) – Structured logging patterns
 - [Deployment Strategies](../deployment-strategies/deployment-strategies.md) – Monitoring during rollouts
 - [Resilience Patterns](../resilience-patterns/resilience-patterns.md) – Circuit breaker metrics
+- [Incident Response](../incident-response/incident-response.md) – Alerting and detection for incidents
+- [Performance Engineering](../performance-engineering/performance-engineering.md) – Performance metrics and profiling
+- [Cost & Token Management](../cost-token-management/cost-token-management.md) – Monitoring AI API spend

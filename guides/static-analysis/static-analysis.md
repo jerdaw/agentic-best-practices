@@ -235,3 +235,4 @@ ruff check . --diff-against-baseline=.ruff-baseline.json
 - [CI/CD Pipelines](../cicd-pipelines/cicd-pipelines.md) – Pipeline design patterns
 - [Secure Coding](../secure-coding/secure-coding.md) – Security-focused analysis
 - [Coding Guidelines](../coding-guidelines/coding-guidelines.md) – Style conventions
+- [Technical Debt Management](../technical-debt-management/technical-debt-management.md) – Detecting and tracking debt

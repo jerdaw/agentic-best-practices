@@ -22,44 +22,43 @@ introduces risk.
 | [Separation of Duties](#separation-of-duties) |
 | [Sandboxing Recommendations](#sandboxing-recommendations) |
 | [Security Audit Checklist](#security-audit-checklist) |
+| [Anti-Patterns](#anti-patterns) |
+| [Red Flags](#red-flags) |
+| [See Also](#see-also) |
 
 ---
 
 ## Quick Reference
 
-**Never share with AI**:
-
-- API keys, tokens, passwords
-- `.env` files or secrets configuration
-- Private keys (SSL, SSH, signing)
-- Production database credentials
-- Customer PII or sensitive data
-
-**Always verify in AI output**:
-
-- User input handling (injection vectors)
-- Authentication/authorization logic
-- Database queries with dynamic values
-- File operations with user-controlled paths
-- Cryptographic implementations
-
-**Highest-risk AI changes**:
-
-- Authentication flows
-- Payment processing
-- Access control
-- Data encryption
-- Session management
+| Category | Guidance | Rationale |
+| :--- | :--- | :--- |
+| **Never share with AI** | API keys, tokens, passwords | Credential leakage enables account takeover |
+| **Never share with AI** | `.env` files or secrets configuration | Exposes full environment secrets |
+| **Never share with AI** | Private keys (SSL, SSH, signing) | Compromises entire certificate/signing chain |
+| **Never share with AI** | Production database credentials | Enables full data breach |
+| **Never share with AI** | Customer PII or sensitive data | Privacy violation and regulatory risk |
+| **Always verify** | User input handling (injection vectors) | AI generates code that trusts input |
+| **Always verify** | Authentication/authorization logic | AI forgets ownership and permission checks |
+| **Always verify** | Database queries with dynamic values | AI defaults to string concatenation |
+| **Always verify** | File operations with user-controlled paths | AI omits path traversal guards |
+| **Always verify** | Cryptographic implementations | AI makes subtle but critical crypto mistakes |
+| **Highest risk** | Authentication flows | Single flaw grants unauthorized access |
+| **Highest risk** | Payment processing | Direct financial loss |
+| **Highest risk** | Access control | Privilege escalation across users |
+| **Highest risk** | Data encryption | Silent data exposure |
+| **Highest risk** | Session management | Session hijacking enables impersonation |
 
 ---
 
 ## Core Principles
 
-1. **AI has no threat model** – You must evaluate security; AI won't
-2. **Secrets never in context** – Don't share sensitive data with AI
-3. **Validate all inputs** – AI generates code that trusts input
-4. **Verify crypto thoroughly** – AI makes subtle but critical mistakes
-5. **Review access control** – AI forgets authorization checks
+| Principle | Guideline | Rationale |
+| :--- | :--- | :--- |
+| **AI has no threat model** | You must evaluate security; AI won't | AI optimizes for functionality, not safety |
+| **Secrets never in context** | Don't share sensitive data with AI | Secrets in prompts risk leakage via logs and training |
+| **Validate all inputs** | Add validation at every system boundary | AI generates code that trusts input by default |
+| **Verify crypto thoroughly** | Expert-review all cryptographic code | AI makes subtle but critical crypto mistakes |
+| **Review access control** | Check every endpoint for auth and ownership | AI forgets authorization checks consistently |
 
 ---
 
@@ -679,6 +678,35 @@ Before deploying AI-generated code:
 - [ ] Token generation uses crypto-secure random
 - [ ] No DIY encryption
 - [ ] Keys/IVs not hardcoded
+
+---
+
+## Anti-Patterns
+
+| Anti-Pattern | Problem | Fix |
+| :--- | :--- | :--- |
+| **Trusting AI-generated auth logic** | AI forgets ownership checks and rate limiting | Review every auth path manually against the checklist |
+| **Sharing `.env` files with AI** | Full credential set exposed in prompt context | Share only variable names; use placeholders |
+| **DIY crypto from AI** | Subtle bugs guaranteed in custom implementations | Use established libraries (bcrypt, libsodium) |
+| **Using `Math.random()` for tokens** | Predictable values enable brute-force attacks | Use `crypto.randomBytes()` or equivalent |
+| **String-concatenated SQL** | Direct injection vector in generated queries | Always use parameterized queries or ORMs |
+| **Blindly adding AI-suggested packages** | Typosquatting and malicious package risk | Verify package source, maintenance, and advisories |
+| **Granting AI agents broad permissions** | Excessive agency enables unintended actions | Apply least privilege per task phase |
+| **Hardcoded IVs and salts** | Defeats purpose of cryptographic randomness | Generate random values per operation |
+
+---
+
+## Red Flags
+
+| Signal | Action | Rationale |
+| :--- | :--- | :--- |
+| Secrets or API keys appearing in AI prompt context | Remove immediately; rotate the exposed credentials | Secrets in prompts leak via logs, history, and training data |
+| AI-generated endpoint missing authentication middleware | Add auth before merging; check all other new endpoints | Missing auth is the most common AI security mistake |
+| `innerHTML`, `eval()`, or string concatenation in queries | Replace with safe alternatives (textContent, parameterized queries) | Direct injection vectors that AI generates by default |
+| AI suggests a package you've never heard of | Verify on npm/PyPI directly; check publish date and maintainer | Typosquatted and malicious packages target AI suggestions |
+| Crypto code using MD5, SHA1, or ECB mode | Replace with bcrypt/argon2 for passwords, AES-GCM for encryption | Weak algorithms provide false sense of security |
+| AI agent requesting write access during planning phase | Restrict to read-only; enforce least privilege per phase | Planning never needs write access |
+| No input validation at API boundary in AI-generated code | Add schema validation before processing any user input | AI assumes trusted input by default |
 
 ---
 
