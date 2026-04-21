@@ -714,3 +714,4 @@ Before deploying AI-generated code:
 
 - [Code Review for AI Output](../code-review-ai/code-review-ai.md) – Review workflow for AI-generated code
 - [Tool Configuration](../tool-configuration/tool-configuration.md) – Configuring AI tools securely
+- [Documentation as Attack Surface](../documentation-as-attack-surface/documentation-as-attack-surface.md) – Treating docs and retrieved context as untrusted inputs

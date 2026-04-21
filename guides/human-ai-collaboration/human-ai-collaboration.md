@@ -404,4 +404,5 @@ Set aside time for unassisted coding to maintain skills:
 
 - [Prompting Patterns](../prompting-patterns/prompting-patterns.md) – Effective prompts for AI
 - [Git Workflows with AI](../git-workflows-ai/git-workflows-ai.md) – Attribution and PR practices
+- [Team AI Coordination](../team-ai-coordination/team-ai-coordination.md) – Shared-repo ownership and escalation rules
 - [Multi-Agent Orchestration](../multi-agent-orchestration/multi-agent-orchestration.md) – Multi-agent coordination patterns

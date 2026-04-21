@@ -167,6 +167,7 @@ steps:
 ## See Also
 
 - [Database Indexing](../database-indexing/database-indexing.md)
+- [Data Modeling & Schema Design](../data-modeling-schema-design/data-modeling-schema-design.md)
 - [Deployment Strategies](../deployment-strategies/deployment-strategies.md)
 - [Resilience Patterns](../resilience-patterns/resilience-patterns.md)
 - [Backup, Restore & DR](../backup-restore-dr/backup-restore-dr.md)

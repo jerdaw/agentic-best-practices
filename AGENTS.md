@@ -54,6 +54,8 @@ Directives for AI agents working within this repository.
 | [Privacy & Compliance](guides/privacy-compliance/privacy-compliance.md) | GDPR, data protection |
 | [Accessibility & i18n](guides/accessibility-i18n/accessibility-i18n.md) | WCAG, localization |
 | [Distributed Sagas](guides/distributed-sagas/distributed-sagas.md) | Multi-service transactions |
+| [Event-Driven Architecture](guides/event-driven-architecture/event-driven-architecture.md) | Pub/sub, event contracts, delivery semantics |
+| [Data Modeling & Schema Design](guides/data-modeling-schema-design/data-modeling-schema-design.md) | Domain modeling, schema evolution, ownership boundaries |
 | [Database Migrations & Drift](guides/database-migrations-drift/database-migrations-drift.md) | Migration lifecycle, drift checks, rollback safety |
 | [Database Indexing](guides/database-indexing/database-indexing.md) | Query optimization |
 | [Planning Documentation](guides/planning-documentation/planning-documentation.md) | Roadmaps, RFCs, ADRs |
@@ -70,19 +72,25 @@ Directives for AI agents working within this repository.
 | [Prompting Patterns](guides/prompting-patterns/prompting-patterns.md) | |
 | [Context Management](guides/context-management/context-management.md) | |
 | [Prompt Files](guides/prompt-files/prompt-files.md) | Reusable task templates |
+| [llms.txt & RAG-Optimized Docs](guides/llms-txt-rag-optimized-docs/llms-txt-rag-optimized-docs.md) | Machine-readable docs, chunking, retrieval boundaries |
 | [Memory Patterns](guides/memory-patterns/memory-patterns.md) | State across sessions |
 | [Custom Agents](guides/custom-agents/custom-agents.md) | Specialized worker profiles |
 | [Code Review for AI Output](guides/code-review-ai/code-review-ai.md) | |
 | [Cost & Token Management](guides/cost-token-management/cost-token-management.md) | API costs, token budgets, model selection |
+| [AI Agent Evaluation & Metrics](guides/ai-agent-evaluation-metrics/ai-agent-evaluation-metrics.md) | Baselines, workflow metrics, adoption evidence |
 | [Security Boundaries](guides/security-boundaries/security-boundaries.md) | |
+| [Documentation as Attack Surface](guides/documentation-as-attack-surface/documentation-as-attack-surface.md) | Prompt injection in docs, provenance, safe retrieval |
 | [Testing AI-Generated Code](guides/testing-ai-code/testing-ai-code.md) | |
 | [Git Workflows with AI](guides/git-workflows-ai/git-workflows-ai.md) | |
 | [Debugging with AI](guides/debugging-with-ai/debugging-with-ai.md) | |
 | [Multi-File Refactoring](guides/multi-file-refactoring/multi-file-refactoring.md) | |
 | [Human-AI Collaboration](guides/human-ai-collaboration/human-ai-collaboration.md) | |
+| [Team AI Coordination](guides/team-ai-coordination/team-ai-coordination.md) | Repo ownership, branch isolation, escalation rules |
 | [Multi-Agent Orchestration](guides/multi-agent-orchestration/multi-agent-orchestration.md) | Agent coordination, delegation, handoff |
 | [Tool Configuration](guides/tool-configuration/tool-configuration.md) | |
 | [PRD for Agents](guides/prd-for-agents/prd-for-agents.md) | Specs AI can consume |
+| [Spec-Driven Development](guides/spec-driven-development/spec-driven-development.md) | Spec-first workflow, phased delivery, verification hooks |
+| [Agentic Decision Logs](guides/agentic-decision-logs/agentic-decision-logs.md) | Decision summaries, evidence links, safe rationale capture |
 | [Architecture for AI](guides/architecture-for-ai/architecture-for-ai.md) | System docs that prevent hallucination |
 
 ### Skills
@@ -101,6 +109,9 @@ Procedural, auto-discoverable workflow skills. Each wraps one or more deep guide
 | [refactoring](skills/refactoring/SKILL.md) | Large changes across multiple files |
 | [e2e-testing](skills/e2e-testing/SKILL.md) | Writing or fixing end-to-end tests |
 | [doc-maintenance](skills/doc-maintenance/SKILL.md) | Keeping docs in sync with code changes |
+| [incident-response](skills/incident-response/SKILL.md) | Managing incidents, outages, and severe regressions |
+| [performance](skills/performance/SKILL.md) | Profiling bottlenecks, load testing, and regressions |
+| [cost-management](skills/cost-management/SKILL.md) | Controlling AI spend, token budgets, and model routing |
 | [issue-writing](skills/issue-writing/SKILL.md) | Filing bug reports, feature requests, task tickets |
 | [git-workflow](skills/git-workflow/SKILL.md) | Branching, committing, conflict resolution, PRs |
 | [logging](skills/logging/SKILL.md) | Structured logging, log levels, redaction |

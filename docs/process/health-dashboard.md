@@ -2,8 +2,8 @@
 
 Real-time metrics tracking the health and readiness of agentic-best-practices.
 
-> **Last Updated**: 2026-02-17
-> **Status**: Pre-v1 (Self-audit refreshed)
+> **Last Updated**: 2026-04-20
+> **Status**: Pre-v1 (guide backlog complete; awaiting pilot validation)
 
 ## Contents
 
@@ -21,15 +21,17 @@ Real-time metrics tracking the health and readiness of agentic-best-practices.
 
 | Metric | Target | Current | Status |
 | --- | --- | --- | --- |
-| Total Guides | All published guides tracked | 49 | ✅ Complete |
-| Guides with Code Examples | 100% | 49/49 (100%) | ✅ Complete |
-| Examples per Guide | 2+ | 49/49 (100%) | ✅ Complete |
+| Total Guides | All published guides tracked | 63 | ✅ Complete |
+| Published Skills | All versioned skills tracked | 17 | ✅ Complete |
+| Guides with Code Examples | 100% | 63/63 (100%) | ✅ Complete |
+| Examples per Guide | 2+ | 63/63 (100%) | ✅ Complete |
 | Cross-references | All guides linked | Yes | ✅ Complete |
 | Navigation accuracy | 100% | 100% | ✅ Complete |
 
 **Notes**:
 
-- All published guides are indexed and link-validated
+- All published guides and skills are indexed and link-validated
+- Tier 1 through Tier 3 guide backlog is complete
 - All guides now meet the 2+ example target
 - Navigation validation automated via `scripts/validate-navigation.sh`
 
@@ -96,7 +98,7 @@ Real-time metrics tracking the health and readiness of agentic-best-practices.
 
 | Requirement | Status | Notes |
 | --- | --- | --- |
-| **Content Complete** | ✅ | All 49 guides exist and meet the 2+ example target |
+| **Content Complete** | ✅ | All 63 guides exist, Tier 1-3 guide backlog is complete, and 17 skills are indexed |
 | **Self-Dogfooding** | ✅ | CLAUDE.md, automated validation in place |
 | **Infrastructure** | ✅ | CI validation, linting, link checks, and adoption smoke simulation enabled |
 | **External Validation** | 🔴 | Pilot tooling complete; still needs human-selected pilot projects |

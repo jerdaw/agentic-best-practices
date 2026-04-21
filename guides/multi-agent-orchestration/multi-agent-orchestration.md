@@ -397,6 +397,7 @@ Validate combined output before it reaches the codebase.
 - [Agentic Workflow](../agentic-workflow/agentic-workflow.md) -- MAP-FIRST workflow for single-agent tasks
 - [Context Management](../context-management/context-management.md) -- Managing context within agent sessions
 - [Human-AI Collaboration](../human-ai-collaboration/human-ai-collaboration.md) -- Human-in-the-loop patterns
+- [Team AI Coordination](../team-ai-coordination/team-ai-coordination.md) -- Shared-repo ownership and escalation rules
 - [Memory Patterns](../memory-patterns/memory-patterns.md) -- State persistence across sessions
 - [Cost & Token Management](../cost-token-management/cost-token-management.md) -- Controlling multi-agent token spend
 - [Concurrency & Async Patterns](../concurrency-async/concurrency-async.md) -- Parallel execution primitives

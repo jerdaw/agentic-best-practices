@@ -254,3 +254,4 @@ Before giving a spec to an AI agent:
 - [Prompting Patterns](../prompting-patterns/prompting-patterns.md) – Crafting effective prompts
 - [Agentic Workflow](../agentic-workflow/agentic-workflow.md) – How agents consume specs
 - [Documentation Guidelines](../documentation-guidelines/documentation-guidelines.md) – General practices
+- [Spec-Driven Development](../spec-driven-development/spec-driven-development.md) – Spec-first delivery workflow

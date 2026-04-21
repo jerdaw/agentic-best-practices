@@ -18,6 +18,9 @@ Procedural workflow skills that agents can auto-discover and follow. Each skill 
 | [refactoring](refactoring/SKILL.md) | Large changes across multiple files | [Multi-File Refactoring](../guides/multi-file-refactoring/multi-file-refactoring.md) |
 | [e2e-testing](e2e-testing/SKILL.md) | Writing or fixing end-to-end tests | [E2E Testing](../guides/e2e-testing/e2e-testing.md) |
 | [doc-maintenance](doc-maintenance/SKILL.md) | Keeping docs in sync with code changes | [Documentation Maintenance](../guides/doc-maintenance/doc-maintenance.md) |
+| [incident-response](incident-response/SKILL.md) | Managing incidents, outages, and severe regressions | [Incident Response](../guides/incident-response/incident-response.md) |
+| [performance](performance/SKILL.md) | Profiling bottlenecks, load testing, and regressions | [Performance Engineering](../guides/performance-engineering/performance-engineering.md) |
+| [cost-management](cost-management/SKILL.md) | Controlling AI spend, token budgets, and model routing | [Cost & Token Management](../guides/cost-token-management/cost-token-management.md) |
 | [issue-writing](issue-writing/SKILL.md) | Filing bug reports, feature requests, task tickets | Standalone |
 | [git-workflow](git-workflow/SKILL.md) | Branching, committing, conflict resolution, PRs | [Git Workflows with AI](../guides/git-workflows-ai/git-workflows-ai.md) |
 | [logging](logging/SKILL.md) | Structured logging, log levels, redaction | [Logging Practices](../guides/logging-practices/logging-practices.md) |

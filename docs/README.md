@@ -13,6 +13,7 @@ Internal documentation for maintaining `agentic-best-practices` (process, plans,
 | `docs/process/roadmap-process.md` | Process | Active | How we maintain the product and execution roadmaps. |
 | `docs/process/maintenance-cadence-decision.md` | Decision | Active | Why quarterly + event-driven maintenance. |
 | `docs/planning/archive/2026-02-16-guide-coverage-expansion-roadmap.md` | Plan | Archived | Completed LG-01 through LG-09 guide coverage expansion and harmonization roadmap. |
+| `docs/planning/archive/2026-04-20-phase2-tier2-tier3-guide-expansion.md` | Plan | Archived | Completed GE-07 through GE-14 Phase 2 guide expansion record. |
 | `docs/planning/archive/2026-02-08-adoption-integration-hardening-plan-v0.2.0.md` | Plan | Archived | Completed adoption hardening implementation record (Phase 1-4). |
 | `docs/planning/archive/2026-02-08-adoption-customization-hardening-plan-v0.3.0.md` | Plan | Archived | Completed implementation record for customization hardening and pilot evidence automation (Phase 1-4). |
 | `docs/templates/feedback-template.md` | Template | Active | How adopters report gaps/conflicts quickly and consistently. |

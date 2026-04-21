@@ -58,6 +58,9 @@ Procedural workflow skills that agents can auto-discover and follow. Each skill 
 | [refactoring](skills/refactoring/SKILL.md) | Large changes across multiple files | [Multi-File Refactoring](guides/multi-file-refactoring/multi-file-refactoring.md) |
 | [e2e-testing](skills/e2e-testing/SKILL.md) | Writing or fixing end-to-end tests | [E2E Testing](guides/e2e-testing/e2e-testing.md) |
 | [doc-maintenance](skills/doc-maintenance/SKILL.md) | Keeping docs in sync with code changes | [Documentation Maintenance](guides/doc-maintenance/doc-maintenance.md) |
+| [incident-response](skills/incident-response/SKILL.md) | Managing incidents, outages, and severe regressions | [Incident Response](guides/incident-response/incident-response.md) |
+| [performance](skills/performance/SKILL.md) | Profiling bottlenecks, load testing, and regressions | [Performance Engineering](guides/performance-engineering/performance-engineering.md) |
+| [cost-management](skills/cost-management/SKILL.md) | Controlling AI spend, token budgets, and model routing | [Cost & Token Management](guides/cost-token-management/cost-token-management.md) |
 | [issue-writing](skills/issue-writing/SKILL.md) | Filing bug reports, feature requests, task tickets | Standalone |
 | [git-workflow](skills/git-workflow/SKILL.md) | Branching, committing, conflict resolution, PRs | [Git Workflows with AI](guides/git-workflows-ai/git-workflows-ai.md) |
 | [logging](skills/logging/SKILL.md) | Structured logging, log levels, redaction | [Logging Practices](guides/logging-practices/logging-practices.md) |
@@ -173,16 +176,16 @@ Gaps identified through comprehensive audit (2026-02-26). Full backlog in [roadm
 
 | Tier | Items | Topics |
 | --- | --- | --- |
-| **Tier 1 — Critical** | GE-01 through GE-06 | Incident Response, Performance Engineering, Technical Debt Management, Cost & Token Management, Multi-Agent Orchestration, Concurrency & Async Patterns |
-| **Tier 2 — Important** | GE-07 through GE-10 | AI Agent Evaluation & Metrics, Event-Driven Architecture, Data Modeling & Schema Design, Team AI Coordination |
-| **Tier 3 — Audit Debt** | GE-11 through GE-14 | llms.txt & RAG-Optimized Docs, Agentic Decision Logs, Spec-Driven Development, Documentation as Attack Surface |
-| **Tier 4 — Specialized** | GE-15 through GE-18 | MCP & Tool Integration, Queue & Background Jobs, Feature Flag Lifecycle, Infrastructure as Code |
+| **Tier 1 — Complete** | GE-01 through GE-06 | Incident Response, Performance Engineering, Technical Debt Management, Cost & Token Management, Multi-Agent Orchestration, Concurrency & Async Patterns |
+| **Tier 2 — Complete** | GE-07 through GE-10 | AI Agent Evaluation & Metrics, Event-Driven Architecture, Data Modeling & Schema Design, Team AI Coordination |
+| **Tier 3 — Complete** | GE-11 through GE-14 | llms.txt & RAG-Optimized Docs, Agentic Decision Logs, Spec-Driven Development, Documentation as Attack Surface |
+| **Tier 4 — Specialized Backlog** | GE-15 through GE-18 | MCP & Tool Integration, Queue & Background Jobs, Feature Flag Lifecycle, Infrastructure as Code |
 
 ### Pre-v1 Launch
 
 | Work Item | Status | Notes |
 | --- | --- | --- |
-| Guide Coverage Expansion Phase 2 — Tier 1 | ✅ Complete | 6 new guides. See [roadmap](roadmap.md#tier-1--critical-no-existing-coverage). |
+| Guide Coverage Expansion Phase 2 — Tiers 1-3 | ✅ Complete | 14 new guides delivered across the audited backlog. See [roadmap](roadmap.md) and [archive](docs/planning/archive/2026-04-20-phase2-tier2-tier3-guide-expansion.md). |
 | Choose 1-2 adoption pilot repos | 🔴 Blocked | Human decision needed. Use [selection criteria](docs/planning/pilot-repo-selection.md). |
 | Execute pilot validation cycle (6-8 weeks) | 🟡 Planned | Use [pilot execution playbook](docs/process/pilot-execution-playbook.md). |
 | Feed pilot outcomes into next release backlog | 🟡 Planned | File actionable updates via [feedback template](docs/templates/feedback-template.md). |
@@ -192,6 +195,7 @@ Completed implementation details are archived in:
 - `docs/planning/archive/2026-02-08-adoption-integration-hardening-plan-v0.2.0.md`
 - `docs/planning/archive/2026-02-08-adoption-customization-hardening-plan-v0.3.0.md`
 - `docs/planning/archive/2026-02-16-guide-coverage-expansion-roadmap.md`
+- `docs/planning/archive/2026-04-20-phase2-tier2-tier3-guide-expansion.md`
 
 See [health dashboard](docs/process/health-dashboard.md) for readiness metrics.
 
@@ -237,6 +241,8 @@ Core software development patterns applicable to any project.
 | [Privacy & Compliance](guides/privacy-compliance/privacy-compliance.md) | GDPR and data protection. |
 | [Accessibility & i18n](guides/accessibility-i18n/accessibility-i18n.md) | WCAG and localization. |
 | [Distributed Sagas](guides/distributed-sagas/distributed-sagas.md) | Multi-service transactions. |
+| [Event-Driven Architecture](guides/event-driven-architecture/event-driven-architecture.md) | Event contracts, delivery semantics, and replay-safe consumers. |
+| [Data Modeling & Schema Design](guides/data-modeling-schema-design/data-modeling-schema-design.md) | Domain modeling, schema evolution, and ownership boundaries. |
 | [Database Migrations & Drift](guides/database-migrations-drift/database-migrations-drift.md) | Migration safety, schema drift detection, and rollback strategy. |
 | [Database Indexing](guides/database-indexing/database-indexing.md) | Query optimization. |
 | [Performance Engineering](guides/performance-engineering/performance-engineering.md) | Profiling, load testing, benchmarking, and capacity planning. |
@@ -256,19 +262,25 @@ Best practices specific to working with AI coding assistants.
 | [Prompting Patterns](guides/prompting-patterns/prompting-patterns.md) | Crafting effective prompts for AI tools. |
 | [Context Management](guides/context-management/context-management.md) | Providing the right context to AI. |
 | [Prompt Files](guides/prompt-files/prompt-files.md) | Authoring reusable task templates for agents. |
+| [llms.txt & RAG-Optimized Docs](guides/llms-txt-rag-optimized-docs/llms-txt-rag-optimized-docs.md) | Machine-readable docs, chunking, and safe retrieval boundaries. |
 | [Memory Patterns](guides/memory-patterns/memory-patterns.md) | State management across agent sessions. |
 | [Custom Agents](guides/custom-agents/custom-agents.md) | Designing specialized agent worker profiles. |
 | [Code Review for AI Output](guides/code-review-ai/code-review-ai.md) | Reviewing AI-generated code effectively. |
 | [Cost & Token Management](guides/cost-token-management/cost-token-management.md) | Token budgets, model selection, and spend governance. |
+| [AI Agent Evaluation & Metrics](guides/ai-agent-evaluation-metrics/ai-agent-evaluation-metrics.md) | Measuring workflow quality, speed, safety, and cost over time. |
 | [Security Boundaries](guides/security-boundaries/security-boundaries.md) | Security requirements for AI development. |
+| [Documentation as Attack Surface](guides/documentation-as-attack-surface/documentation-as-attack-surface.md) | Prompt injection risks in docs, comments, and retrieved context. |
 | [Testing AI-Generated Code](guides/testing-ai-code/testing-ai-code.md) | Verification strategies for AI output. |
 | [Git Workflows with AI](guides/git-workflows-ai/git-workflows-ai.md) | Version control practices for AI. |
 | [Debugging with AI](guides/debugging-with-ai/debugging-with-ai.md) | Effective debugging with AI assistance. |
 | [Multi-File Refactoring](guides/multi-file-refactoring/multi-file-refactoring.md) | Coordinating large changes with AI. |
 | [Human-AI Collaboration](guides/human-ai-collaboration/human-ai-collaboration.md) | Deciding when and how to use AI. |
+| [Team AI Coordination](guides/team-ai-coordination/team-ai-coordination.md) | Ownership, branch isolation, and escalation rules for shared repos. |
 | [Multi-Agent Orchestration](guides/multi-agent-orchestration/multi-agent-orchestration.md) | Coordinating multiple agents on shared tasks. |
 | [Tool Configuration](guides/tool-configuration/tool-configuration.md) | Configuring AI coding tools effectively. |
 | [PRD for Agents](guides/prd-for-agents/prd-for-agents.md) | Writing specs that AI agents can consume. |
+| [Spec-Driven Development](guides/spec-driven-development/spec-driven-development.md) | Spec-first workflow with phased delivery and verification hooks. |
+| [Agentic Decision Logs](guides/agentic-decision-logs/agentic-decision-logs.md) | Safe, durable decision summaries for AI-assisted work. |
 | [Architecture for AI](guides/architecture-for-ai/architecture-for-ai.md) | System docs that prevent hallucination. |
 
 ---

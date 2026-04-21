@@ -335,4 +335,6 @@ docs/
 - [Documentation Guidelines](../documentation-guidelines/documentation-guidelines.md) – READMEs, API docs, ADRs
 - [PRD for Agents](../prd-for-agents/prd-for-agents.md) – Feature specifications for AI
 - [Agentic Workflow](../agentic-workflow/agentic-workflow.md) – PLAN phase consumes these docs
+- [Agentic Decision Logs](../agentic-decision-logs/agentic-decision-logs.md) – Durable decision summaries with evidence links
+- [Spec-Driven Development](../spec-driven-development/spec-driven-development.md) – Spec-first execution for AI-assisted work
 - [Technical Debt Management](../technical-debt-management/technical-debt-management.md) – Tracking and prioritizing debt

@@ -280,3 +280,4 @@ def recover_sagas():
 - [Idempotency Patterns](../idempotency-patterns/idempotency-patterns.md) – Safe retry strategies
 - [Resilience Patterns](../resilience-patterns/resilience-patterns.md) – Handling failures
 - [Error Handling](../error-handling/error-handling.md) – Error recovery patterns
+- [Event-Driven Architecture](../event-driven-architecture/event-driven-architecture.md) – Event contracts and delivery semantics

@@ -201,3 +201,4 @@ export * from './types'
 - [ADRs in Documentation](../documentation-guidelines/documentation-guidelines.md#architectural-decision-records-adrs)
 - [PRD for Agents](../prd-for-agents/prd-for-agents.md) – Requirement specs
 - [Context Management](../context-management/context-management.md) – Managing what diagrams to share
+- [llms.txt & RAG-Optimized Docs](../llms-txt-rag-optimized-docs/llms-txt-rag-optimized-docs.md) – Machine-readable entry points and retrieval boundaries

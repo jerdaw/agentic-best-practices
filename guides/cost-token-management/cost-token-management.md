@@ -391,3 +391,4 @@ Scale this across all non-interactive workflows for significant savings.
 - [Custom Agents](../custom-agents/custom-agents.md) — Specialized agents with scoped capabilities
 - [Tool Configuration](../tool-configuration/tool-configuration.md) — Configuring AI tool settings and limits
 - [Observability Patterns](../observability-patterns/observability-patterns.md) — Metrics, tracing, and dashboards
+- [AI Agent Evaluation & Metrics](../ai-agent-evaluation-metrics/ai-agent-evaluation-metrics.md) — Measuring workflow outcomes, not just spend
