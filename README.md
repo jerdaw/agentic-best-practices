@@ -2,10 +2,37 @@
 
 An opinionated set of best practices for agentic, AI-assisted software development. Each guide distills real-world patterns into scannable references with concrete examples.
 
+## Onboarding Another Repo
+
+If you are using this repository to onboard another project's AI, start here before running any bootstrap commands.
+
+| Situation | Required starting point |
+| --- | --- |
+| **Another repo's AI is onboarding this standards repo** | Follow [adoption/adoption.md](adoption/adoption.md) and use the decision-first workflow |
+| **Existing repo already has local agent instructions** | Prefer `--existing-mode merge` so onboarding stays additive and reviewable |
+| **Unsure which guides to surface by default** | Start with a small `STANDARDS_TOPICS` shortlist for the repo's recurring concerns |
+| **Repo intentionally does something different** | Record that in `Project-Specific Overrides` instead of pretending the shared default still applies |
+
+Use this repository as a library of recommended defaults. Adopt them when they fit, modify them when the repo needs a narrower version, and decline specific pieces when the project has a better reasoned local pattern.
+
+### Minimal Instruction For Another Repo's AI
+
+```text
+Use this repository as the shared onboarding source.
+Start with README.md -> Onboarding Another Repo and adoption/adoption.md.
+Treat the standards as recommended defaults, not mandatory doctrine.
+Create .agentic-best-practices/adoption.env from adoption/template-adoption-config.env.
+Choose a small STANDARDS_TOPICS shortlist for this repo.
+Prefer --existing-mode merge if the repo already has AGENTS.md or local instructions.
+Run scripts/validate-adoption.sh after rendering and review the diff.
+Document any intentional project-specific exceptions in Project-Specific Overrides.
+```
+
 ## Quick Reference
 
 | Topic | Guidance |
 | --- | --- |
+| **For Repo Onboarding** | Start with [Onboarding Another Repo](#onboarding-another-repo) and then [adoption/adoption.md](adoption/adoption.md). |
 | **For Agents** | Adopt patterns immediately; no need to ask permission for standard practices. |
 | **For Humans** | Use as a reference; challenge guidelines if they impede valid edge cases. See [references](docs/reference/references.md) for external sources. |
 | **Contributing** | Follow [Writing Best Practices](guides/writing-best-practices/writing-best-practices.md) strictly. |

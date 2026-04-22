@@ -8,6 +8,7 @@ A guide for integrating this repository into your projects so AI coding assistan
 
 | Section |
 | --- |
+| [If You Are Onboarding Another Repo](#if-you-are-onboarding-another-repo) |
 | [Decision-First Onboarding](#decision-first-onboarding) |
 | [Quick Start](#quick-start) |
 | [One-Time Setup](#one-time-setup) |
@@ -23,6 +24,37 @@ A guide for integrating this repository into your projects so AI coding assistan
 | [Drift Prevention](#drift-prevention) |
 | [Maintenance](#maintenance) |
 | [Troubleshooting](#troubleshooting) |
+
+---
+
+## If You Are Onboarding Another Repo
+
+If you found this file because a project needs to adopt these standards, use this section before running bootstrap.
+
+| Step | Required action |
+| --- | --- |
+| **1. Start from project fit** | Treat these guides as recommended defaults, not mandatory doctrine |
+| **2. Choose deliberate defaults** | Pick `latest` or `pinned`, choose `merge` or `overwrite`, and select a short `STANDARDS_TOPICS` shortlist |
+| **3. Keep existing context unless you have a reason not to** | Prefer `--existing-mode merge` for established repos |
+| **4. Make differences explicit** | Put justified repo-specific choices in `Project-Specific Overrides` |
+| **5. Validate before calling onboarding done** | Run `scripts/validate-adoption.sh` and review the generated diff |
+
+| Do | Avoid |
+| --- | --- |
+| Use this repository as an option the project evaluates objectively | Blindly copying the full catalog into every repo |
+| Surface a shortlist of the most relevant recurring concerns | Treating omission from `STANDARDS_TOPICS` as a ban on consulting other guides when needed |
+| Preserve better local patterns when they are real and documented | Overwriting an existing `AGENTS.md` just because bootstrap can do it |
+
+```text
+Use this repository as the shared onboarding source.
+Start with README.md -> Onboarding Another Repo and adoption/adoption.md.
+Treat the standards as recommended defaults, not mandatory doctrine.
+Create .agentic-best-practices/adoption.env from adoption/template-adoption-config.env.
+Choose a small STANDARDS_TOPICS shortlist for this repo.
+Prefer --existing-mode merge if the repo already has AGENTS.md or local instructions.
+Run scripts/validate-adoption.sh after rendering and review the diff.
+Document any intentional project-specific exceptions in Project-Specific Overrides.
+```
 
 ---
 

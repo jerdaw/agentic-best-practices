@@ -8,12 +8,31 @@ Directives for AI agents working within this repository.
 
 | Section |
 | --- |
+| [Onboarding External Repos](#onboarding-external-repos) |
 | [Guide Index](#guide-index) |
 | [Style Requirements](#style-requirements) |
 | [Operational Rules](#operational-rules) |
 | [Maintenance Rules](#maintenance-rules) |
 
 ---
+
+## Onboarding External Repos
+
+If your task is to onboard this repository into another project, start with [adoption/adoption.md](adoption/adoption.md) before making any changes.
+
+| Rule | Requirement |
+| --- | --- |
+| **Use the right posture** | Treat these standards as recommended defaults the target repo should evaluate objectively |
+| **Pick a shortlist** | Choose a small `STANDARDS_TOPICS` list for the target repo's recurring concerns |
+| **Protect local context** | Prefer `--existing-mode merge` when the target repo already has local agent instructions |
+| **Make decisions explicit** | Record justified departures in `Project-Specific Overrides` |
+| **Validate the result** | Run `scripts/validate-adoption.sh` before considering onboarding complete |
+
+| Avoid | Why |
+| --- | --- |
+| Copying the full guide catalog into every repo by default | Creates noise and weakens reviewability |
+| Treating shared defaults as mandatory doctrine | This repository recommends defaults; the target project still decides fit |
+| Overwriting local instructions without a concrete reason | Destroys context the target repo may rely on |
 
 ## Guide Index
 
