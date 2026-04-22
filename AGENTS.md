@@ -189,3 +189,4 @@ Run `scripts/validate-navigation.sh` to check for drift:
 - Contents tables match actual H2 sections
 - Guide Index matches actual files
 - All internal links resolve
+- Markdown linting and pre-commit checks require Node 20+; if the local default Node is older, use `npx -y -p node@20 npm run precommit`

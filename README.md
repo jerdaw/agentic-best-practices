@@ -35,6 +35,7 @@ Document any intentional project-specific exceptions in Project-Specific Overrid
 | **For Repo Onboarding** | Start with [Onboarding Another Repo](#onboarding-another-repo) and then [adoption/adoption.md](adoption/adoption.md). |
 | **For Agents** | Adopt patterns immediately; no need to ask permission for standard practices. |
 | **For Humans** | Use as a reference; challenge guidelines if they impede valid edge cases. See [references](docs/reference/references.md) for external sources. |
+| **For Maintainers** | Use Node 20+ for markdown linting and pre-commit checks; if your default Node is older, run `npx -y -p node@20 npm run precommit`. |
 | **Contributing** | Follow [Writing Best Practices](guides/writing-best-practices/writing-best-practices.md) strictly. |
 | **Philosophy** | Examples > Prose. Tables > Paragraphs. Actionable > Theoretical. |
 

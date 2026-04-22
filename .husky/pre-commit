@@ -1,1 +1,21 @@
+#!/usr/bin/env sh
+set -eu
+
+NODE_VERSION="$(node -v 2>/dev/null || true)"
+
+if [ -z "$NODE_VERSION" ]; then
+  echo "Pre-commit checks require Node.js 20+."
+  echo "Install Node 20 and rerun the commit."
+  exit 1
+fi
+
+NODE_MAJOR="$(printf '%s\n' "$NODE_VERSION" | sed -E 's/^v([0-9]+).*/\1/')"
+
+if [ "$NODE_MAJOR" -lt 20 ]; then
+  echo "Pre-commit checks require Node.js 20+."
+  echo "Current Node version: $NODE_VERSION"
+  echo "Run 'nvm use' or verify with: npx -y -p node@20 npm run precommit"
+  exit 1
+fi
+
 npm run precommit
