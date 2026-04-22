@@ -1,6 +1,6 @@
 # Adopting Best Practices
 
-A guide for integrating this repository into your projects so AI coding assistants follow consistent standards.
+A guide for integrating this repository into your projects so AI coding assistants work from a consistent set of recommended defaults.
 
 > **Scope**: Works with any AI coding tool (Claude, Codex, Gemini, Cursor) across any number of projects.
 
@@ -8,10 +8,12 @@ A guide for integrating this repository into your projects so AI coding assistan
 
 | Section |
 | --- |
+| [Decision-First Onboarding](#decision-first-onboarding) |
 | [Quick Start](#quick-start) |
 | [One-Time Setup](#one-time-setup) |
 | [Adoption Modes](#adoption-modes) |
 | [Per-Project Adoption](#per-project-adoption) |
+| [Skills Installation](#skills-installation) |
 | [Config-Driven Customization](#config-driven-customization) |
 | [Existing Projects](#existing-projects) |
 | [Migration Workflows](#migration-workflows) |
@@ -24,7 +26,64 @@ A guide for integrating this repository into your projects so AI coding assistan
 
 ---
 
+## Decision-First Onboarding
+
+Use onboarding to encode deliberate project choices, not to silently import the entire standards catalog.
+
+These standards are prima facie good defaults. The repository recommends them as a starting point, but each project should decide objectively whether to adopt them as-is, adopt a modified version, or decline specific pieces because a better project-specific approach exists.
+
+| Decision | Choose | Recommendation | Why |
+| --- | --- | --- | --- |
+| **Standards path mode** | `latest` or `pinned` | Start with `latest`; use `pinned` for regulated or high-risk repos | Controls update speed and reproducibility |
+| **Existing file strategy** | `fail`, `merge`, or `overwrite` | Use `merge` for any repo that already has local agent instructions | Preserves local context while adding the managed standards block |
+| **Standards shortlist** | `STANDARDS_TOPICS` entries | Start with `3-6` recurring concerns, not the full guide index | Keeps the default reference table relevant and reviewable |
+| **Skills** | Install or skip | Start with `skip` unless the repo clearly benefits from local auto-discovered procedures | Avoids copying workflow baggage the repo will not use |
+| **Command defaults** | Auto-detected or overridden | Only override when stack detection is wrong or incomplete | Prevents stale or misleading commands |
+| **Intentional deviations** | Follow standard or record override | Put exceptions in `Project-Specific Overrides` | Makes non-standard behavior explicit and auditable |
+
+### Recommended first pass for a real repo
+
+| Step | Action |
+| --- | --- |
+| **1. Copy config** | Create `.agentic-best-practices/adoption.env` from the template |
+| **2. Edit topics** | Replace the sample `STANDARDS_TOPICS` list with the repo's recurring concerns |
+| **3. Choose mode** | Decide `latest` vs `pinned` before rendering |
+| **4. Bootstrap safely** | Use `--existing-mode merge` for established repos |
+| **5. Review intent** | Check the generated diff and capture any justified exceptions in `Project-Specific Overrides` |
+
+### How to evaluate a default objectively
+
+| Question | If yes | If no |
+| --- | --- | --- |
+| Does this default address a recurring problem in the repo? | Keep it in `STANDARDS_TOPICS` | Leave it out of the shortlist |
+| Would following it reduce risk, inconsistency, or rework here? | Adopt it as-is | Consider a narrower or modified version |
+| Does the repo already have a better established pattern? | Document the project-specific pattern in `Project-Specific Overrides` | Prefer the shared default |
+| Would adopting it add ceremony with little benefit? | Keep it optional or omit it | Keep it as a recommended default |
+
+```bash
+mkdir -p .agentic-best-practices
+cp "$AGENTIC_BEST_PRACTICES_HOME/adoption/template-adoption-config.env" .agentic-best-practices/adoption.env
+
+# Edit .agentic-best-practices/adoption.env before rendering.
+# Most importantly: choose a small, project-specific STANDARDS_TOPICS list.
+
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
+  --project-dir . \
+  --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
+  --config-file .agentic-best-practices/adoption.env \
+  --existing-mode merge
+```
+
+---
+
 ## Quick Start
+
+Use this after you have made the decisions above. If you have not chosen topics, mode, and merge strategy yet, start with [Decision-First Onboarding](#decision-first-onboarding).
+
+| Situation | Start with |
+| --- | --- |
+| **Existing repo or anything important** | Config file + `--existing-mode merge` |
+| **Brand-new repo or quick experiment** | Plain bootstrap defaults |
 
 ```bash
 # One-time: clone to standard location
@@ -33,16 +92,27 @@ git clone https://github.com/[org]/agentic-best-practices.git ~/agentic-best-pra
 # Set standards path (customize if needed)
 export AGENTIC_BEST_PRACTICES_HOME="${AGENTIC_BEST_PRACTICES_HOME:-$HOME/agentic-best-practices}"
 
-# Per-project: render AGENTS.md + CLAUDE.md with defaults
-bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
-  --project-dir . \
-  --standards-path "$AGENTIC_BEST_PRACTICES_HOME"
+# Recommended for real repos: copy config and make deliberate choices first
+mkdir -p .agentic-best-practices
+cp "$AGENTIC_BEST_PRACTICES_HOME/adoption/template-adoption-config.env" .agentic-best-practices/adoption.env
 
-# Optional: apply reusable project customizations from config file
+# After editing STANDARDS_TOPICS and other values, render with config
 bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
   --project-dir . \
   --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
   --config-file .agentic-best-practices/adoption.env
+
+# Existing repo with AGENTS.md: merge standards section in-place
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
+  --project-dir . \
+  --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
+  --config-file .agentic-best-practices/adoption.env \
+  --existing-mode merge
+
+# Fastest baseline for a brand-new repo or quick experiment
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
+  --project-dir . \
+  --standards-path "$AGENTIC_BEST_PRACTICES_HOME"
 
 # Optional: pin standards to a release tag or commit SHA
 bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
@@ -74,7 +144,7 @@ Clone this repository to a consistent location on your machine.
 | Decision | Recommendation | Rationale |
 | --- | --- | --- |
 | **Location** | `~/agentic-best-practices` or custom path in `AGENTIC_BEST_PRACTICES_HOME` | Predictable path across projects |
-| **Method** | Direct clone (not submodule) | Single source of truth; updates propagate immediately |
+| **Method** | Direct clone (not submodule) | Shared local install; updates are easy to review and reuse |
 | **Updates** | `git pull` periodically | Keep standards current |
 
 ```bash
@@ -82,7 +152,7 @@ git clone https://github.com/[org]/agentic-best-practices.git ~/agentic-best-pra
 export AGENTIC_BEST_PRACTICES_HOME="${AGENTIC_BEST_PRACTICES_HOME:-$HOME/agentic-best-practices}"
 ```
 
-**Why not submodules?** Submodules version-lock each project to a specific commit. For standards, you typically want all projects to follow the current standards, not frozen snapshots.
+**Why not submodules?** Submodules version-lock each project to a specific commit. For teams using latest-mode adoption, a normal clone usually makes it easier to review and reuse shared guidance across multiple repos.
 
 ---
 
@@ -128,10 +198,11 @@ For each project (new or existing):
 
 | Step | Action |
 | --- | --- |
-| **1. Run bootstrap** | `bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" --project-dir . --standards-path "$AGENTIC_BEST_PRACTICES_HOME"` |
-| **2. Review output** | Verify generated role/priorities/commands are correct for your project |
-| **3. Validate** | `bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/validate-adoption.sh" --project-dir . --expect-standards-path "$AGENTIC_BEST_PRACTICES_HOME"` |
-| **4. Commit** | Add `AGENTS.md` and `CLAUDE.md` (symlink or copy) to version control |
+| **1. Choose decisions** | Pick mode, merge strategy, shortlist topics, skill install, and any command overrides |
+| **2. Run bootstrap** | Render `AGENTS.md` and `CLAUDE.md` with the selected options |
+| **3. Review output** | Verify generated role, priorities, topics, commands, and boundaries are correct for your project |
+| **4. Validate** | `bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/validate-adoption.sh" --project-dir . --expect-standards-path "$AGENTIC_BEST_PRACTICES_HOME"` |
+| **5. Commit** | Add `AGENTS.md` and `CLAUDE.md` (symlink or copy) to version control |
 
 ### Bootstrap script behavior
 
@@ -214,7 +285,7 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
 | `PROJECT_DESCRIPTION` | Set short project description in Agent Role section |
 | `PRIORITY_ONE`, `PRIORITY_TWO`, `PRIORITY_THREE` | Set ordered decision priorities |
 | `STANDARDS_TOPICS` | Customize Standards Reference rows (`Topic\|path;Topic\|path`) |
-| `DEVIATION_POLICY` | Override default deviation policy sentence |
+| `DECISION_POLICY` | Override default decision-policy sentence |
 | `DEV_CMD`, `TEST_CMD`, `COVERAGE_CMD`, `LINT_CMD`, `TYPECHECK_CMD`, `BUILD_CMD` | Override generated command entries |
 
 ### Notes
@@ -224,7 +295,19 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
 | CLI wins over config | If both are set, explicit CLI arguments take precedence |
 | Config path reuse | `--config-file` also applies to merge mode and pilot prep workflow |
 | Guide path formats | `STANDARDS_TOPICS` supports absolute paths, repo-relative paths, or `{{STANDARDS_PATH}}` token |
+| Legacy policy key | Older configs using `DEVIATION_POLICY` still work, but `DECISION_POLICY` is the preferred key |
+| Shortlists should stay small | Start with `3-6` topics and expand only when the repo repeatedly needs more |
 | Command override defaults | Optional command override keys are commented out in template config; enable only when needed |
+
+### Choosing `STANDARDS_TOPICS` intentionally
+
+| Pattern | Use when | Example topics |
+| --- | --- | --- |
+| **Minimal** | Small repo with narrow scope | Error handling, Testing strategy, Logging |
+| **Balanced** | Typical service or application | Error handling, Logging, API design, Testing strategy, Security boundaries |
+| **Specialized** | Repo has one or two dominant technical concerns | Add Event-Driven Architecture, Database Migrations & Drift, Incident Response, or Multi-Agent Orchestration only when they are recurring concerns |
+
+The Standards Reference table is a curated shortlist of recommended defaults for recurring work in that repo. It is not an attempt to mirror every guide in this repository, and it does not imply that every project should adopt the same shortlist.
 
 ---
 
@@ -238,6 +321,8 @@ For projects that already have an `AGENTS.md`:
 | **Has AGENTS.md and you want to preserve local content** | Run bootstrap with `--existing-mode merge` |
 | **Has AGENTS.md and you want to replace with template** | Run bootstrap with `--existing-mode overwrite` (or `--force`) |
 | **Has AGENTS.md with local standards** | Merge and keep local standards in Project-Specific/Overrides sections |
+
+For most external repos and pilots, `merge` should be the default starting point because it keeps onboarding additive and reviewable.
 
 ### Safe merge workflow
 
@@ -395,7 +480,7 @@ The core mechanism is a directive in your project's `AGENTS.md` telling AI to co
 ```markdown
 ## Standards Reference
 
-This project follows organizational standards defined in `{{STANDARDS_PATH}}/`.
+This project uses shared guidance from `{{STANDARDS_PATH}}/` as its working defaults.
 
 **Before implementing**, consult the relevant guide:
 
@@ -409,7 +494,7 @@ This project follows organizational standards defined in `{{STANDARDS_PATH}}/`.
 
 For other topics, check `{{STANDARDS_PATH}}/README.md` for the full guide index.
 
-**Deviation policy**: Do not deviate from these standards without explicit approval. If deviation is necessary, document it in the Project-Specific Overrides section with rationale.
+**Decision policy**: Treat these as recommended defaults. If this project chooses a different approach, document the rationale in Project-Specific Overrides so the decision stays explicit and reviewable.
 ```
 
 ### Why this works
@@ -418,7 +503,7 @@ For other topics, check `{{STANDARDS_PATH}}/README.md` for the full guide index.
 | --- | --- |
 | **Explicit file paths** | AI can read guides directly |
 | **Before implementing** | AI checks standards before writing code |
-| **Deviation policy** | AI asks before going off-script |
+| **Decision policy** | Alternative project-specific choices stay explicit instead of being silently invented |
 | **Guide table** | Quick lookup for common topics |
 | **README fallback** | Covers topics not in the quick table |
 
@@ -437,8 +522,8 @@ Use `adoption/template-agents.md` as the source template.
 | Template section | What to customize |
 | --- | --- |
 | **Project-Specific** | Role, stack, commands, boundaries |
-| **Standards Reference** | Usually unchanged after bootstrap; ensure path is correct |
-| **Project-Specific Overrides** | Intentional, justified deviations only |
+| **Standards Reference** | Keep the topic table intentionally scoped to recommended defaults that fit the repo |
+| **Project-Specific Overrides** | Record intentional changes, omissions, or better local patterns with rationale |
 
 ---
 
@@ -446,11 +531,11 @@ Use `adoption/template-agents.md` as the source template.
 
 Standards lose value if projects drift over time. These controls reduce drift.
 
-### 1. Deviation requires justification
+### 1. Differences should be explicit
 
 | Rule | Effect |
 | --- | --- |
-| Every intentional override must be documented in `Project-Specific Overrides` | Deviations are visible and auditable |
+| Every intentional change from the recommended defaults should be documented in `Project-Specific Overrides` | Project-specific choices are visible and auditable |
 
 ### 2. Periodic consistency check
 
@@ -459,11 +544,11 @@ Standards lose value if projects drift over time. These controls reduce drift.
 | New major feature | Pull latest standards and re-check key patterns |
 | Quarterly | Review standards updates and project overrides |
 
-### 3. No silent overrides
+### 3. No silent drift
 
 | Rule | Effect |
 | --- | --- |
-| Do not deviate without explicit approval | Agents ask before conflicting with standards |
+| Do not silently replace a recommended default with an undocumented local pattern | Projects make conscious decisions instead of accidental drift |
 
 ### 4. Auditable history
 

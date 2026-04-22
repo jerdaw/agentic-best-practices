@@ -204,7 +204,12 @@ bash "$VALIDATE_SCRIPT" \
     --strict \
     >/dev/null
 
-PINNED_STANDARDS_PATH="$(sed -n 's/^This project follows organizational standards defined in `\([^`]*\)\/\?`\./\1/p' "$PINNED_PROJECT/AGENTS.md" | head -n 1)"
+PINNED_STANDARDS_PATH="$(
+    sed -n \
+        -e 's/^This project uses shared guidance from `\([^`]*\)\/\?` as its working defaults\./\1/p' \
+        -e 's/^This project follows organizational standards defined in `\([^`]*\)\/\?`\./\1/p' \
+        "$PINNED_PROJECT/AGENTS.md" | head -n 1
+)"
 if [[ -z "$PINNED_STANDARDS_PATH" ]]; then
     echo "Error: expected pinned standards path in AGENTS.md." >&2
     exit 1
@@ -357,7 +362,7 @@ PRIORITY_ONE=Reliability over speed
 PRIORITY_TWO=Security over convenience
 PRIORITY_THREE=Readability over cleverness
 STANDARDS_TOPICS=Resilience|guides/resilience-patterns/resilience-patterns.md;Observability|guides/observability-patterns/observability-patterns.md;Testing|guides/testing-strategy/testing-strategy.md
-DEVIATION_POLICY=Only deviate with explicit maintainer approval and documented rollback path.
+DECISION_POLICY=Adopt these defaults unless maintainers decide a different approach is a better fit and document why.
 LINT_CMD=npm run lint -- --max-warnings=0
 EOF
 
@@ -379,8 +384,8 @@ if ! grep -Fq "| Resilience | \`$REPO_ROOT/guides/resilience-patterns/resilience
     exit 1
 fi
 
-if ! grep -Fq "**Deviation policy**: Only deviate with explicit maintainer approval and documented rollback path." "$CONFIG_PROJECT/AGENTS.md"; then
-    echo "Error: expected custom deviation policy in config-driven AGENTS.md." >&2
+if ! grep -Fq "**Decision policy**: Adopt these defaults unless maintainers decide a different approach is a better fit and document why." "$CONFIG_PROJECT/AGENTS.md"; then
+    echo "Error: expected custom decision policy in config-driven AGENTS.md." >&2
     exit 1
 fi
 

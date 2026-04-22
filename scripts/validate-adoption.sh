@@ -139,8 +139,12 @@ else
         warn "Multiple Standards Reference sections detected ($standards_section_count)"
     fi
 
-    if ! grep -Fq "**Deviation policy**:" "$AGENTS_PATH"; then
-        err "Deviation policy statement is missing from AGENTS.md"
+    if grep -Fq "**Decision policy**:" "$AGENTS_PATH"; then
+        :
+    elif grep -Fq "**Deviation policy**:" "$AGENTS_PATH"; then
+        warn "Legacy 'Deviation policy' label found; prefer 'Decision policy' wording"
+    else
+        err "Decision policy statement is missing from AGENTS.md"
     fi
 
     managed_begin_count="$(grep -Fc '<!-- BEGIN MANAGED: STANDARDS_REFERENCE -->' "$AGENTS_PATH" || true)"
@@ -159,7 +163,12 @@ else
         warn "Key Commands still contain TODO placeholders"
     fi
 
-    standards_path="$(sed -n 's/^This project follows organizational standards defined in `\([^`]*\)\/\?`\./\1/p' "$AGENTS_PATH" | head -n 1)"
+    standards_path="$(
+        sed -n \
+            -e 's/^This project uses shared guidance from `\([^`]*\)\/\?` as its working defaults\./\1/p' \
+            -e 's/^This project follows organizational standards defined in `\([^`]*\)\/\?`\./\1/p' \
+            "$AGENTS_PATH" | head -n 1
+    )"
     if [[ -z "$standards_path" ]]; then
         err "Could not parse standards path from AGENTS.md Standards Reference"
     else

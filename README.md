@@ -70,7 +70,23 @@ Procedural workflow skills that agents can auto-discover and follow. Each skill 
 
 ## Getting Started
 
-Use this repository as a shared standards library across all your projects.
+Use this repository as a shared standards library for projects that choose to adopt it.
+
+These guides are prima facie good defaults, not universal mandates. We recommend adopting them unless project-specific constraints, architecture, team process, or risk profile give you a better reason to do something else.
+
+The point of onboarding is to make that choice explicit: adopt the defaults, adopt a modified version, or decline specific pieces with a clear rationale.
+
+### Decision-First Onboarding
+
+Before running bootstrap on a real repo, make these choices deliberately:
+
+| Decision | Recommendation |
+| --- | --- |
+| **Standards mode** | Start with `latest`; use `pinned` only when reproducibility matters more than fast updates |
+| **Existing instructions** | Use `--existing-mode merge` for any repo that already has local agent guidance |
+| **Default guide table** | Pick a short `STANDARDS_TOPICS` list for recurring concerns instead of copying the full catalog |
+
+The full workflow is documented in [adoption/adoption.md](adoption/adoption.md#decision-first-onboarding).
 
 ### Quick Start
 
@@ -81,12 +97,11 @@ git clone https://github.com/[org]/agentic-best-practices.git ~/agentic-best-pra
 # Set standards path (customize if needed)
 export AGENTIC_BEST_PRACTICES_HOME="${AGENTIC_BEST_PRACTICES_HOME:-$HOME/agentic-best-practices}"
 
-# Per-project: render AGENTS.md + CLAUDE.md with project defaults
-bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
-  --project-dir . \
-  --standards-path "$AGENTIC_BEST_PRACTICES_HOME"
+# Recommended for real repos: copy config and choose topics first
+mkdir -p .agentic-best-practices
+cp "$AGENTIC_BEST_PRACTICES_HOME/adoption/template-adoption-config.env" .agentic-best-practices/adoption.env
 
-# Optional: apply reusable customization settings from a config file
+# After editing STANDARDS_TOPICS, render with config
 bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
   --project-dir . \
   --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
@@ -96,8 +111,14 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
 bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
   --project-dir . \
   --standards-path "$AGENTIC_BEST_PRACTICES_HOME" \
+  --config-file .agentic-best-practices/adoption.env \
   --existing-mode merge \
   --claude-mode skip
+
+# Fastest baseline for a brand-new repo or quick experiment
+bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
+  --project-dir . \
+  --standards-path "$AGENTIC_BEST_PRACTICES_HOME"
 
 # Optional pinned mode: snapshot standards at a specific tag/commit
 bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
@@ -130,7 +151,7 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/check-pilot-readiness.sh" \
 
 | Component | Purpose |
 | --- | --- |
-| **This repo** (`$AGENTIC_BEST_PRACTICES_HOME/`) | Single source of truth for all standards |
+| **This repo** (`$AGENTIC_BEST_PRACTICES_HOME/`) | Shared home for the guidance a project adopts |
 | **Project AGENTS.md** | Points AI to consult agentic-best-practices for guidance |
 | **Bootstrap script** | Renders template with project defaults and standards path |
 | **Stack-aware defaults** | Auto-detects Node/Python/Go/Rust/JVM projects to pre-fill language/runtime/testing and key command defaults |
@@ -142,7 +163,7 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/check-pilot-readiness.sh" \
 The template includes a **Standards Reference** section that tells AI:
 > *Before implementing patterns for error handling, logging, API design, etc., consult the relevant guide in `{{STANDARDS_PATH}}/`.*
 
-This ensures consistent AI behavior across all your projects.
+This helps produce more consistent AI behavior in repos that adopt it.
 
 ### Preventing Drift
 
@@ -150,9 +171,9 @@ The [Adoption Guide](adoption/adoption.md) includes mechanisms to prevent projec
 
 | Mechanism | Effect |
 | --- | --- |
-| **Deviation policy** | AI asks before deviating from standards |
-| **Overrides section** | Intentional deviations must be documented with rationale |
-| **Periodic sync** | `git pull` updates standards across all projects |
+| **Decision policy** | Recommended defaults are explicit, and project-specific alternatives are documented instead of silently assumed |
+| **Overrides section** | Intentional changes, omissions, or better local patterns are documented with rationale |
+| **Periodic sync** | `git pull` refreshes shared guidance for latest-mode adopters |
 
 ### Updating Standards
 
@@ -195,6 +216,7 @@ Completed implementation details are archived in:
 - `docs/planning/archive/2026-02-08-adoption-integration-hardening-plan-v0.2.0.md`
 - `docs/planning/archive/2026-02-08-adoption-customization-hardening-plan-v0.3.0.md`
 - `docs/planning/archive/2026-02-16-guide-coverage-expansion-roadmap.md`
+- `docs/planning/archive/2026-02-26-tier1-guide-coverage-expansion.md`
 - `docs/planning/archive/2026-04-20-phase2-tier2-tier3-guide-expansion.md`
 
 See [health dashboard](docs/process/health-dashboard.md) for readiness metrics.

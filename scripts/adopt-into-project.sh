@@ -28,7 +28,7 @@ PRIORITY_TWO="Security over convenience"
 PRIORITY_THREE="Readability over cleverness"
 
 STANDARDS_TOPICS=""
-DEVIATION_POLICY="Do not deviate from these standards without explicit approval. If deviation is necessary, document it in the Project-Specific Overrides section below with rationale."
+DECISION_POLICY="These standards are recommended defaults. Adopt them unless this project has a better reason to do otherwise; if it does, document the project decision and rationale in the Project-Specific Overrides section below."
 
 DEV_CMD_OVERRIDE=""
 TEST_CMD_OVERRIDE=""
@@ -146,7 +146,7 @@ load_adoption_config() {
         PRIORITY_TWO) PRIORITY_TWO="$value" ;;
         PRIORITY_THREE) PRIORITY_THREE="$value" ;;
         STANDARDS_TOPICS) STANDARDS_TOPICS="$value" ;;
-        DEVIATION_POLICY) DEVIATION_POLICY="$value" ;;
+        DECISION_POLICY | DEVIATION_POLICY) DECISION_POLICY="$value" ;;
         DEV_CMD) DEV_CMD_OVERRIDE="$value" ;;
         TEST_CMD) TEST_CMD_OVERRIDE="$value" ;;
         COVERAGE_CMD) COVERAGE_CMD_OVERRIDE="$value" ;;
@@ -622,7 +622,8 @@ render_template() {
     replace_literal "$rendered_path" "[src/types/]" "$critical_types"
 
     replace_literal "$rendered_path" "{{STANDARDS_GUIDE_ROWS}}" "$standards_rows"
-    replace_literal "$rendered_path" "{{DEVIATION_POLICY}}" "$DEVIATION_POLICY"
+    replace_literal "$rendered_path" "{{DECISION_POLICY}}" "$DECISION_POLICY"
+    replace_literal "$rendered_path" "{{DEVIATION_POLICY}}" "$DECISION_POLICY"
     replace_literal "$rendered_path" "{{STANDARDS_PATH}}" "$standards_path"
     replace_literal "$rendered_path" "~/agentic-best-practices" "$standards_path"
 }

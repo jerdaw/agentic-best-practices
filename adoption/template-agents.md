@@ -38,9 +38,13 @@ You are a [specific role, e.g., "security-conscious backend developer"] working 
 
 ## Standards Reference
 
-This project follows organizational standards defined in `{{STANDARDS_PATH}}/`.
+This project uses shared guidance from `{{STANDARDS_PATH}}/` as its working defaults.
 
 **Before implementing**, consult the relevant guide:
+
+Treat these as the project's recommended defaults for recurring concerns, not as a claim that every default must fit every situation unchanged.
+
+Use `{{STANDARDS_PATH}}/README.md` when work touches a topic outside this shortlist.
 
 | Topic | Guide |
 | --- | --- |
@@ -50,7 +54,7 @@ This project follows organizational standards defined in `{{STANDARDS_PATH}}/`.
 
 For other topics, check `{{STANDARDS_PATH}}/README.md` for the full guide index (all guides are in `{{STANDARDS_PATH}}/guides/`).
 
-**Deviation policy**: {{DEVIATION_POLICY}}
+**Decision policy**: {{DECISION_POLICY}}
 
 ---
 
@@ -97,6 +101,7 @@ For other topics, check `{{STANDARDS_PATH}}/README.md` for the full guide index 
 | **Ask First** | Database schema changes | Requires migration review |
 | **Ask First** | Add new dependencies | Security and bundle impact |
 | **Ask First** | [Add your own] | [Rationale] |
+| **Never** | Add AI tools or assistants as commit authors, co-authors, or document contributors | Preserves human accountability |
 | **Never** | Commit .env or secrets | Security requirement |
 | **Never** | Force push to main | Protects shared history |
 | **Never** | [Add your own] | [Rationale] |
@@ -114,18 +119,18 @@ See `{{STANDARDS_PATH}}/skills/README.md` for the full skills index.
 ## Project-Specific Overrides
 
 <!--
-  Document any intentional deviations from {{STANDARDS_PATH}} here.
-  If this section is empty, the project follows all standards without exception.
+  Document any intentional project decisions about {{STANDARDS_PATH}} here.
+  If this section is empty, the project currently adopts the selected defaults above as its working defaults.
 
   Format:
   ### [Topic]
-  **Standard**: [What best-practices says]
-  **Override**: [What this project does instead]
-  **Rationale**: [Why the deviation is necessary]
-  **Approved**: [Date]
+  **Recommended default**: [What best-practices suggests]
+  **Project decision**: [What this project does instead, or why it omits the default]
+  **Rationale**: [Why this is a better fit here]
+  **Reviewed**: [Date]
 -->
 
-None. This project follows all organizational standards.
+None. This project currently uses the selected defaults above as its working defaults.
 
 ---
 

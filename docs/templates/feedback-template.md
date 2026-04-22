@@ -77,7 +77,7 @@ Paste this into a GitHub Issue (or any tracker).
 | --- | --- |
 | Guide file(s) referenced |  |
 | Section(s) referenced |  |
-| Deviation policy involved? | Yes/No (and why) |
+| Decision policy involved? | Yes/No (and why) |
 
 ### Environment
 

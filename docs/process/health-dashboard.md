@@ -2,7 +2,7 @@
 
 Real-time metrics tracking the health and readiness of agentic-best-practices.
 
-> **Last Updated**: 2026-04-20
+> **Last Updated**: 2026-04-22
 > **Status**: Pre-v1 (guide backlog complete; awaiting pilot validation)
 
 ## Contents
@@ -56,6 +56,7 @@ Real-time metrics tracking the health and readiness of agentic-best-practices.
 - External link checking added via CI workflow
 - Markdown linting enforced automatically
 - Downstream adoption simulation validates new project setup, merge workflow, overwrite workflow, pinned workflow, pilot-prep workflow, readiness checks, findings summary generation, and references
+- Adoption tooling now validates `Decision policy` wording while remaining backward-compatible with legacy `DEVIATION_POLICY` configs
 
 ---
 

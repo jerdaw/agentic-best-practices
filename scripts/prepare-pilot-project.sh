@@ -257,7 +257,12 @@ if [[ "$ADOPTION_MODE" == "latest" ]]; then
 fi
 "${validate_cmd[@]}"
 
-EFFECTIVE_STANDARDS_PATH="$(sed -n 's/^This project follows organizational standards defined in `\([^`]*\)\/?`\./\1/p' "$PROJECT_DIR/AGENTS.md" | head -n 1)"
+EFFECTIVE_STANDARDS_PATH="$(
+    sed -n \
+        -e 's/^This project uses shared guidance from `\([^`]*\)\/\?` as its working defaults\./\1/p' \
+        -e 's/^This project follows organizational standards defined in `\([^`]*\)\/\?`\./\1/p' \
+        "$PROJECT_DIR/AGENTS.md" | head -n 1
+)"
 if [[ -z "$EFFECTIVE_STANDARDS_PATH" ]]; then
     EFFECTIVE_STANDARDS_PATH="$STANDARDS_PATH"
 fi

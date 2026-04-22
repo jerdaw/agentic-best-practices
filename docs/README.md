@@ -23,6 +23,8 @@ Internal documentation for maintaining `agentic-best-practices` (process, plans,
 | `docs/adr/adr-001-validation-and-ci.md` | ADR | Active | Why validation + CI are treated as the primary "test suite". |
 | `docs/adr/adr-002-adoption-hardening-and-authorship-policy.md` | ADR | Active | Why adoption hardening baseline is fixed and commit authorship remains human-only. |
 | `docs/adr/adr-003-pilot-evidence-handoff-and-human-validation.md` | ADR | Active | Why pilot evidence summary and human-owned external validation gates are standardized. |
+| `docs/adr/adr-004-agent-concepts-architecture.md` | ADR | Active | Why the repo uses the current agent-concepts taxonomy and boundary definitions. |
+| `docs/adr/adr-005-shared-guidance-recommended-defaults.md` | ADR | Active | Why onboarding treats repo guidance as recommended defaults rather than universal mandates. |
 | `docs/reference/references.md` | Reference | Active | External sources (human readers only). |
 | `docs/deep-research/chatgpt-agentic-documentation-and-comments-2026-02-15.md` | Research output | Active | ChatGPT deep-research report for docs/comments in agentic coding. |
 | `docs/deep-research/gemini-agentic-documentation-and-comments-2026-02-15.md` | Research output | Active | Gemini deep-research report for docs/comments in agentic coding. |

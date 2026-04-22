@@ -8,7 +8,7 @@ PROJECT_DIR=""
 STANDARDS_PATH="${AGENTIC_BEST_PRACTICES_HOME:-$HOME/agentic-best-practices}"
 CONFIG_FILE=""
 STANDARDS_TOPICS=""
-DEVIATION_POLICY="Do not deviate from these standards without explicit approval. If deviation is necessary, document it in the Project-Specific Overrides section with rationale."
+DECISION_POLICY="These standards are recommended defaults. Adopt them unless this project has a better reason to do otherwise; if it does, document the project decision and rationale in Project-Specific Overrides."
 
 MANAGED_BEGIN="<!-- BEGIN MANAGED: STANDARDS_REFERENCE -->"
 MANAGED_END="<!-- END MANAGED: STANDARDS_REFERENCE -->"
@@ -95,7 +95,7 @@ load_adoption_config() {
 
         case "$key" in
         STANDARDS_TOPICS) STANDARDS_TOPICS="$value" ;;
-        DEVIATION_POLICY) DEVIATION_POLICY="$value" ;;
+        DECISION_POLICY | DEVIATION_POLICY) DECISION_POLICY="$value" ;;
         "")
             ;;
         *)
@@ -321,7 +321,7 @@ cat >"$block_file" <<EOF
 $MANAGED_BEGIN
 ## Standards Reference
 
-This project follows organizational standards defined in \`$STANDARDS_PATH_FOR_DOC/\`.
+This project uses shared guidance from \`$STANDARDS_PATH_FOR_DOC/\` as its working defaults.
 
 **Before implementing**, consult the relevant guide:
 
@@ -331,7 +331,7 @@ $standards_rows
 
 For other topics, check \`$STANDARDS_PATH_FOR_DOC/README.md\` for the full guide index (all guides are in \`$STANDARDS_PATH_FOR_DOC/guides/\`).
 
-**Deviation policy**: $DEVIATION_POLICY
+**Decision policy**: $DECISION_POLICY
 $MANAGED_END
 EOF
 
