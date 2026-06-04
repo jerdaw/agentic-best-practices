@@ -97,12 +97,12 @@ def get_required_env(name: str) -> str:
 
 ```python
 # Bad: Hardcoded secret
-db_password = "super_secret_123"  # Never do this
+db_password = "<hardcoded-password>"  # Never do this
 
 # Bad: Secret in config file that gets committed
 # config.yaml
 # database:
-#   password: super_secret_123
+#   password: <hardcoded-password>
 ```
 
 ### Pattern 2: Secret Manager Integration

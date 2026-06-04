@@ -398,16 +398,16 @@ See [Commenting Guidelines](../commenting-guidelines/commenting-guidelines.md) f
 | `LOG_LEVEL` | **No** | Verbosity (info) | Controls noise level in production logs. |
 | `API_KEY` | **Yes** | External API key | Authenticates project to upstream services. |
 
-### Example .env
+### Example .env.example
 
 ```text
-DATABASE_URL=postgres://localhost:5432/myapp_dev
+DATABASE_URL=<local-database-url>
 PORT=3000
 LOG_LEVEL=debug
 ```
 
 > [!CAUTION]
-> Never commit `.env` files to source control. Use `.env.example` as a template for secrets.
+> Never commit `.env` files to source control. Use `.env.example` as a template for required variable names, not secret values.
 
 ### Configuration File Layout
 

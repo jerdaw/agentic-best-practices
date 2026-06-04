@@ -157,9 +157,15 @@ Follow [Writing Best Practices](guides/writing-best-practices/writing-best-pract
 | Update README | **Required** | When adding new guides |
 | Fix broken links | **Always** | Maintains graph integrity |
 | Keep human-only authorship metadata | **Required** | Maintains accountability in git history and docs |
-| Avoid AI attribution | **Required** | No 'Co-authored-by' trailers or AI credits |
+| Avoid AI attribution | **Required** | No AI authors, contributors, 'Co-authored-by' trailers, or AI credits |
 | Add new directory | **Ask first** | Taxonomy decisions need review |
 | Restructure repo | **Ask first** | High impact on linking |
+
+| Authorship Rule | Requirement |
+| --- | --- |
+| Commit authors | Must be actual contributing humans; `dependabot[bot]` and `github-actions[bot]` are permitted automation exceptions |
+| Commit trailers | Do not add AI tools or assistants as co-authors, reviewers, generators, or contributors |
+| Documentation credits | Credit only humans or permitted automation; do not credit Claude, Gemini, Codex, Copilot, ChatGPT, or other AI tools |
 
 ### Anti-Patterns
 

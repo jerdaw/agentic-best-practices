@@ -22,6 +22,18 @@ Thumbs.db
 .env
 .env.local
 
+# Local/private maintainer notes. Do not commit plaintext private notes.
+private/**/*.md
+private/**/*.txt
+private/**/*.log
+private/**/*.local.*
+.private/
+
+# Encrypted private notes may be tracked only when an encryption workflow is intentional.
+!private/**/*.age
+!private/**/*.md.age
+!private/**/*.enc.md
+
 # Build & Logs
 node_modules/
 dist/

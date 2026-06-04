@@ -215,7 +215,7 @@ config/production.json (if contains secrets)
 const apiKey = process.env.STRIPE_API_KEY
 
 // Bad: Never share the actual value with AI
-const apiKey = 'sk_live_...'  // Never do this
+const apiKey = '<secret-api-key>'  // Never do this
 ```
 
 **Placeholder pattern for AI context**:

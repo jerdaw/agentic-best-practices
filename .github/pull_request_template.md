@@ -20,6 +20,7 @@ Describe what changed and why.
 
 - [ ] No secrets/credentials/tokens were added to docs, comments, code, or examples
 - [ ] No sensitive operational details were added to broad-access docs without redaction/control
+- [ ] Only human contributors or permitted automation bots are listed as authors/contributors; no AI attribution was added
 
 ## Change Type
 
