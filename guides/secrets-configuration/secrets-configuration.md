@@ -25,6 +25,7 @@ Guidelines for separating configuration from code and handling secrets securely.
 | :--- | :--- | :--- |
 | **Always** | Read secrets from environment or secret store | Never embedded in code |
 | **Always** | Add secret files to `.gitignore` | Prevents accidental commits |
+| **Always** | Run full Git-history secret scans for onboarding, imports, and release gates | Deleted secrets still remain in history |
 | **Always** | Use different secrets per environment | Limits blast radius of leaks |
 | **Always** | Default to secure/production settings | Dev overrides, not prod |
 | **Prefer** | Secret managers over env files | Rotation, audit, encryption |
@@ -246,14 +247,57 @@ config/local/
 
 | Check | Tool | Purpose |
 | :--- | :--- | :--- |
-| Secret scanning | `gitleaks`, `trufflehog` | Detect committed secrets |
+| Secret scanning | `gitleaks`, `trufflehog` | Detect secrets before commit |
 | Env file check | Custom script | Ensure `.env` is gitignored |
 | Config validation | Schema validator | Catch missing required config |
 
 ```bash
-# Example: gitleaks pre-commit
-gitleaks detect --source . --verbose
+# Current working tree
+gitleaks dir -v --redact .
+
+# Current commit or staged range, depending on hook setup
+trufflehog git file://. --since-commit HEAD --only-verified --fail
 ```
+
+### Repository Secret Scans
+
+Run both a fast working-tree scan and a full Git-history scan when a repository is adopted, imported,
+published, or suspected of leaking credentials.
+
+| Scan | Command | Use |
+| :--- | :--- | :--- |
+| Current tree | `gitleaks dir -v --redact .` | Fast local check for files as they exist now |
+| Full Git history | `gitleaks git -v --redact .` | Required check for secrets committed in any reachable history |
+| Verified Git findings | `trufflehog git file://. --only-verified --fail` | Confirms active credentials and fails automation on verified leaks |
+
+### Scan Timing
+
+| When | Required Scan | Rationale |
+| :--- | :--- | :--- |
+| Pre-commit | Current tree plus changed commits | Gives developers fast feedback |
+| PR / CI delta | Branch or commit-range scan | Blocks newly introduced secrets before merge |
+| Repo onboarding/import | Full Git history with Gitleaks and TruffleHog | Imported history may contain old credentials |
+| Pre-public-release | Full Git history with Gitleaks and TruffleHog | Public release makes old commits broadly accessible |
+| Suspected leak response | Full Git history, current tree, artifacts, and logs | Confirms scope before remediation is declared complete |
+
+### Good / Bad Scan Coverage
+
+| Good | Bad | Why |
+| :--- | :--- | :--- |
+| Run `gitleaks git -v --redact .` before publishing a repo | Run only `gitleaks dir -v --redact .` | Directory scans miss secrets that were deleted from the current tree |
+| Rotate exposed credentials before rewriting history | Delete the file and keep using the same key | The old key may already be copied from Git history |
+| Treat baselines and allowlists as reviewed false positives only | Baseline all findings to make CI pass | Baselines must not hide unresolved real leaks |
+
+### Findings Triage
+
+| Step | Action | Rationale |
+| :--- | :--- | :--- |
+| 1 | Rotate or revoke the exposed credential immediately | A secret in Git must be treated as compromised |
+| 2 | Remove the source of the leak from code, config, docs, and logs | Prevents the next scan from reintroducing the finding |
+| 3 | Rewrite history with maintained tooling such as `git filter-repo` or BFG | Removes the secret from reachable Git history |
+| 4 | Coordinate any force-push and notify repository consumers | History rewrites break existing clones and branches |
+| 5 | Invalidate published artifacts, caches, packages, and images when they may contain the secret | Git cleanup does not clean downstream copies |
+| 6 | Rerun Gitleaks and TruffleHog full-history scans | Remediation is incomplete until scanners are clean or findings are documented false positives |
 
 ### Runtime Checks
 
@@ -273,7 +317,8 @@ def validate_config(config: dict) -> None:
 
 ### Checklist
 
-- [ ] No secrets in repository (run `gitleaks`)
+- [ ] No secrets in the working tree (run `gitleaks dir -v --redact .`)
+- [ ] No secrets in Git history for onboarding, imports, public releases, or suspected leaks
 - [ ] `.env` and secret files in `.gitignore`
 - [ ] Different credentials per environment
 - [ ] Secrets loaded from environment or secret manager
@@ -286,7 +331,7 @@ def validate_config(config: dict) -> None:
 
 | Signal | Action | Rationale |
 | --- | --- | --- |
-| Hardcoded API key, password, or token in source code | Move to environment variable or secret manager immediately | Committed secrets persist in git history even after "deletion" |
+| Hardcoded API key, password, or token in source code | Rotate it, move future access to environment or secret manager, and scan Git history | Committed secrets persist in git history even after "deletion" |
 | `.env` file not in `.gitignore` | Add it to `.gitignore` before the next commit | A committed `.env` leaks every secret in the file |
 | Same database password used in dev, staging, and prod | Generate unique credentials per environment | One breach exposes all environments |
 | Secret value appearing in application logs | Add redaction — log "provided: true/false" instead | Logs are often stored in broadly accessible systems |

@@ -417,19 +417,16 @@ git revert <commit-hash>
 
 If AI accidentally committed secrets:
 
-```bash
-# 1. Immediately rotate the exposed secrets
+| Step | Action | Rationale |
+| --- | --- | --- |
+| 1 | Rotate or revoke the exposed credential immediately | Reverting or deleting the file does not protect an already-leaked secret |
+| 2 | Remove the source reference from code, config, docs, and logs | Prevents the same secret from being committed again |
+| 3 | Rewrite history with maintained tooling such as `git filter-repo` or BFG | Prefer maintained history-rewrite tools over `git filter-branch` |
+| 4 | Coordinate any force-push with the team | History rewrites break existing clones and branches |
+| 5 | Rerun full-history scans with Gitleaks and TruffleHog | Cleanup is incomplete until history scans are clean or documented false positives |
 
-# 2. Remove from history
-git filter-branch --force --index-filter \
-  "git rm --cached --ignore-unmatch path/to/.env" \
-  --prune-empty --tag-name-filter cat -- --all
-
-# 3. Force push (coordinate with team)
-git push origin --force --all
-
-# 4. Consider the secrets permanently compromised
-```
+See [Secrets & Configuration Management](../secrets-configuration/secrets-configuration.md#repository-secret-scans)
+for full-history scan commands and remediation criteria.
 
 ---
 

@@ -26,7 +26,7 @@ Best practices for managing CI/CD pipelines while working with AI coding agents.
 | **Always** | Require manual approval for production | Prevent automated rogue deployments |
 | **Always** | Use short-lived OIDC tokens for cloud | Avoid permanent secrets in CI |
 | **Always** | Pin action versions to full SHAs | Prevent supply chain attacks |
-| **Always** | Run security scans in the pipeline | Automate vulnerability detection |
+| **Always** | Run security scans in the pipeline | Automate vulnerability and secret detection |
 | **Prefer** | Smaller, modular workflows | Easier for AI to reason about |
 | **Never** | Allow AI to modify deployment secrets | Protects critical infrastructure |
 
@@ -54,9 +54,23 @@ Break pipelines into logical stages that agents can understand and verify indepe
 | :--- | :--- | :--- |
 | **1. Validate** | Lint, Type-check, Format check | Code quality gate |
 | **2. Test** | Unit tests, Integration tests | Functional correctness |
-| **3. Security** | SAST, Dependency scan, Secret scan | Attack surface reduction |
+| **3. Security** | SAST, Dependency scan, Secret scan | Attack surface and credential-leak reduction |
 | **4. Build** | Compile, Containerize, Sign | Artifact creation |
 | **5. Deploy** | Update infra, Run migrations | Release execution |
+
+### Secret Scan Coverage
+
+Secret scanning in CI means both new-change protection and periodic full-history assurance.
+
+| Scan | Trigger | Purpose |
+| :--- | :--- | :--- |
+| PR / new-commit scan | Every pull request and push | Block newly introduced secrets before merge |
+| Full-history scan | Scheduled job, repo import, and release gate | Catch secrets already present in reachable Git history |
+| Verified-secret scan | High-risk repos and release gates | Fail automation on credentials that scanners can verify |
+
+Use the commands in
+[Secrets & Configuration Management](../secrets-configuration/secrets-configuration.md#repository-secret-scans)
+for Gitleaks and TruffleHog coverage.
 
 ### GitHub Actions Pattern
 

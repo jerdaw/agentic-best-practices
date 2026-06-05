@@ -85,14 +85,14 @@ git push --force-with-lease
 - [ ] Commit messages follow convention
 - [ ] Description explains what and why
 - [ ] No unrelated changes included
-- [ ] No secrets or credentials in the diff
+- [ ] No secrets or credentials in the diff; full history scanned for imports, public releases, or suspected leaks
 
 ## Red Flags
 
 | Signal | Action |
 | --- | --- |
 | `git push --force` on shared branch | Use `--force-with-lease` |
-| Credentials in a commit | Rotate immediately, rewrite history |
+| Credentials in a commit | Rotate immediately, rewrite history, rerun full-history secret scans |
 | 20+ files changed with vague message | Split into logical commits |
 | Merge conflict resolved without reading both sides | Re-resolve intentionally |
 
