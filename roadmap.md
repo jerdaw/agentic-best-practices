@@ -24,7 +24,7 @@ Execution roadmap for current implementation work. Canonical product roadmap rem
 
 | Workstream | Goal | Status |
 | --- | --- | --- |
-| External validation | Validate standards and workflows in 1-2 real repositories | 🔴 Blocked on pilot repo selection |
+| External validation | Validate standards and workflows in 1-2 real repositories | 🔴 Blocked on the owner decision prepared in `docs/planning/2026-07-10-pilot-selection-readiness-plan.md` |
 | Tier 4 backlog triage | Evaluate specialized topics after pilot evidence and real-world feedback | 🟡 Planned |
 
 Completed implementation details are archived in:
