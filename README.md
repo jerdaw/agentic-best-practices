@@ -235,7 +235,7 @@ Gaps identified through comprehensive audit (2026-02-26). Full backlog in [roadm
 | Work Item | Status | Notes |
 | --- | --- | --- |
 | Guide Coverage Expansion Phase 2 — Tiers 1-3 | ✅ Complete | 14 new guides delivered across the audited backlog. See [roadmap](roadmap.md) and [archive](docs/planning/archive/2026-04-20-phase2-tier2-tier3-guide-expansion.md). |
-| Choose 1-2 adoption pilot repos | 🔴 Blocked | Human decision needed. Use [selection criteria](docs/planning/pilot-repo-selection.md). |
+| Choose 1-2 adoption pilot repos | 🔴 Blocked | `old-reddit-enhanced` is rehearsed and recommended; human owner/feedback commitment is still required. See the [decision packet](docs/planning/2026-07-10-pilot-selection-decision.md). |
 | Execute pilot validation cycle (6-8 weeks) | 🟡 Planned | Use [pilot execution playbook](docs/process/pilot-execution-playbook.md). |
 | Feed pilot outcomes into next release backlog | 🟡 Planned | File actionable updates via [feedback template](docs/templates/feedback-template.md). |
 

@@ -637,7 +637,7 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/adopt-into-project.sh" \
 | AI doesn't follow standards | Missing or broken reference directive | Re-run bootstrap or fix `Standards Reference` section |
 | AI can't find guides | Wrong standards path | Validate with `--expect-standards-path` |
 | Different behavior across tools | `CLAUDE.md` missing or out of sync | Regenerate with bootstrap or copy/symlink `AGENTS.md` |
-| Strict validation fails on structure | Missing recommended sections or TODO commands | Add missing sections (`Agent Role`, `Tech Stack`, `Key Commands`, `Boundaries`) and replace TODO commands |
+| Strict validation fails on structure | Missing recommended sections or TODO commands | For generated/overwritten files, add `Agent Role`, `Tech Stack`, `Key Commands`, and `Boundaries`; merge-mode pilot preparation accepts documented equivalent headings in mature existing instructions. Replace TODO commands in either case. |
 | Pinned mode fails to create snapshot | Ref does not exist or standards path is not a git repo | Verify `--pinned-ref` and run `git -C "$AGENTIC_BEST_PRACTICES_HOME" fetch --tags` |
 | Pilot prep script skips files | Pilot artifact files already exist | Re-run with `--overwrite` to refresh generated pilot files |
 | Pilot readiness check reports missing artifacts | Pilot files or cadence docs not created yet | Run `prepare-pilot-project.sh`, then add weekly/retrospective files and re-run readiness check |

@@ -10,6 +10,7 @@ PILOT_DIR=".agentic-best-practices/pilot"
 MIN_WEEKLY_CHECKINS=1
 REQUIRE_RETROSPECTIVE=0
 STRICT=0
+ALLOW_SECTION_ALIASES=0
 
 ERRORS=0
 WARNINGS=0
@@ -27,6 +28,7 @@ Options:
   --min-weekly-checkins <n>     Minimum weekly check-in files required (default: 1)
   --require-retrospective       Require a completed retrospective file (retrospective*.md excluding template)
   --strict                      Fail if warnings are present
+  --allow-section-aliases       Accept common equivalent headings in mature merged AGENTS.md files
   --help                        Show help
 EOF
 }
@@ -92,6 +94,10 @@ while [[ $# -gt 0 ]]; do
         STRICT=1
         shift
         ;;
+    --allow-section-aliases)
+        ALLOW_SECTION_ALIASES=1
+        shift
+        ;;
     --help)
         print_usage
         exit 0
@@ -131,6 +137,9 @@ fi
 if [[ -f "$VALIDATE_SCRIPT" ]]; then
     validate_output="$(mktemp)"
     validate_cmd=(bash "$VALIDATE_SCRIPT" --project-dir "$PROJECT_DIR")
+    if [[ "$ALLOW_SECTION_ALIASES" -eq 1 ]]; then
+        validate_cmd+=(--allow-section-aliases)
+    fi
     if [[ "$STRICT" -eq 1 ]]; then
         validate_cmd+=(--strict)
     fi

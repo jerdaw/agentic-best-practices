@@ -72,6 +72,7 @@ bash "$AGENTIC_BEST_PRACTICES_HOME/scripts/check-pilot-readiness.sh" \
 | `--min-weekly-checkins 0` | Immediately after kickoff setup (before week 1 artifacts exist). |
 | `--min-weekly-checkins 4` | Mid/late pilot to enforce cadence completion. |
 | `--require-retrospective` | End-of-pilot gate before final decision review. |
+| `--allow-section-aliases` | Mature merge-mode `AGENTS.md` uses equivalent headings such as `Quick Reference`, `Project Overview`, or `Critical Rules`. |
 
 ## Findings Summary
 

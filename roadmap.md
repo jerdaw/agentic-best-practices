@@ -24,7 +24,7 @@ Execution roadmap for current implementation work. Canonical product roadmap rem
 
 | Workstream | Goal | Status |
 | --- | --- | --- |
-| External validation | Validate standards and workflows in 1-2 real repositories | 🔴 Blocked on the owner decision prepared in `docs/planning/2026-07-10-pilot-selection-readiness-plan.md` |
+| External validation | Validate standards and workflows in 1-2 real repositories | 🔴 `old-reddit-enhanced` is rehearsed and recommended; blocked only on explicit owner/feedback commitment in `docs/planning/2026-07-10-pilot-selection-decision.md` |
 | Tier 4 backlog triage | Evaluate specialized topics after pilot evidence and real-world feedback | 🟡 Planned |
 
 Completed implementation details are archived in:
@@ -82,7 +82,7 @@ These actions require human owners and cannot be completed autonomously from thi
 
 | Priority | Action | Owner | Status |
 | --- | --- | --- | --- |
-| 1 | Select pilot repositories with explicit team commitment | Human maintainer | 🔴 Pending |
+| 1 | Approve or reject the rehearsed `old-reddit-enhanced` pilot contract | Human maintainer | 🔴 Pending |
 | 2 | Execute 6-8 week pilot with generated artifacts | Human maintainer + pilot owners | 🔴 Pending |
 | 3 | Convert pilot findings into guide/script backlog and releases | Human maintainer + contributors | 🔴 Pending |
 | 4 | Triage Tier 4 topics (GE-15 through GE-18) using pilot evidence | Agent + human review | 🟡 Planned |

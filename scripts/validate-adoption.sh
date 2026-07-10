@@ -4,6 +4,7 @@ set -euo pipefail
 PROJECT_DIR="."
 EXPECT_STANDARDS_PATH=""
 STRICT=0
+ALLOW_SECTION_ALIASES=0
 
 print_usage() {
     cat <<'EOF'
@@ -14,6 +15,7 @@ Options:
   --project-dir <path>            Target project directory (default: .)
   --expect-standards-path <path>  Expected standards repo path in AGENTS.md
   --strict                        Fail on warnings
+  --allow-section-aliases         Accept common equivalent headings in mature merged AGENTS.md files
   --help                          Show help
 EOF
 }
@@ -80,6 +82,10 @@ while [[ $# -gt 0 ]]; do
         STRICT=1
         shift
         ;;
+    --allow-section-aliases)
+        ALLOW_SECTION_ALIASES=1
+        shift
+        ;;
     --help)
         print_usage
         exit 0
@@ -111,6 +117,44 @@ err() {
 warn() {
     WARNINGS=$((WARNINGS + 1))
     echo "WARN: $1"
+}
+
+has_any_h2() {
+    local heading
+    for heading in "$@"; do
+        if grep -Fqx "## $heading" "$AGENTS_PATH"; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+has_recommended_section_or_alias() {
+    local required_header="$1"
+    if grep -Fqx "$required_header" "$AGENTS_PATH"; then
+        return 0
+    fi
+    if [[ "$ALLOW_SECTION_ALIASES" -ne 1 ]]; then
+        return 1
+    fi
+
+    case "$required_header" in
+    "## Agent Role")
+        has_any_h2 "Project Overview" "Purpose" "Project Context"
+        ;;
+    "## Tech Stack")
+        has_any_h2 "Project Overview" "Architecture" "Development"
+        ;;
+    "## Key Commands")
+        has_any_h2 "Quick Reference" "Development Commands" "Commands"
+        ;;
+    "## Boundaries")
+        has_any_h2 "Critical Rules" "Guardrails" "Safety Boundaries" "What to Avoid"
+        ;;
+    *)
+        return 1
+        ;;
+    esac
 }
 
 if [[ ! -f "$AGENTS_PATH" ]]; then
@@ -154,7 +198,7 @@ else
     fi
 
     for required_header in "## Agent Role" "## Tech Stack" "## Key Commands" "## Boundaries"; do
-        if ! grep -Fq "$required_header" "$AGENTS_PATH"; then
+        if ! has_recommended_section_or_alias "$required_header"; then
             warn "Missing recommended section: $required_header"
         fi
     done

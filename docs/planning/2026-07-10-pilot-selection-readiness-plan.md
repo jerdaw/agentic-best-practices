@@ -2,7 +2,7 @@
 
 | Field | Value |
 | --- | --- |
-| Status | In progress; pilot not selected |
+| Status | Complete; pilot recommendation ready for owner commitment |
 | Prepared | 2026-07-10 |
 | Decision owner | Human maintainer |
 | Scope | Score local candidates and rehearse setup in disposable clones |
@@ -75,3 +75,18 @@ The real pilot starts only after the maintainer confirms:
 - support owner;
 - acceptable failure/isolation posture;
 - kickoff date.
+
+## Completion Evidence
+
+| Requirement | Evidence |
+| --- | --- |
+| Candidate scoring | Four candidates measured and scored in `2026-07-10-pilot-selection-decision.md` |
+| Primary recommendation | `old-reddit-enhanced`; one pilot only |
+| Configuration | `pilot-old-reddit-adoption.env` with five recurring topics and repo-native commands |
+| Disposable setup | Merge-mode preparation passed in a remote-free clone |
+| Strict readiness | 0 errors, 0 warnings, 0 weekly check-ins required at setup |
+| Candidate integrity | Real `old-reddit-enhanced` worktree remained clean |
+| Tooling regression | Merge-aware section aliases covered by adoption smoke scenario 8 |
+| External effects | No candidate writes, pushes, issues, messages, schedules, or releases |
+
+The decision remains human-owned because explicit willingness and feedback capacity are critical rubric criteria and cannot be inferred from repository state.

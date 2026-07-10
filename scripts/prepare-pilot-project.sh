@@ -252,6 +252,9 @@ fi
 "${adopt_cmd[@]}"
 
 validate_cmd=(bash "$VALIDATE_SCRIPT" --project-dir "$PROJECT_DIR" --strict)
+if [[ "$EXISTING_MODE" == "merge" ]]; then
+    validate_cmd+=(--allow-section-aliases)
+fi
 if [[ "$ADOPTION_MODE" == "latest" ]]; then
     validate_cmd+=(--expect-standards-path "$STANDARDS_PATH")
 fi
