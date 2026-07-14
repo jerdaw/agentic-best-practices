@@ -33,7 +33,7 @@ Sample verification of high-impact claims against primary/high-signal sources.
 
 | Reference | Publisher | Date |
 | --- | --- | --- |
-| [Google Developer Documentation Style Guide - Documentation Best Practices](https://developers.google.com/style/documentation-best-practices) | Google Developers | Accessed 2026-02-15 |
+| [Google Documentation Best Practices](https://google.github.io/styleguide/docguide/best_practices.html) | Google | Accessed 2026-07-13 |
 | [Google Python Style Guide - Comments and Docstrings](https://google.github.io/styleguide/pyguide.html#38-comments-and-docstrings) | Google | Accessed 2026-02-15 |
 | [PEP 257 - Docstring Conventions](https://peps.python.org/pep-0257/) | Python Software Foundation | 2001 (current) |
 | [Docs as Code](https://www.writethedocs.org/guide/docs-as-code/) | Write the Docs | Accessed 2026-02-15 |
