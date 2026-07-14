@@ -2,7 +2,7 @@
 
 | Field | Value |
 | --- | --- |
-| **Status** | In progress |
+| **Status** | Complete |
 | **Owner** | Jeremy Dawson |
 | **Started** | 2026-07-13 |
 | **Scope** | Documentation validation, maintainer runtime, and CI action maintenance |
@@ -11,6 +11,14 @@
 
 Restore reliable documentation validation with a current supported toolchain,
 without changing guide policy or pilot-selection decisions.
+
+## Outcome
+
+PR #1 merged the citation repair, Node 22 documentation toolchain, linked-worktree
+lint boundary, and current first-party workflow actions in commit `57572e3`.
+All required hosted checks passed before merge. Current behavior and runtime
+requirements live in `README.md`, `AGENTS.md`, `package.json`, and the workflow
+files; this archive is historical context only.
 
 ## Work Plan
 
@@ -21,7 +29,7 @@ without changing guide policy or pilot-selection decisions.
 | 3 | Exclude repository-local worktrees from Markdown lint traversal | Complete |
 | 4 | Upgrade first-party workflow actions and the lint runner to supported majors | Complete |
 | 5 | Run clean-install audits, the full pre-commit gate, and command-surface smoke checks | Complete |
-| 6 | Verify hosted pull-request checks, merge, and archive this plan | Pending |
+| 6 | Verify hosted pull-request checks, merge, and archive this plan | Complete |
 
 ## Risk Controls
 
@@ -39,5 +47,5 @@ without changing guide policy or pilot-selection decisions.
 - [x] `npm run precommit` passes.
 - [x] All documented command-surface help checks exit successfully.
 - [x] The branch diff is clean and human-authored.
-- [ ] Required hosted checks pass and the branch is merged.
-- [ ] This plan is archived with an outcome summary.
+- [x] Required hosted checks pass and the branch is merged.
+- [x] This plan is archived with an outcome summary.
