@@ -436,4 +436,50 @@ if grep -Fq "TODO: set command for" "$RUST_PROJECT/AGENTS.md"; then
     exit 1
 fi
 
+# Scenario 8: pilot merge should accept equivalent headings in mature existing instructions.
+ALIAS_PROJECT="$WORK_DIR/alias-project"
+mkdir -p "$ALIAS_PROJECT"
+cat >"$ALIAS_PROJECT/AGENTS.md" <<'EOF'
+# AGENTS.md
+
+## Quick Reference
+
+| Command | Purpose |
+| --- | --- |
+| `npm test` | Run tests |
+
+## Project Overview
+
+| Field | Value |
+| --- | --- |
+| Type | Browser extension |
+| Tooling | Node.js 20+ |
+
+## Critical Rules
+
+- Preserve existing behavior.
+- Never commit secrets.
+EOF
+ln -s AGENTS.md "$ALIAS_PROJECT/CLAUDE.md"
+
+bash "$PREPARE_PILOT_SCRIPT" \
+    --project-dir "$ALIAS_PROJECT" \
+    --standards-path "$REPO_ROOT" \
+    --existing-mode merge \
+    --claude-mode skip \
+    --pilot-owner "pilot-owner" \
+    >/dev/null
+
+if [[ ! -f "$ALIAS_PROJECT/.agentic-best-practices/pilot/kickoff.md" ]]; then
+    echo "Error: merge-aware pilot validation rejected equivalent existing headings." >&2
+    exit 1
+fi
+
+bash "$READINESS_SCRIPT" \
+    --project-dir "$ALIAS_PROJECT" \
+    --min-weekly-checkins 0 \
+    --allow-section-aliases \
+    --strict \
+    >/dev/null
+
 echo "Adoption smoke simulation passed."

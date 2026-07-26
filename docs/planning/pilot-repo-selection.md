@@ -4,9 +4,10 @@ Evaluation framework for choosing 1-2 adoption pilot repositories.
 
 | Field | Value |
 | --- | --- |
-| **Status** | Draft - awaiting human decision |
+| **Status** | Recommendation prepared; awaiting human commitment |
 | **Created** | 2026-02-05 |
 | **Decision owner** | Human (requires org priorities + stakeholders) |
+| **Current decision packet** | `2026-07-10-pilot-selection-decision.md` |
 
 ## Contents
 
