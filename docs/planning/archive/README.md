@@ -77,3 +77,4 @@ archive/
 | `2026-02-16-guide-coverage-expansion-roadmap.md` | Completed LG-01 through LG-09 guide coverage expansion and harmonization roadmap. |
 | `2026-02-26-tier1-guide-coverage-expansion.md` | Completed GE-01 through GE-06 Tier 1 guide coverage expansion (6 new guides). |
 | `2026-04-20-phase2-tier2-tier3-guide-expansion.md` | Completed GE-07 through GE-14 guide coverage expansion (8 new guides). |
+| `2026-07-13-documentation-validation-maintenance.md` | Completed documentation validation, runtime, and workflow maintenance. |
