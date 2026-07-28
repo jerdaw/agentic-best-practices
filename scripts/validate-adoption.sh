@@ -208,9 +208,9 @@ else
     fi
 
     standards_path="$(
-        sed -n \
-            -e 's/^This project uses shared guidance from `\([^`]*\)\/\?` as its working defaults\./\1/p' \
-            -e 's/^This project follows organizational standards defined in `\([^`]*\)\/\?`\./\1/p' \
+        sed -E -n \
+            -e 's|^This project uses shared guidance from `([^`]*)/?` as its working defaults\.$|\1|p' \
+            -e 's|^This project follows organizational standards defined in `([^`]*)/?`\.$|\1|p' \
             "$AGENTS_PATH" | head -n 1
     )"
     if [[ -z "$standards_path" ]]; then
@@ -245,7 +245,10 @@ else
         fi
     fi
 
-    mapfile -t guide_refs < <(grep -oE '`[^`]+guides/[^`]+\.md`' "$AGENTS_PATH" | tr -d '`' | sort -u || true)
+    guide_refs=()
+    while IFS= read -r guide_ref; do
+        [[ -n "$guide_ref" ]] && guide_refs[${#guide_refs[@]}]="$guide_ref"
+    done < <(grep -oE '`[^`]+guides/[^`]+\.md`' "$AGENTS_PATH" | tr -d '`' | sort -u || true)
     if [[ "${#guide_refs[@]}" -eq 0 ]]; then
         err "No guide references found in AGENTS.md"
     else

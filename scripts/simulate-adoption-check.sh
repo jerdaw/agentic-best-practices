@@ -205,9 +205,9 @@ bash "$VALIDATE_SCRIPT" \
     >/dev/null
 
 PINNED_STANDARDS_PATH="$(
-    sed -n \
-        -e 's/^This project uses shared guidance from `\([^`]*\)\/\?` as its working defaults\./\1/p' \
-        -e 's/^This project follows organizational standards defined in `\([^`]*\)\/\?`\./\1/p' \
+    sed -E -n \
+        -e 's|^This project uses shared guidance from `([^`]*)/?` as its working defaults\.$|\1|p' \
+        -e 's|^This project follows organizational standards defined in `([^`]*)/?`\.$|\1|p' \
         "$PINNED_PROJECT/AGENTS.md" | head -n 1
 )"
 if [[ -z "$PINNED_STANDARDS_PATH" ]]; then

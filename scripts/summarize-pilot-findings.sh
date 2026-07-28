@@ -157,7 +157,10 @@ retrospective_count=0
 latest_retrospective=""
 
 if [[ -d "$PILOT_DIR_ABS" ]]; then
-    mapfile -t weekly_files < <(find "$PILOT_DIR_ABS" -maxdepth 1 -type f -name 'weekly-*.md' ! -name 'weekly-checkin-template.md' | sort)
+    weekly_files=()
+    while IFS= read -r weekly_file; do
+        [[ -n "$weekly_file" ]] && weekly_files[${#weekly_files[@]}]="$weekly_file"
+    done < <(find "$PILOT_DIR_ABS" -maxdepth 1 -type f -name 'weekly-*.md' ! -name 'weekly-checkin-template.md' | sort)
     weekly_count="${#weekly_files[@]}"
     if ((weekly_count < MIN_WEEKLY_CHECKINS)); then
         warn "Weekly check-ins below target. Required: $MIN_WEEKLY_CHECKINS, found: $weekly_count"
@@ -171,7 +174,10 @@ if [[ -d "$PILOT_DIR_ABS" ]]; then
         weekly_rows+=$'| `'"$weekly_name"$'` | '"$reporting_period"$' | '"$blockers"$' | '"$critical_defects"$' |\n'
     done
 
-    mapfile -t retrospective_files < <(find "$PILOT_DIR_ABS" -maxdepth 1 -type f -name 'retrospective*.md' ! -name 'retrospective-template.md' | sort)
+    retrospective_files=()
+    while IFS= read -r retrospective_file; do
+        [[ -n "$retrospective_file" ]] && retrospective_files[${#retrospective_files[@]}]="$retrospective_file"
+    done < <(find "$PILOT_DIR_ABS" -maxdepth 1 -type f -name 'retrospective*.md' ! -name 'retrospective-template.md' | sort)
     retrospective_count="${#retrospective_files[@]}"
     if ((retrospective_count > 0)); then
         latest_retrospective="${retrospective_files[$((retrospective_count - 1))]}"
